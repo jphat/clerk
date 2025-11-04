@@ -1,0 +1,28 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TitleBar from '@/components/site/TitleBar.astro';
+import type { PageMeta } from '@/types';
+
+const user = (Astro.locals as any).user;
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description: 'User dashboard and profile management.',
+	// image: {},
+	// language: "en",
+	title: `${user?.firstName ? `${user?.firstName}'s Dashboard` : 'Dashboard'}`,
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
+
+	<div class="container"></div>
+</Layout>

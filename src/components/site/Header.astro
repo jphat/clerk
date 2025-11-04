@@ -1,5 +1,12 @@
 ---
 import { Zap } from 'lucide-vue-next';
+import { Button } from '@/components/ui/button';
+import {
+	SignedIn,
+	UserButton,
+	SignInButton,
+	SignedOut,
+} from '@clerk/astro/components';
 ---
 
 <header
@@ -13,5 +20,41 @@ import { Zap } from 'lucide-vue-next';
 		<a href="/">
 			<Zap class="h-8 w-8 stroke-1" />
 		</a>
+
+		<!-- Main Navigation Menu (visible when signed in) -->
+		<SignedIn>
+			<!-- main menu -->
+		</SignedIn>
+
+		<!-- Authentication Section -->
+		<div class="flex items-center space-x-2">
+			<SignedIn>
+				<UserButton
+					appearance={{
+						elements: {
+							avatarBox: 'w-8 h-8',
+							userButtonPopoverActionButtonIcon: 'hidden',
+							userButtonPopoverActionButtonIconBox: 'hidden',
+						},
+					}}
+					userProfileMode="modal"
+				>
+					<!-- userProfileUrl="/u/dashboard" -->
+					<UserButton.MenuItems>
+						<UserButton.Link label="Dashboard" href="/u" />
+					</UserButton.MenuItems>
+				</UserButton>
+			</SignedIn>
+
+			<!-- Non-authenticated User Buttons -->
+			<SignedOut>
+				<Button variant="default" size="sm"
+					><a href="/sign-in"> Sign In </a></Button
+				>
+				<Button variant="secondary" size="sm"
+					><a href="/sign-up"> Sign Up </a></Button
+				>
+			</SignedOut>
+		</div>
 	</nav>
 </header>

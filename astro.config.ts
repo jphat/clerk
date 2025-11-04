@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import { shadcn } from '@clerk/themes'
 import clerk from '@clerk/astro';
 import mdx from '@astrojs/mdx';
 import node from '@astrojs/node';
@@ -40,7 +41,20 @@ export default defineConfig({
 		],
 	},
 
-	integrations: [clerk(), mdx(), vue()],
+	integrations: [
+		clerk({
+			appearance: {
+				baseTheme: shadcn,
+				elements: {
+					userButtonPopoverFooter: "hidden",
+				},
+				signIn: {},
+				signUp: {},
+			},
+		}),
+		mdx(),
+		vue()
+	],
 
 	output: 'server',
 

@@ -1,4 +1,6 @@
 ---
+export const prerender = false; // Required for authentication state
+
 import SEOHead from '@/components/site/SEOHead.astro';
 import Footer from '@/components/site/Footer.astro';
 import Header from '@/components/site/Header.astro';
@@ -6,6 +8,10 @@ import { SITE_LANGUAGE } from '@/consts';
 import type { PageMeta } from '@/types';
 
 const { pageMeta } = Astro.props as { pageMeta: PageMeta };
+
+// Get authentication state from middleware
+// const auth = Astro.locals.auth;
+// const { userId } = auth ? auth() : { userId: null };
 ---
 
 <!doctype html>

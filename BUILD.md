@@ -121,3 +121,7 @@ playwright/.clerk/user.json \
 src/pages/{a,u}/index.astro \
 src/pages/{sign-in,sign-up}.astro \
 src/pages/test/{admin,editor,viewer}.astro
+
+update
+- astro.config.ts with clerk theme package and integration configs
+- sign, sign up, header.astro, middleware/index.ts

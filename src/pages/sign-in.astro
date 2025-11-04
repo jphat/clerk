@@ -1,0 +1,27 @@
+---
+export const prerender = false; // Required for Clerk authentication
+
+import { SignIn as ClerkSignIn } from '@clerk/astro/components';
+import { SITE_TITLE } from '@/consts';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/types';
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description: `Sign in to your account at ${SITE_TITLE} to access exclusive features and stay updated with the latest news.`,
+	// image: {},
+	// language: "en",
+	title: 'Sign In',
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<div class="container mx-auto px-4 py-8 max-w-md">
+		<ClerkSignIn
+			path="/sign-in"
+			redirectUrl="/u"
+			routing="path"
+			signUpUrl="/sign-up"
+		/>
+	</div>
+</Layout>
