@@ -125,3 +125,12 @@ src/pages/test/{admin,editor,viewer}.astro
 update
 - astro.config.ts with clerk theme package and integration configs
 - sign, sign up, header.astro, middleware/index.ts
+
+## spec kit
+
+1 /speckit.constitution - Establish project principles
+`Create principles focused on code quality, testing standards, user experience consistency, and performance requirements`
+2 /speckit.specify - Create baseline specification
+3 /speckit.plan - Create implementation plan
+4 /speckit.tasks - Generate actionable tasks
+5 /speckit.implement - Execute implementation
