@@ -1,0 +1,19 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/types';
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description:
+		'Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.',
+	// image: {},
+	// language: "en",
+	title: 'Home',
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<div class="container mt-8">
+		<h1>Welcome to Astro!</h1>
+	</div>
+</Layout>

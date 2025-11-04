@@ -1,0 +1,24 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import TitleBar from '@/components/site/TitleBar.astro';
+import type { PageMeta } from '@/types';
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description: 'The page you are looking for does not exist.',
+	// image: {},
+	// language: "en",
+	title: '404 Page Not Found',
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
+</Layout>

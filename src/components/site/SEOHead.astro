@@ -1,0 +1,75 @@
+---
+import '@/styles/global.css';
+import { Font } from 'astro:assets';
+import { SITE_EVERGREEN_IMAGE, SITE_TITLE } from '@/consts';
+
+const { pageMeta } = Astro.props;
+
+const ogImage = pageMeta.image ?? SITE_EVERGREEN_IMAGE;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+{/* Global Metadata */}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title={SITE_TITLE}
+	href={new URL('rss.xml', Astro.site)}
+/>
+<meta name="generator" content={Astro.generator} />
+
+{/* Canonical URL */}
+<link rel="canonical" href={canonicalUrl} />
+
+{/* Sitemap */}
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+{/* preload font */}
+<Font cssVariable="--font-jetbrains-mono" preload />
+
+{/* Primary Meta Tags */}
+<title>{pageMeta.title} - {SITE_TITLE}</title>
+<meta name="description" content={pageMeta.description} />
+
+{/* Open Graph / Facebook */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={pageMeta.title} />
+<meta property="og:description" content={pageMeta.description} />
+<meta property="og:image" content={ogImage.src} />
+
+{/* Twitter */}
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={pageMeta.title} />
+<meta property="twitter:description" content={pageMeta.description} />
+<meta property="twitter:image" content={ogImage.src} />
+
+{/* mode handling */}
+<script is:inline>
+	const getThemePreference = () => {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
+		}
+		return window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light';
+	};
+	const isDark = getThemePreference() === 'dark';
+	document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+
+	if (typeof localStorage !== 'undefined') {
+		const observer = new MutationObserver(() => {
+			const isDark = document.documentElement.classList.contains('dark');
+			localStorage.setItem('theme', isDark ? 'dark' : 'light');
+		});
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ['class'],
+		});
+	}
+</script>

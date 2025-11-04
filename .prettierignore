@@ -1,0 +1,99 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.output/
+.astro/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated files
+CHANGELOG.md
+TODO.md
+
+# Static assets that shouldn't be formatted
+public/**/*.svg
+public/**/*.png
+public/**/*.jpg
+public/**/*.jpeg
+public/**/*.gif
+public/**/*.ico
+public/**/*.webp
+
+# Font files
+src/assets/fonts/**/*
+**/*.ttf
+**/*.otf
+**/*.woff
+**/*.woff2
+**/*.eot
+
+# Data files
+data/**/*.json
+data/**/*.csv
+data/**/*.xml
+data/**/*.yaml
+data/**/*.yml
+
+# Database files
+db/**/*.db
+db/**/*.sqlite
+db/**/*.sqlite3
+
+# Test coverage
+tests/coverage/
+
+# Temporary files
+.tmp/
+.temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ShadCN Components
+src/components/ui/

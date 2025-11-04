@@ -1,0 +1,15 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["_", "dist"],
+	"compilerOptions": {
+		"allowJs": true,
+		"baseUrl": ".",
+		"jsx": "preserve",
+		"strictNullChecks": true, // add if using `base` template
+		"paths": {
+			"@/*": ["./src/*"],
+			"@data/*": ["./data/*"]
+		}
+	}
+}

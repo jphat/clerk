@@ -1,0 +1,46 @@
+---
+import { Slash } from 'lucide-vue-next';
+import type { TitleBar } from '@/types';
+
+const { breadcrumbs, headerClassList, title, description } =
+	Astro.props as TitleBar;
+---
+
+<header
+	class={`container space-y-4 md:space-y-8 py-8 md:py-12 ${headerClassList?.join(' ')}`}
+>
+	{
+		breadcrumbs && (
+			<nav aria-label="Breadcrumb">
+				<ol class="flex flex-wrap uppercase font-mono items-center gap-1.5 break-words sm:gap-2.5">
+					{breadcrumbs.map((crumb, index) =>
+						index < breadcrumbs.length - 1 ? (
+							<>
+								<li>
+									<a href={crumb.url}>{crumb.title}</a>
+								</li>
+								<li
+									role="presentation"
+									aria-hidden="true"
+									class="[&>svg]:size-3.5"
+								>
+									<Slash />
+								</li>
+							</>
+						) : (
+							<li>
+								<span aria-current="page">{crumb.title}</span>
+							</li>
+						),
+					)}
+				</ol>
+			</nav>
+		)
+	}
+
+	<h1 class="text-4xl md:text-6xl font-medium text-balance">
+		{title}
+	</h1>
+
+	{description && <p class="lead w-full md:w-4/5">{description}</p>}
+</header>

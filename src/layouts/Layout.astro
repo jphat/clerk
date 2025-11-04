@@ -1,0 +1,31 @@
+---
+import SEOHead from '@/components/site/SEOHead.astro';
+import Footer from '@/components/site/Footer.astro';
+import Header from '@/components/site/Header.astro';
+import { SITE_LANGUAGE } from '@/consts';
+import type { PageMeta } from '@/types';
+
+const { pageMeta } = Astro.props as { pageMeta: PageMeta };
+---
+
+<!doctype html>
+<html lang={pageMeta.language ?? SITE_LANGUAGE}>
+	<head>
+		<SEOHead pageMeta={pageMeta} />
+	</head>
+
+	<body class={pageMeta.bodyClassList ? pageMeta.bodyClassList.join(' ') : ''}>
+		<a
+			href="#main-content"
+			class="text-center bg-black text-white underline text-2xl sr-only focus:not-sr-only"
+			>skip to main content</a
+		>
+		<Header />
+
+		<main id="main-content">
+			<slot />
+		</main>
+
+		<Footer />
+	</body>
+</html>

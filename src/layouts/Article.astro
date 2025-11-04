@@ -1,0 +1,16 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/types';
+
+const { pageMeta } = Astro.props as { pageMeta: PageMeta };
+---
+
+<Layout pageMeta={pageMeta}>
+	<article>
+		<slot name="titleBar" />
+
+		<div class="container mt-8 sm:mt-12">
+			<slot />
+		</div>
+	</article></Layout
+>
