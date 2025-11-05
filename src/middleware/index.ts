@@ -32,8 +32,11 @@ export const onRequest: MiddlewareHandler = clerkMiddleware(
                 context.locals.user = {
                     id: userId,
                     email: user.emailAddresses[0]?.emailAddress || '',
+                    firstName: user.firstName || '',
+                    imageUrl: user.imageUrl || '',
+                    lastName: user.lastName || '',
+                    permissions,
                     role,
-                    permissions
                 }
 
                 // Check if the current route is protected and if user has access
@@ -47,16 +50,16 @@ export const onRequest: MiddlewareHandler = clerkMiddleware(
                 // If there's an error fetching user data, treat as unauthenticated
                 console.error('Error fetching user data:', error)
 
-                // Check if route requires authentication
-                const routeCheck = isRouteProtected(context.url.pathname, [], 'viewer')
+                // Check if route requires authentication (no role = unauthenticated)
+                const routeCheck = isRouteProtected(context.url.pathname, [])
 
                 if (!routeCheck.allowed) {
                     return context.redirect('/sign-in')
                 }
             }
         } else {
-            // For unauthenticated users, check if route requires authentication
-            const routeCheck = isRouteProtected(context.url.pathname, [], 'viewer')
+            // For unauthenticated users, check if route requires authentication (no role = unauthenticated)
+            const routeCheck = isRouteProtected(context.url.pathname, [])
 
             // If route is protected and user is not authenticated, redirect to sign-in
             if (!routeCheck.allowed) {

@@ -50,11 +50,11 @@ export const ROLE_PERMISSIONS: RoleConfig = {
  *    - Patterns are case-sensitive
  * 
  * 5. Route precedence: More specific patterns should be listed before general ones
- *    Example: '/admin/users/create' should come before '/admin/**'
+ *    Example: '/a/users/create' should come before '/a/**'
  */
 export const PROTECTED_ROUTES: RouteConfig[] = [
     // Admin-only routes (require admin role)
-    { pattern: '/admin/**', adminOnly: true },
+    { pattern: '/a/**', adminOnly: true },
 
     // Test pages for different roles (used for development/testing)
     { pattern: '/test/admin', adminOnly: true },
@@ -105,9 +105,17 @@ export const PUBLIC_ROUTES: string[] = [
  * Users just need to be logged in to access these routes
  */
 export const AUTHENTICATED_ROUTES: RouteConfig[] = [
-    { pattern: '/dashboard', permissions: [] },
-    { pattern: '/profile', permissions: [] },
-    { pattern: '/settings/account', permissions: [] }
+    // { pattern: '/u', permissions: [] },
+    // { pattern: '/profile', permissions: [] },
+    // { pattern: '/settings/account', permissions: [] },
+
+    // User area routes - require authentication only
+    { pattern: '/u{.*}', permissions: [] },
+    // { pattern: '/u/**', permissions: [] },
+
+    // Application area routes - require authentication only  
+    { pattern: '/a{.*}', permissions: [] }
+    // { pattern: '/a/**', permissions: [] }
 ]
 
 /**

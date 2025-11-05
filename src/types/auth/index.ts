@@ -27,8 +27,11 @@ export interface RoleConfig {
 export interface UserContext {
     id: string
     email: string
-    role: Role
+    firstName: string
+    imageUrl: string
+    lastName: string
     permissions: Permission[]
+    role: Role
 }
 
 /**

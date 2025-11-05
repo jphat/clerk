@@ -128,6 +128,13 @@ export const PROTECTED_ROUTES: RouteConfig[] = [
 - Patterns are case-sensitive
 - More specific patterns should be listed before general ones
 
+### Common Route Patterns
+
+- `/u/**` - User dashboard and profile areas (authentication required)
+- `/a/**` - Application-specific authenticated areas
+- `/admin/**` - Administrative functions (admin role required)
+- `/api/**` - API endpoints with various permission requirements
+
 ### Public Routes
 
 Routes that should never require authentication:
@@ -149,7 +156,9 @@ Routes that require login but no specific permissions:
 ```typescript
 export const AUTHENTICATED_ROUTES: RouteConfig[] = [
     { pattern: '/dashboard', permissions: [] },
-    { pattern: '/profile', permissions: [] }
+    { pattern: '/profile', permissions: [] },
+    { pattern: '/u/**', permissions: [] },      // User area routes
+    { pattern: '/a/**', permissions: [] }       // Application area routes
 ]
 ```
 

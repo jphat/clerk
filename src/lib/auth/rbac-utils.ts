@@ -113,15 +113,15 @@ export function isAuthenticatedRoute(pathname: string): boolean {
  * @param pathname - URL pathname to check
  * @param userPermissions - Array of user's permissions (empty array if not authenticated)
  * @param userRole - User's role (undefined if not authenticated)
- * @param isAuthenticated - Whether the user is authenticated
  * @returns RouteProtectionResult indicating if access is allowed
  */
 export function isRouteProtected(
     pathname: string,
     userPermissions: Permission[],
-    userRole?: Role,
-    isAuthenticated: boolean = false
+    userRole?: Role
 ): RouteProtectionResult {
+    // Determine if user is authenticated based on whether they have a role
+    const isAuthenticated = !!userRole
     // Check if route is explicitly public
     if (isPublicRoute(pathname)) {
         return { allowed: true }

@@ -1,0 +1,27 @@
+---
+export const prerender = false; // Required for Clerk authentication
+
+import TitleBar from '@/components/site/TitleBar.astro';
+import { SITE_TITLE } from '@/consts';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/types';
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description: `List of users on ${SITE_TITLE}`,
+	// image: {},
+	// language: "en",
+	title: `${SITE_TITLE} Users`,
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
+</Layout>

@@ -32,10 +32,6 @@ const user = Astro.locals.user;
 		<!-- Main Navigation Menu (visible when signed in) -->
 		<SignedIn>
 			<nav class="hidden md:flex items-center space-x-6">
-				<a href="/dashboard" class="text-sm font-medium hover:text-primary">
-					Dashboard
-				</a>
-
 				{
 					canWriteContent(Astro.locals) && (
 						<a
@@ -49,7 +45,7 @@ const user = Astro.locals.user;
 
 				{
 					canManageUser(Astro.locals) && (
-						<a href="/users" class="text-sm font-medium hover:text-primary">
+						<a href="/a/users" class="text-sm font-medium hover:text-primary">
 							Manage Users
 						</a>
 					)
@@ -57,8 +53,8 @@ const user = Astro.locals.user;
 
 				{
 					isAdmin(Astro.locals) && (
-						<a href="/admin" class="text-sm font-medium hover:text-primary">
-							Admin
+						<a href="/a" class="text-sm font-medium hover:text-primary">
+							Admin Dash
 						</a>
 					)
 				}
@@ -90,12 +86,12 @@ const user = Astro.locals.user;
 						}
 						{
 							canManageUser(Astro.locals) && (
-								<UserButton.Link label="Manage Users" href="/users" />
+								<UserButton.Link label="Manage Users" href="/a/users" />
 							)
 						}
 						{
 							isAdmin(Astro.locals) && (
-								<UserButton.Link label="Admin Panel" href="/admin" />
+								<UserButton.Link label="Admin Panel" href="/a" />
 							)
 						}
 					</UserButton.MenuItems>
