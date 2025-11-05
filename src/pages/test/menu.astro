@@ -1,0 +1,442 @@
+---
+/**
+ * Test page for PermissionMenu component
+ *
+ * This page demonstrates the permission-aware menu functionality
+ * with different user roles and permission levels.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import PermissionMenu from '@/components/auth/PermissionMenu.astro';
+import MenuExample from '@/components/auth/MenuExample.astro';
+import AdvancedMenuExample from '@/components/auth/AdvancedMenuExample.astro';
+import type { MenuItem } from '@/types/auth';
+
+// Example menu configurations for testing
+const mainMenu: MenuItem[] = [
+	{
+		label: 'Dashboard',
+		href: '/dashboard',
+		// No permissions - visible to all authenticated users
+	},
+	{
+		label: 'Content Management',
+		href: '/content',
+		permissions: ['write_content', 'edit_content'],
+		children: [
+			{
+				label: 'Create Article',
+				href: '/content/create',
+				permissions: ['write_content'],
+			},
+			{
+				label: 'Edit Articles',
+				href: '/content/edit',
+				permissions: ['edit_content'],
+			},
+			{
+				label: 'Draft Articles',
+				href: '/content/drafts',
+				permissions: ['write_content'],
+			},
+		],
+	},
+	{
+		label: 'User Management',
+		href: '/admin/users',
+		permissions: ['manage_user'],
+		children: [
+			{
+				label: 'View Users',
+				href: '/admin/users/list',
+				permissions: ['manage_user'],
+			},
+			{
+				label: 'Add User',
+				href: '/admin/users/create',
+				permissions: ['manage_user'],
+			},
+			{
+				label: 'User Roles',
+				href: '/admin/users/roles',
+				permissions: ['manage_user'],
+			},
+		],
+	},
+	{
+		label: 'Settings',
+		href: '/settings',
+		// No permissions - visible to all authenticated users
+	},
+];
+
+const editorMenu: MenuItem[] = [
+	{
+		label: 'My Content',
+		href: '/my-content',
+		permissions: ['write_content', 'edit_content'],
+	},
+	{
+		label: 'Publishing',
+		href: '/publish',
+		permissions: ['edit_content'],
+		children: [
+			{
+				label: 'Review Queue',
+				href: '/publish/review',
+				permissions: ['edit_content'],
+			},
+			{
+				label: 'Published',
+				href: '/publish/published',
+				permissions: ['edit_content'],
+			},
+		],
+	},
+];
+
+const publicMenu: MenuItem[] = [
+	{
+		label: 'Home',
+		href: '/',
+	},
+	{
+		label: 'About',
+		href: '/about',
+	},
+	{
+		label: 'Contact',
+		href: '/contact',
+	},
+];
+---
+
+<Layout title="Permission Menu Test">
+	<main class="container">
+		<h1>Permission Menu Component Test</h1>
+
+		<div class="test-section">
+			<h2>Main Navigation Menu</h2>
+			<p>
+				This menu shows different items based on your current role and
+				permissions:
+			</p>
+			<div class="menu-container">
+				<PermissionMenu items={mainMenu} className="main-nav" />
+			</div>
+		</div>
+
+		<div class="test-section">
+			<h2>Editor-Specific Menu</h2>
+			<p>This menu is designed for content editors:</p>
+			<div class="menu-container">
+				<PermissionMenu items={editorMenu} className="editor-nav" />
+			</div>
+		</div>
+
+		<div class="test-section">
+			<h2>Public Menu (No Permissions Required)</h2>
+			<p>This menu is visible to all users, including unauthenticated ones:</p>
+			<div class="menu-container">
+				<PermissionMenu items={publicMenu} className="public-nav" />
+			</div>
+		</div>
+
+		<div class="test-section">
+			<h2>Menu Example Component</h2>
+			<p>This demonstrates the pre-configured menu example:</p>
+			<MenuExample />
+		</div>
+
+		<div class="test-section">
+			<h2>Advanced Menu Examples</h2>
+			<p>
+				Complex menu configurations with nested permissions and detailed
+				analysis:
+			</p>
+			<AdvancedMenuExample />
+		</div>
+
+		<div class="test-section">
+			<h2>Current User Context</h2>
+			<p>Your current authentication and permission status:</p>
+			<div class="user-context">
+				{
+					Astro.locals.user ? (
+						<div class="authenticated">
+							<p>
+								<strong>Status:</strong> Authenticated
+							</p>
+							<p>
+								<strong>Role:</strong> {Astro.locals.user.role}
+							</p>
+							<p>
+								<strong>Permissions:</strong>{' '}
+								{Astro.locals.user.permissions.length > 0
+									? Astro.locals.user.permissions.join(', ')
+									: 'None'}
+							</p>
+							<p>
+								<strong>User ID:</strong> {Astro.locals.user.id}
+							</p>
+						</div>
+					) : (
+						<div class="unauthenticated">
+							<p>
+								<strong>Status:</strong> Not authenticated
+							</p>
+							<p>Sign in to see role-based menu filtering in action.</p>
+							<a href="/sign-in" class="auth-link">
+								Sign In
+							</a>
+						</div>
+					)
+				}
+			</div>
+		</div>
+
+		<div class="test-section">
+			<h2>Test Different Roles</h2>
+			<p>
+				Visit these pages to see how the interface adapts to different
+				permission levels:
+			</p>
+			<div class="role-test-grid">
+				<div class="role-test-card">
+					<h3>Admin Test Page</h3>
+					<p>Full administrative access with all permissions</p>
+					<ul>
+						<li>✅ User management</li>
+						<li>✅ Content creation</li>
+						<li>✅ Content editing</li>
+						<li>✅ System settings</li>
+					</ul>
+					<a href="/test/admin" class="test-link admin">Visit Admin Page</a>
+				</div>
+				<div class="role-test-card">
+					<h3>Editor Test Page</h3>
+					<p>Content management permissions</p>
+					<ul>
+						<li>❌ User management</li>
+						<li>✅ Content creation</li>
+						<li>✅ Content editing</li>
+						<li>❌ System settings</li>
+					</ul>
+					<a href="/test/editor" class="test-link editor">Visit Editor Page</a>
+				</div>
+				<div class="role-test-card">
+					<h3>Viewer Test Page</h3>
+					<p>Read-only access with no special permissions</p>
+					<ul>
+						<li>❌ User management</li>
+						<li>❌ Content creation</li>
+						<li>❌ Content editing</li>
+						<li>❌ System settings</li>
+					</ul>
+					<a href="/test/viewer" class="test-link viewer">Visit Viewer Page</a>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
+
+	.test-section {
+		margin-bottom: 3rem;
+		padding: 1.5rem;
+		border: 1px solid #e0e0e0;
+		border-radius: 0.5rem;
+		background-color: #f9f9f9;
+	}
+
+	.test-section h2 {
+		margin-top: 0;
+		color: #333;
+		border-bottom: 2px solid #007bff;
+		padding-bottom: 0.5rem;
+	}
+
+	.menu-container {
+		background-color: white;
+		border: 1px solid #ddd;
+		border-radius: 0.25rem;
+		padding: 1rem;
+		margin-top: 1rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	:global(.main-nav),
+	:global(.editor-nav),
+	:global(.public-nav) {
+		font-family:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	}
+
+	:global(.main-nav .menu-link) {
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	:global(.editor-nav) {
+		background-color: #f8f9fa;
+	}
+
+	:global(.public-nav .menu-link) {
+		color: #007bff;
+	}
+
+	ul {
+		list-style-type: disc;
+		margin-left: 1.5rem;
+	}
+
+	ul li {
+		margin-bottom: 0.5rem;
+	}
+
+	ul a {
+		color: #007bff;
+		text-decoration: none;
+	}
+
+	ul a:hover {
+		text-decoration: underline;
+	}
+
+	.user-context {
+		background: #f8f9fa;
+		padding: 1.5rem;
+		border-radius: 0.5rem;
+		border: 1px solid #dee2e6;
+		margin-top: 1rem;
+	}
+
+	.authenticated {
+		color: #155724;
+		background: #d4edda;
+		padding: 1rem;
+		border-radius: 0.25rem;
+		border: 1px solid #c3e6cb;
+	}
+
+	.unauthenticated {
+		color: #721c24;
+		background: #f8d7da;
+		padding: 1rem;
+		border-radius: 0.25rem;
+		border: 1px solid #f5c6cb;
+	}
+
+	.auth-link {
+		display: inline-block;
+		margin-top: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: #007bff;
+		color: white;
+		text-decoration: none;
+		border-radius: 0.25rem;
+		font-weight: 500;
+	}
+
+	.auth-link:hover {
+		background: #0056b3;
+		text-decoration: none;
+	}
+
+	.role-test-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		margin-top: 1rem;
+	}
+
+	.role-test-card {
+		background: white;
+		border: 1px solid #dee2e6;
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.role-test-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+	}
+
+	.role-test-card h3 {
+		margin-top: 0;
+		margin-bottom: 0.5rem;
+		color: #333;
+		font-size: 1.2rem;
+	}
+
+	.role-test-card p {
+		color: #666;
+		margin-bottom: 1rem;
+		font-size: 0.9rem;
+	}
+
+	.role-test-card ul {
+		list-style: none;
+		margin: 0 0 1.5rem 0;
+		padding: 0;
+	}
+
+	.role-test-card li {
+		margin-bottom: 0.25rem;
+		font-size: 0.85rem;
+		padding: 0.25rem 0;
+	}
+
+	.test-link {
+		display: block;
+		text-align: center;
+		padding: 0.75rem 1rem;
+		border-radius: 0.25rem;
+		text-decoration: none;
+		font-weight: 500;
+		transition: background-color 0.2s ease;
+	}
+
+	.test-link.admin {
+		background: #dc3545;
+		color: white;
+	}
+
+	.test-link.admin:hover {
+		background: #c82333;
+	}
+
+	.test-link.editor {
+		background: #28a745;
+		color: white;
+	}
+
+	.test-link.editor:hover {
+		background: #218838;
+	}
+
+	.test-link.viewer {
+		background: #6c757d;
+		color: white;
+	}
+
+	.test-link.viewer:hover {
+		background: #545b62;
+	}
+
+	/* Responsive design */
+	@media (max-width: 768px) {
+		.role-test-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

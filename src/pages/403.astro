@@ -1,15 +1,18 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import TitleBar from '@/components/site/TitleBar.astro';
+import { Button } from '@/components/ui/button';
 import type { PageMeta } from '@/types';
 
 const pageMeta: PageMeta = {
 	bodyClassList: [],
 	description: 'You do not have permission to access this page.',
-	// image: {},
-	// language: "en",
 	title: '403 Access Denied',
 };
+
+// Get user context from middleware
+const user = Astro.locals.user;
+const isAuthenticated = !!user;
 ---
 
 <Layout pageMeta={pageMeta}>
@@ -21,4 +24,147 @@ const pageMeta: PageMeta = {
 		description={pageMeta.description}
 		title={pageMeta.title}
 	/>
+
+	<div class="container mx-auto px-4 py-8 max-w-2xl">
+		<div class="text-center space-y-6">
+			<!-- Error Icon -->
+			<div
+				class="mx-auto w-24 h-24 bg-red-100 rounded-full flex items-center justify-center"
+			>
+				<svg
+					class="w-12 h-12 text-red-600"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+					></path>
+				</svg>
+			</div>
+
+			<!-- Main Message -->
+			<div class="space-y-2">
+				<h1 class="text-3xl font-bold text-gray-900">Access Denied</h1>
+				<p class="text-lg text-gray-600">
+					You don't have permission to access this page.
+				</p>
+			</div>
+
+			<!-- Contextual Information -->
+			<div class="bg-gray-50 rounded-lg p-4 text-left">
+				{
+					isAuthenticated ? (
+						<div class="space-y-2">
+							<p class="text-sm text-gray-700">
+								<strong>Current Role:</strong> {user.role}
+							</p>
+							<p class="text-sm text-gray-700">
+								<strong>Your Permissions:</strong>
+								{user.permissions.length > 0
+									? user.permissions.join(', ')
+									: 'None'}
+							</p>
+							<p class="text-sm text-gray-500 mt-3">
+								If you believe you should have access to this page, please
+								contact your administrator.
+							</p>
+						</div>
+					) : (
+						<div class="space-y-2">
+							<p class="text-sm text-gray-700">
+								You are not currently signed in. Some pages require
+								authentication and specific permissions.
+							</p>
+							<p class="text-sm text-gray-500">
+								Please sign in to access protected content.
+							</p>
+						</div>
+					)
+				}
+			</div>
+
+			<!-- Navigation Options -->
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<Button client:load>
+					<a href="/" class="flex items-center gap-2">
+						<svg
+							class="w-4 h-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+							></path>
+						</svg>
+						Go Home
+					</a>
+				</Button>
+
+				{
+					!isAuthenticated && (
+						<Button variant="outline" client:load>
+							<a href="/sign-in" class="flex items-center gap-2">
+								<svg
+									class="w-4 h-4"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+									/>
+								</svg>
+								Sign In
+							</a>
+						</Button>
+					)
+				}
+
+				<Button variant="ghost" client:load>
+					<button onclick="history.back()" class="flex items-center gap-2">
+						<svg
+							class="w-4 h-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+						</svg>
+						Go Back
+					</button>
+				</Button>
+			</div>
+
+			<!-- Help Section -->
+			<div class="border-t pt-6 mt-8">
+				<h3 class="text-lg font-semibold text-gray-900 mb-3">Need Help?</h3>
+				<div class="text-sm text-gray-600 space-y-2">
+					<p>If you're experiencing issues with page access:</p>
+					<ul
+						class="list-disc list-inside space-y-1 text-left max-w-md mx-auto"
+					>
+						<li>Verify you're signed in with the correct account</li>
+						<li>Check if your account has the necessary permissions</li>
+						<li>Contact your administrator if you need additional access</li>
+						<li>Try refreshing the page or clearing your browser cache</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </Layout>

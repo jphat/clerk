@@ -26,3 +26,13 @@ export type TitleBar = {
 	title: string;
 	description?: string;
 };
+
+// Re-export auth types for convenience
+export type {
+	Role,
+	Permission,
+	RoleConfig,
+	UserContext,
+	MenuItem,
+	RouteConfig
+} from './auth';

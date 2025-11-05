@@ -1,6 +1,13 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import type { PageMeta } from '@/types';
+import {
+	canWriteContent,
+	canEditContent,
+	canManageUser,
+	isAdmin,
+	hasRole,
+} from '@/lib/auth/template-utils';
 
 const pageMeta: PageMeta = {
 	bodyClassList: [],
@@ -10,10 +17,150 @@ const pageMeta: PageMeta = {
 	// language: "en",
 	title: 'Home',
 };
+
+const user = Astro.locals.user;
 ---
 
 <Layout pageMeta={pageMeta}>
 	<div class="container mt-8">
 		<h1>Welcome to Astro!</h1>
+
+		{
+			user ? (
+				<div class="mt-6 space-y-4">
+					<div class="bg-card p-6 rounded-lg border">
+						<h2 class="text-xl font-semibold mb-2">
+							Welcome back, {user.email}!
+						</h2>
+						<p class="text-muted-foreground mb-4">
+							You are logged in as:{' '}
+							<span class="font-medium capitalize">{user.role}</span>
+						</p>
+
+						<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+							{canWriteContent(Astro.locals) && (
+								<div class="bg-primary/10 p-4 rounded-lg">
+									<h3 class="font-medium text-primary">Content Creation</h3>
+									<p class="text-sm text-muted-foreground mt-1">
+										You can create new content
+									</p>
+									<a
+										href="/content/create"
+										class="text-sm text-primary hover:underline mt-2 inline-block"
+									>
+										Create Content →
+									</a>
+								</div>
+							)}
+
+							{canEditContent(Astro.locals) && (
+								<div class="bg-secondary/50 p-4 rounded-lg">
+									<h3 class="font-medium">Content Editing</h3>
+									<p class="text-sm text-muted-foreground mt-1">
+										You can edit existing content
+									</p>
+									<a
+										href="/content/edit"
+										class="text-sm text-primary hover:underline mt-2 inline-block"
+									>
+										Edit Content →
+									</a>
+								</div>
+							)}
+
+							{canManageUser(Astro.locals) && (
+								<div class="bg-accent/50 p-4 rounded-lg">
+									<h3 class="font-medium">User Management</h3>
+									<p class="text-sm text-muted-foreground mt-1">
+										You can manage users and permissions
+									</p>
+									<a
+										href="/users"
+										class="text-sm text-primary hover:underline mt-2 inline-block"
+									>
+										Manage Users →
+									</a>
+								</div>
+							)}
+
+							{isAdmin(Astro.locals) && (
+								<div class="bg-destructive/10 p-4 rounded-lg border-destructive/20 border">
+									<h3 class="font-medium text-destructive">Admin Access</h3>
+									<p class="text-sm text-muted-foreground mt-1">
+										You have full administrative privileges
+									</p>
+									<a
+										href="/admin"
+										class="text-sm text-destructive hover:underline mt-2 inline-block"
+									>
+										Admin Panel →
+									</a>
+								</div>
+							)}
+						</div>
+
+						{hasRole(Astro.locals, 'viewer') &&
+							!canWriteContent(Astro.locals) && (
+								<div class="mt-4 p-4 bg-muted rounded-lg">
+									<p class="text-sm text-muted-foreground">
+										You currently have viewer access. Contact an administrator
+										to request additional permissions.
+									</p>
+								</div>
+							)}
+					</div>
+
+					<div class="bg-card p-6 rounded-lg border">
+						<h3 class="text-lg font-medium mb-3">Quick Actions</h3>
+						<div class="flex flex-wrap gap-2">
+							<a
+								href="/u"
+								class="inline-flex items-center px-3 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+							>
+								Dashboard
+							</a>
+							<a
+								href="/test/menu"
+								class="inline-flex items-center px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80"
+							>
+								Test Menu
+							</a>
+							{isAdmin(Astro.locals) && (
+								<a
+									href="/test/admin"
+									class="inline-flex items-center px-3 py-2 text-sm bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90"
+								>
+									Admin Test
+								</a>
+							)}
+						</div>
+					</div>
+				</div>
+			) : (
+				<div class="mt-6">
+					<div class="bg-card p-6 rounded-lg border text-center">
+						<h2 class="text-xl font-semibold mb-2">Get Started</h2>
+						<p class="text-muted-foreground mb-4">
+							Sign in to access personalized content and features based on your
+							role.
+						</p>
+						<div class="space-x-2">
+							<a
+								href="/sign-in"
+								class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+							>
+								Sign In
+							</a>
+							<a
+								href="/sign-up"
+								class="inline-flex items-center px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80"
+							>
+								Sign Up
+							</a>
+						</div>
+					</div>
+				</div>
+			)
+		}
 	</div>
 </Layout>

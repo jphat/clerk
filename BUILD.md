@@ -141,9 +141,7 @@ touch src/types/auth/index.ts
     2.1 /speckit.clarify (optional) - Ask structured questions to de-risk ambiguous areas before planning
 3 /speckit.plan - Create implementation plan
     3.1 /speckit.checklist (optional) - Generate quality checklists to validate requirements completeness, clarity, and consistency
-
-
-
 4 /speckit.tasks - Generate actionable tasks
     4.1 /speckit.analyze (optional) - Cross-artifact consistency & alignment report
 5 /speckit.implement - Execute implementation
+`/speckit.implement all tasks. admin should get all permissions. where necessary, use these env variables for testing: CLERK_TEST_EMAIL, CLERK_TEST_EMAIL_CODE, CLERK_TEST_PASSWORD, CLERK_TEST_ADMIN, CLERK_TEST_ADMINPASSWORD, CLERK_TEST_EDITOR, CLERK_TEST_EDITORPASSWORD, CLERK_TEST_VIEWER, CLERK_TEST_VIEWERPASSWORD`

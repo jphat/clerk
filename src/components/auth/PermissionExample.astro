@@ -1,0 +1,99 @@
+---
+/**
+ * Example component demonstrating template utility usage
+ *
+ * This component shows how to use the RBAC template utilities
+ * for conditional rendering based on user permissions and roles.
+ */
+
+import {
+	canWriteContent,
+	canEditContent,
+	canManageUser,
+	hasRole,
+	isAdmin,
+	isAuthenticated,
+} from '@/lib/auth';
+
+// Get user context from Astro locals
+const userCanWrite = canWriteContent(Astro.locals);
+const userCanEdit = canEditContent(Astro.locals);
+const userCanManage = canManageUser(Astro.locals);
+const userIsAdmin = isAdmin(Astro.locals);
+const userIsEditor = hasRole(Astro.locals, 'editor');
+const userIsAuthenticated = isAuthenticated(Astro.locals);
+---
+
+<div class="permission-example">
+	<h2>Permission-Based Content</h2>
+
+	{
+		userIsAuthenticated ? (
+			<div>
+				<p>Welcome, authenticated user!</p>
+
+				{userCanWrite && <button type="button">Create New Content</button>}
+
+				{userCanEdit && <button type="button">Edit Content</button>}
+
+				{userCanManage && <button type="button">Manage Users</button>}
+
+				{userIsAdmin && (
+					<div class="admin-panel">
+						<h3>Admin Panel</h3>
+						<p>Admin-only content visible here</p>
+					</div>
+				)}
+
+				{userIsEditor && (
+					<div class="editor-tools">
+						<h3>Editor Tools</h3>
+						<p>Editor-specific tools available</p>
+					</div>
+				)}
+			</div>
+		) : (
+			<div>
+				<p>Please sign in to access content.</p>
+				<a href="/sign-in">Sign In</a>
+			</div>
+		)
+	}
+</div>
+
+<style>
+	.permission-example {
+		padding: 1rem;
+		border: 1px solid #ccc;
+		border-radius: 0.5rem;
+		margin: 1rem 0;
+	}
+
+	.admin-panel {
+		background-color: #f0f8ff;
+		padding: 1rem;
+		border-radius: 0.25rem;
+		margin: 0.5rem 0;
+	}
+
+	.editor-tools {
+		background-color: #f5f5f5;
+		padding: 1rem;
+		border-radius: 0.25rem;
+		margin: 0.5rem 0;
+	}
+
+	button {
+		margin: 0.25rem;
+		padding: 0.5rem 1rem;
+		background-color: #007bff;
+		color: white;
+		border: none;
+		border-radius: 0.25rem;
+		cursor: pointer;
+	}
+
+	button:hover {
+		background-color: #0056b3;
+	}
+</style>

@@ -26,4 +26,13 @@
     "editor.minimap.enabled": false,
     "terminal.integrated.fontSize": 14,
     "terminal.integrated.lineHeight": 2,
+    "kiroAgent.trustedCommands": [
+        "git branch --list",
+        "git fetch --all --prune",
+        "git ls-remote --heads origin",
+        "npm run build",
+        "npm run check",
+        "npm run test",
+        "npx tsc --noEmit",
+    ],
 }

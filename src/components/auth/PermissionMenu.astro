@@ -1,0 +1,179 @@
+---
+/**
+ * Permission-aware Menu Component
+ *
+ * This component renders navigation menus with permission-based filtering.
+ * Menu items are only shown if the user has the required permissions.
+ * Supports nested menu items with permission inheritance.
+ */
+
+import type { MenuItem } from '@/types/auth';
+import {
+	hasAnyPermissionTemplate as hasAnyPermission,
+	isAuthenticated,
+} from '@/lib/auth';
+
+interface Props {
+	items: MenuItem[];
+	className?: string;
+	nested?: boolean;
+}
+
+const { items, className = '', nested = false } = Astro.props;
+const user = Astro.locals.user;
+
+/**
+ * Determine if a menu item should be shown based on user permissions
+ *
+ * @param item - Menu item to check
+ * @returns True if the menu item should be displayed
+ */
+function shouldShowMenuItem(item: MenuItem): boolean {
+	// If no permissions are specified, show to all authenticated users
+	if (!item.permissions || item.permissions.length === 0) {
+		return isAuthenticated(Astro.locals);
+	}
+
+	// If user is not authenticated, hide the item
+	if (!user) {
+		return false;
+	}
+
+	// Check if user has any of the required permissions
+	return hasAnyPermission(Astro.locals, item.permissions);
+}
+
+/**
+ * Filter menu items and their children based on permissions
+ *
+ * @param menuItems - Array of menu items to filter
+ * @returns Filtered array of menu items
+ */
+function filterMenuItems(menuItems: MenuItem[]): MenuItem[] {
+	return menuItems
+		.filter(shouldShowMenuItem)
+		.map((item) => {
+			// If item has children, recursively filter them
+			if (item.children && item.children.length > 0) {
+				const filteredChildren = filterMenuItems(item.children);
+				return {
+					...item,
+					children: filteredChildren,
+				};
+			}
+			return item;
+		})
+		.filter((item) => {
+			// Remove parent items that have no visible children
+			if (item.children) {
+				return item.children.length > 0 || shouldShowMenuItem(item);
+			}
+			return true;
+		});
+}
+
+// Filter the menu items based on user permissions
+const visibleItems = filterMenuItems(items);
+---
+
+{
+	visibleItems.length > 0 && (
+		<nav class={`permission-menu ${className} ${nested ? 'nested' : ''}`}>
+			<ul class="menu-list">
+				{visibleItems.map((item) => (
+					<li class="menu-item">
+						<a href={item.href} class="menu-link" aria-label={item.label}>
+							{item.label}
+						</a>
+
+						{item.children && item.children.length > 0 && (
+							<Astro.self
+								items={item.children}
+								nested={true}
+								className="submenu"
+							/>
+						)}
+					</li>
+				))}
+			</ul>
+		</nav>
+	)
+}
+
+<style>
+	.permission-menu {
+		display: block;
+	}
+
+	.menu-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.menu-item {
+		position: relative;
+	}
+
+	.menu-link {
+		display: block;
+		padding: 0.75rem 1rem;
+		text-decoration: none;
+		color: inherit;
+		transition: background-color 0.2s ease;
+	}
+
+	.menu-link:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+	}
+
+	.menu-link:focus {
+		outline: 2px solid #007bff;
+		outline-offset: -2px;
+	}
+
+	/* Nested menu styling */
+	.nested {
+		margin-left: 1rem;
+		border-left: 1px solid #e0e0e0;
+	}
+
+	.nested .menu-link {
+		padding-left: 1.5rem;
+		font-size: 0.9em;
+		color: #666;
+	}
+
+	.nested .menu-link:hover {
+		background-color: rgba(0, 0, 0, 0.03);
+		color: #333;
+	}
+
+	/* Submenu indicator */
+	.menu-item:has(.submenu) > .menu-link::after {
+		content: '▼';
+		float: right;
+		font-size: 0.8em;
+		color: #999;
+		transition: transform 0.2s ease;
+	}
+
+	.menu-item:hover:has(.submenu) > .menu-link::after {
+		transform: rotate(180deg);
+	}
+
+	/* Responsive design */
+	@media (max-width: 768px) {
+		.menu-link {
+			padding: 0.5rem 0.75rem;
+		}
+
+		.nested {
+			margin-left: 0.5rem;
+		}
+
+		.nested .menu-link {
+			padding-left: 1rem;
+		}
+	}
+</style>

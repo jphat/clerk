@@ -1,8 +1,9 @@
 ---
+import { Debug } from 'astro:components';
+
 import Layout from '@/layouts/Layout.astro';
 import TitleBar from '@/components/site/TitleBar.astro';
 import type { PageMeta } from '@/types';
-
 const user = (Astro.locals as any).user;
 
 const pageMeta: PageMeta = {
@@ -15,6 +16,7 @@ const pageMeta: PageMeta = {
 ---
 
 <Layout pageMeta={pageMeta}>
+	<Debug data={user} />
 	<TitleBar
 		breadcrumbs={[
 			{ title: 'Home', url: '/' },

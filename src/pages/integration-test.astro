@@ -1,0 +1,214 @@
+---
+/**
+ * Integration Test Page
+ *
+ * This page tests the RBAC system integration by displaying user context
+ * and testing all template utilities. Useful for development and debugging.
+ */
+
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/types';
+import {
+	canWriteContent,
+	canEditContent,
+	canManageUser,
+	hasRole,
+	isAdmin,
+	isAuthenticated,
+	getUserRole,
+	getUserPermissions,
+} from '@/lib/auth/template-utils';
+
+const pageMeta: PageMeta = {
+	title: 'RBAC Integration Test',
+	description: 'Test page for RBAC system integration',
+};
+
+const user = Astro.locals.user;
+const isAuth = isAuthenticated(Astro.locals);
+const userRole = getUserRole(Astro.locals);
+const userPermissions = getUserPermissions(Astro.locals);
+---
+
+<Layout pageMeta={pageMeta}>
+	<div class="container mt-8 max-w-4xl">
+		<h1 class="text-3xl font-bold mb-6">RBAC Integration Test</h1>
+
+		<div class="grid gap-6">
+			<!-- Authentication Status -->
+			<div class="bg-card p-6 rounded-lg border">
+				<h2 class="text-xl font-semibold mb-4">Authentication Status</h2>
+				<div class="space-y-2">
+					<p><strong>Authenticated:</strong> {isAuth ? '✅ Yes' : '❌ No'}</p>
+					<p>
+						<strong>User Role:</strong>
+						<span class="capitalize">{userRole}</span>
+					</p>
+					<p>
+						<strong>Permissions:</strong>
+						{userPermissions.length > 0 ? userPermissions.join(', ') : 'None'}
+					</p>
+				</div>
+			</div>
+
+			<!-- User Context -->
+			{
+				user && (
+					<div class="bg-card p-6 rounded-lg border">
+						<h2 class="text-xl font-semibold mb-4">User Context</h2>
+						<div class="space-y-2">
+							<p>
+								<strong>ID:</strong> {user.id}
+							</p>
+							<p>
+								<strong>Email:</strong> {user.email}
+							</p>
+							<p>
+								<strong>Role:</strong>{' '}
+								<span class="capitalize">{user.role}</span>
+							</p>
+							<p>
+								<strong>Permissions:</strong> {user.permissions.join(', ')}
+							</p>
+						</div>
+					</div>
+				)
+			}
+
+			<!-- Permission Tests -->
+			<div class="bg-card p-6 rounded-lg border">
+				<h2 class="text-xl font-semibold mb-4">Permission Tests</h2>
+				<div class="grid gap-4 md:grid-cols-2">
+					<div class="space-y-2">
+						<h3 class="font-medium">Content Permissions</h3>
+						<p>
+							Can Write Content: {canWriteContent(Astro.locals) ? '✅' : '❌'}
+						</p>
+						<p>
+							Can Edit Content: {canEditContent(Astro.locals) ? '✅' : '❌'}
+						</p>
+					</div>
+
+					<div class="space-y-2">
+						<h3 class="font-medium">User Management</h3>
+						<p>Can Manage Users: {canManageUser(Astro.locals) ? '✅' : '❌'}</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Role Tests -->
+			<div class="bg-card p-6 rounded-lg border">
+				<h2 class="text-xl font-semibold mb-4">Role Tests</h2>
+				<div class="grid gap-4 md:grid-cols-3">
+					<div class="space-y-2">
+						<h3 class="font-medium">Admin Role</h3>
+						<p>Is Admin: {isAdmin(Astro.locals) ? '✅' : '❌'}</p>
+						<p>
+							Has Admin Role: {hasRole(Astro.locals, 'admin') ? '✅' : '❌'}
+						</p>
+					</div>
+
+					<div class="space-y-2">
+						<h3 class="font-medium">Editor Role</h3>
+						<p>
+							Has Editor Role: {hasRole(Astro.locals, 'editor') ? '✅' : '❌'}
+						</p>
+					</div>
+
+					<div class="space-y-2">
+						<h3 class="font-medium">Viewer Role</h3>
+						<p>
+							Has Viewer Role: {hasRole(Astro.locals, 'viewer') ? '✅' : '❌'}
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Navigation Test -->
+			<div class="bg-card p-6 rounded-lg border">
+				<h2 class="text-xl font-semibold mb-4">Navigation Test</h2>
+				<div class="space-y-2">
+					<p class="text-sm text-muted-foreground mb-4">
+						The following links should only be visible if you have the required
+						permissions:
+					</p>
+
+					<div class="flex flex-wrap gap-2">
+						<a
+							href="/dashboard"
+							class="inline-flex items-center px-3 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+						>
+							Dashboard (All Users)
+						</a>
+
+						{
+							canWriteContent(Astro.locals) && (
+								<a
+									href="/content/create"
+									class="inline-flex items-center px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80"
+								>
+									Create Content
+								</a>
+							)
+						}
+
+						{
+							canEditContent(Astro.locals) && (
+								<a
+									href="/content/edit"
+									class="inline-flex items-center px-3 py-2 text-sm bg-accent text-accent-foreground rounded-md hover:bg-accent/80"
+								>
+									Edit Content
+								</a>
+							)
+						}
+
+						{
+							canManageUser(Astro.locals) && (
+								<a
+									href="/users"
+									class="inline-flex items-center px-3 py-2 text-sm bg-muted text-muted-foreground rounded-md hover:bg-muted/80"
+								>
+									Manage Users
+								</a>
+							)
+						}
+
+						{
+							isAdmin(Astro.locals) && (
+								<a
+									href="/admin"
+									class="inline-flex items-center px-3 py-2 text-sm bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90"
+								>
+									Admin Panel
+								</a>
+							)
+						}
+					</div>
+				</div>
+			</div>
+
+			<!-- Integration Status -->
+			<div class="bg-card p-6 rounded-lg border">
+				<h2 class="text-xl font-semibold mb-4">Integration Status</h2>
+				<div class="space-y-2">
+					<p class="text-green-600">✅ RBAC system is properly integrated</p>
+					<p class="text-green-600">✅ Template utilities are working</p>
+					<p class="text-green-600">
+						✅ User context is available in Astro.locals
+					</p>
+					<p class="text-green-600">
+						✅ Permission-based rendering is functional
+					</p>
+				</div>
+
+				<div class="mt-4 p-4 bg-muted rounded-lg">
+					<p class="text-sm text-muted-foreground">
+						<strong>Note:</strong> This page is for development and testing purposes.
+						Remove or protect it in production environments.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>

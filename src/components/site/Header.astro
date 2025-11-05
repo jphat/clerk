@@ -7,6 +7,14 @@ import {
 	SignInButton,
 	SignedOut,
 } from '@clerk/astro/components';
+import {
+	canManageUser,
+	isAdmin,
+	canWriteContent,
+} from '@/lib/auth/template-utils';
+
+// Get user context from locals
+const user = Astro.locals.user;
 ---
 
 <header
@@ -23,7 +31,38 @@ import {
 
 		<!-- Main Navigation Menu (visible when signed in) -->
 		<SignedIn>
-			<!-- main menu -->
+			<nav class="hidden md:flex items-center space-x-6">
+				<a href="/dashboard" class="text-sm font-medium hover:text-primary">
+					Dashboard
+				</a>
+
+				{
+					canWriteContent(Astro.locals) && (
+						<a
+							href="/content/create"
+							class="text-sm font-medium hover:text-primary"
+						>
+							Create Content
+						</a>
+					)
+				}
+
+				{
+					canManageUser(Astro.locals) && (
+						<a href="/users" class="text-sm font-medium hover:text-primary">
+							Manage Users
+						</a>
+					)
+				}
+
+				{
+					isAdmin(Astro.locals) && (
+						<a href="/admin" class="text-sm font-medium hover:text-primary">
+							Admin
+						</a>
+					)
+				}
+			</nav>
 		</SignedIn>
 
 		<!-- Authentication Section -->
@@ -39,9 +78,26 @@ import {
 					}}
 					userProfileMode="modal"
 				>
-					<!-- userProfileUrl="/u/dashboard" -->
 					<UserButton.MenuItems>
 						<UserButton.Link label="Dashboard" href="/u" />
+						{
+							canWriteContent(Astro.locals) && (
+								<UserButton.Link
+									label="Create Content"
+									href="/content/create"
+								/>
+							)
+						}
+						{
+							canManageUser(Astro.locals) && (
+								<UserButton.Link label="Manage Users" href="/users" />
+							)
+						}
+						{
+							isAdmin(Astro.locals) && (
+								<UserButton.Link label="Admin Panel" href="/admin" />
+							)
+						}
 					</UserButton.MenuItems>
 				</UserButton>
 			</SignedIn>

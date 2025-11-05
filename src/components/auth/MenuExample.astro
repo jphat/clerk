@@ -1,0 +1,92 @@
+---
+/**
+ * Example usage of the PermissionMenu component
+ *
+ * This demonstrates how to configure and use the permission-aware menu
+ * with various permission requirements and nested menu structures.
+ */
+
+import PermissionMenu from './PermissionMenu.astro';
+import type { MenuItem } from '@/types/auth';
+
+// Example menu configuration with permission requirements
+const menuItems: MenuItem[] = [
+	{
+		label: 'Home',
+		href: '/',
+		// No permissions required - visible to all authenticated users
+	},
+	{
+		label: 'Content',
+		href: '/content',
+		permissions: ['write_content', 'edit_content'], // Visible to editors and admins
+		children: [
+			{
+				label: 'Create New',
+				href: '/content/create',
+				permissions: ['write_content'],
+			},
+			{
+				label: 'Edit Existing',
+				href: '/content/edit',
+				permissions: ['edit_content'],
+			},
+			{
+				label: 'View All',
+				href: '/content/list',
+				permissions: ['write_content', 'edit_content'],
+			},
+		],
+	},
+	{
+		label: 'Administration',
+		href: '/admin',
+		permissions: ['manage_user'], // Admin only
+		children: [
+			{
+				label: 'User Management',
+				href: '/admin/users',
+				permissions: ['manage_user'],
+			},
+			{
+				label: 'System Settings',
+				href: '/admin/settings',
+				permissions: ['manage_user'],
+			},
+		],
+	},
+	{
+		label: 'Profile',
+		href: '/profile',
+		// No permissions required - visible to all authenticated users
+	},
+];
+---
+
+<div class="menu-example">
+	<h3>Navigation Menu</h3>
+	<PermissionMenu items={menuItems} className="main-navigation" />
+</div>
+
+<style>
+	.menu-example {
+		max-width: 300px;
+		border: 1px solid #ddd;
+		border-radius: 0.5rem;
+		padding: 1rem;
+		background-color: #f9f9f9;
+	}
+
+	.menu-example h3 {
+		margin-top: 0;
+		margin-bottom: 1rem;
+		color: #333;
+		font-size: 1.1rem;
+	}
+
+	:global(.main-navigation) {
+		background-color: white;
+		border-radius: 0.25rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+</style>
