@@ -137,7 +137,10 @@ touch src/types/auth/index.ts
 1 /speckit.constitution - Establish project principles
 `Create principles focused on code quality, testing standards, user experience consistency, and performance requirements`
 2 /speckit.specify - Create baseline specification
-`add mvp rbac functionality. use miniminal, well-documented code to promote maintenability. clerk authenticated users will have one role either, admin, editor, or viewer. start with three permissions: write_content, edit_content, manage_user. admins have all permissions. editors can write and edit content. menu items have a permission array to make sure it's only viewable by users with correct permissions. middleware should include logic to check if user has correct permissions before accessing a URL, otherwise redirect to 403. use Astro locals in middleware to store user data so they are accessible app wide.`
+`add mvp rbac functionality. use miniminal, well-documented code to promote maintenability. clerk authenticated users will have one role either, admin, editor, or viewer. flexible permissions, start with three: write_content, edit_content, manage_user. include utiliies to allow in-template conditional rendering, e.g.: canWriteContent, canEditContent, canManageUser. middleware should include list of proteced and admin routes. menu items have a permissions array that will render based on the user's permissions. use Astro locals in middleware to store user data so they are accessible app wide.`
+
+
+
     2.1 /speckit.clarify (optional) - Ask structured questions to de-risk ambiguous areas before planning
 3 /speckit.plan - Create implementation plan
     3.1 /speckit.checklist (optional) - Generate quality checklists to validate requirements completeness, clarity, and consistency

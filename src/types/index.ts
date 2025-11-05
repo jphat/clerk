@@ -3,6 +3,7 @@ export type NavItem = {
 	description?: string;
 	href: string;
 	icon?: string;
+	permissions?: string[];
 	title: string;
 };
 
