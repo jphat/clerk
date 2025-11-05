@@ -39,7 +39,7 @@ import { canWriteContent, isAdmin } from '@/lib/auth/template-utils'
 )}
 
 {isAdmin(Astro.locals) && (
-  <a href="/admin">Admin Dashboard</a>
+  <a href="/a">Admin Dashboard</a>
 )}
 ```
 
@@ -106,7 +106,7 @@ Edit `src/lib/auth/rbac-config.ts` to add new protected routes:
 ```typescript
 export const PROTECTED_ROUTES: RouteConfig[] = [
     // Admin-only route
-    { pattern: '/admin/settings', adminOnly: true },
+    { pattern: '/a/settings', adminOnly: true },
     
     // Permission-based route (user needs ANY of the listed permissions)
     { pattern: '/content/create', permissions: ['write_content'] },
@@ -115,7 +115,7 @@ export const PROTECTED_ROUTES: RouteConfig[] = [
     { pattern: '/content/manage', permissions: ['write_content', 'edit_content'] },
     
     // Wildcard patterns
-    { pattern: '/admin/**', adminOnly: true },
+    { pattern: '/a/**', adminOnly: true },
     { pattern: '/api/content/**', permissions: ['write_content', 'edit_content'] }
 ]
 ```
@@ -131,8 +131,7 @@ export const PROTECTED_ROUTES: RouteConfig[] = [
 ### Common Route Patterns
 
 - `/u/**` - User dashboard and profile areas (authentication required)
-- `/a/**` - Application-specific authenticated areas
-- `/admin/**` - Administrative functions (admin role required)
+- `/a/**` - Admin-only application areas (admin role required)
 - `/api/**` - API endpoints with various permission requirements
 
 ### Public Routes
@@ -157,8 +156,12 @@ Routes that require login but no specific permissions:
 export const AUTHENTICATED_ROUTES: RouteConfig[] = [
     { pattern: '/dashboard', permissions: [] },
     { pattern: '/profile', permissions: [] },
-    { pattern: '/u/**', permissions: [] },      // User area routes
-    { pattern: '/a/**', permissions: [] }       // Application area routes
+    { pattern: '/u/**', permissions: [] }       // User area routes
+]
+
+export const PROTECTED_ROUTES: RouteConfig[] = [
+    { pattern: '/a', adminOnly: true },         // Admin area root
+    { pattern: '/a/**', adminOnly: true }       // Admin area routes
 ]
 ```
 
@@ -200,7 +203,7 @@ const user = Astro.locals.user
 )}
 
 {hasRole(Astro.locals, 'admin') && (
-    <a href="/admin">Admin Panel</a>
+    <a href="/a">Admin Panel</a>
 )}
 
 {isAdmin(Astro.locals) && (
@@ -287,7 +290,7 @@ const menuItems = [
     { label: 'Home', href: '/' },
     { label: 'Create Content', href: '/content/create', permissions: ['write_content'] },
     { label: 'Edit Content', href: '/content/edit', permissions: ['edit_content'] },
-    { label: 'Admin Panel', href: '/admin', permissions: ['manage_user'] }
+    { label: 'Admin Panel', href: '/a', permissions: ['manage_user'] }
 ]
 ---
 
@@ -318,7 +321,7 @@ const menuItems = [
     },
     { 
       label: 'Administration', 
-      href: '/admin',
+      href: '/a',
       permissions: ['manage_user'] // Only users with manage_user permission
     }
 ]
@@ -473,7 +476,7 @@ export function canManageOwnContent(locals: App.Locals, contentAuthorId: string)
 
 Use the test pages to verify role-based access:
 
-- `/test/admin` - Admin only
+- `/test/a` - Admin only
 - `/test/editor` - Editor permissions required
 - `/test/viewer` - Any authenticated user
 
@@ -544,7 +547,7 @@ The 403 error page shows current user role and permissions for debugging.
 
 ### Testing Permissions
 
-1. **Use Test Pages**: Visit `/test/admin`, `/test/editor`, `/test/viewer` to test role access
+1. **Use Test Pages**: Visit `/test/a`, `/test/editor`, `/test/viewer` to test role access
 2. **Browser DevTools**: Inspect `Astro.locals.user` in server-side context
 3. **Console Logging**: Add temporary logging in middleware or components:
 

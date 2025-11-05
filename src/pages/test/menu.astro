@@ -43,22 +43,22 @@ const mainMenu: MenuItem[] = [
 	},
 	{
 		label: 'User Management',
-		href: '/admin/users',
+		href: '/a/users',
 		permissions: ['manage_user'],
 		children: [
 			{
 				label: 'View Users',
-				href: '/admin/users/list',
+				href: '/a/users/list',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'Add User',
-				href: '/admin/users/create',
+				href: '/a/users/create',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'User Roles',
-				href: '/admin/users/roles',
+				href: '/a/users/roles',
 				permissions: ['manage_user'],
 			},
 		],
@@ -211,7 +211,7 @@ const publicMenu: MenuItem[] = [
 						<li>✅ Content editing</li>
 						<li>✅ System settings</li>
 					</ul>
-					<a href="/test/admin" class="test-link admin">Visit Admin Page</a>
+					<a href="/test/a" class="test-link admin">Visit Admin Page</a>
 				</div>
 				<div class="role-test-card">
 					<h3>Editor Test Page</h3>

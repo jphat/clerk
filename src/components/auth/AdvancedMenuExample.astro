@@ -67,56 +67,56 @@ const complexMenu: MenuItem[] = [
 	},
 	{
 		label: 'Administration',
-		href: '/admin',
+		href: '/a',
 		permissions: ['manage_user'], // Admin only section
 		children: [
 			{
 				label: 'User Management',
-				href: '/admin/users',
+				href: '/a/users',
 				permissions: ['manage_user'],
 				children: [
 					{
 						label: 'Active Users',
-						href: '/admin/users/active',
+						href: '/a/users/active',
 						permissions: ['manage_user'],
 					},
 					{
 						label: 'Pending Registrations',
-						href: '/admin/users/pending',
+						href: '/a/users/pending',
 						permissions: ['manage_user'],
 					},
 					{
 						label: 'Role Assignments',
-						href: '/admin/users/roles',
+						href: '/a/users/roles',
 						permissions: ['manage_user'],
 					},
 				],
 			},
 			{
 				label: 'System Configuration',
-				href: '/admin/config',
+				href: '/a/config',
 				permissions: ['manage_user'],
 				children: [
 					{
 						label: 'General Settings',
-						href: '/admin/config/general',
+						href: '/a/config/general',
 						permissions: ['manage_user'],
 					},
 					{
 						label: 'Security Settings',
-						href: '/admin/config/security',
+						href: '/a/config/security',
 						permissions: ['manage_user'],
 					},
 					{
 						label: 'Integration Settings',
-						href: '/admin/config/integrations',
+						href: '/a/config/integrations',
 						permissions: ['manage_user'],
 					},
 				],
 			},
 			{
 				label: 'System Monitoring',
-				href: '/admin/monitoring',
+				href: '/a/monitoring',
 				permissions: ['manage_user'],
 			},
 		],
@@ -216,7 +216,7 @@ const roleBasedMenu: MenuItem[] = [
 	},
 	{
 		label: 'Admin Zone',
-		href: '/admin',
+		href: '/a',
 		permissions: ['manage_user'],
 	},
 ];

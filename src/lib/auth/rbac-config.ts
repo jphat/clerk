@@ -35,7 +35,7 @@ export const ROLE_PERMISSIONS: RoleConfig = {
  * Route Protection Patterns:
  * 
  * 1. Admin-only routes: Use `adminOnly: true` for routes that require admin role
- *    Example: { pattern: '/admin/**', adminOnly: true }
+ *    Example: { pattern: '/a/**', adminOnly: true }
  * 
  * 2. Permission-based routes: Use `permissions: [...]` for routes requiring specific permissions
  *    Example: { pattern: '/content/create', permissions: ['write_content'] }
@@ -54,10 +54,11 @@ export const ROLE_PERMISSIONS: RoleConfig = {
  */
 export const PROTECTED_ROUTES: RouteConfig[] = [
     // Admin-only routes (require admin role)
-    { pattern: '/a/**', adminOnly: true },
+    { pattern: '/a', adminOnly: true },        // Exact /a route
+    { pattern: '/a/**', adminOnly: true },     // All /a/* routes
 
     // Test pages for different roles (used for development/testing)
-    { pattern: '/test/admin', adminOnly: true },
+    { pattern: '/test/a', adminOnly: true },
     { pattern: '/test/editor', permissions: ['write_content', 'edit_content'] },
     { pattern: '/test/viewer', permissions: [] }, // Authenticated users only
 
@@ -68,12 +69,12 @@ export const PROTECTED_ROUTES: RouteConfig[] = [
     { pattern: '/content/delete/**', permissions: ['edit_content'] },
 
     // User management routes
-    { pattern: '/users/**', permissions: ['manage_user'] },
-    { pattern: '/users/profile/edit', permissions: ['manage_user'] },
-    { pattern: '/users/roles/**', adminOnly: true },
+    { pattern: '/a/users/**', permissions: ['manage_user'] },
+    { pattern: '/a/users/profile/edit', permissions: ['manage_user'] },
+    { pattern: '/a/users/roles/**', adminOnly: true },
 
     // API routes (if needed for future API endpoints)
-    { pattern: '/api/admin/**', adminOnly: true },
+    { pattern: '/api/a/**', adminOnly: true },
     { pattern: '/api/content/**', permissions: ['write_content', 'edit_content'] },
     { pattern: '/api/users/**', permissions: ['manage_user'] },
 
@@ -105,17 +106,15 @@ export const PUBLIC_ROUTES: string[] = [
  * Users just need to be logged in to access these routes
  */
 export const AUTHENTICATED_ROUTES: RouteConfig[] = [
-    // { pattern: '/u', permissions: [] },
-    // { pattern: '/profile', permissions: [] },
-    // { pattern: '/settings/account', permissions: [] },
+    { pattern: '/dashboard', permissions: [] },
+    { pattern: '/profile', permissions: [] },
+    { pattern: '/settings/account', permissions: [] },
 
     // User area routes - require authentication only
-    { pattern: '/u{.*}', permissions: [] },
-    // { pattern: '/u/**', permissions: [] },
+    { pattern: '/u', permissions: [] },
+    { pattern: '/u/**', permissions: [] }
 
-    // Application area routes - require authentication only  
-    { pattern: '/a{.*}', permissions: [] }
-    // { pattern: '/a/**', permissions: [] }
+    // Note: /a/** routes are admin-only and configured in PROTECTED_ROUTES
 ]
 
 /**

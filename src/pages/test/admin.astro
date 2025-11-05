@@ -40,76 +40,76 @@ const adminAccess = isAdmin(Astro.locals);
 const adminMenu: MenuItem[] = [
 	{
 		label: 'Dashboard',
-		href: '/admin/dashboard',
+		href: '/a/dashboard',
 		permissions: ['manage_user'],
 	},
 	{
 		label: 'User Management',
-		href: '/admin/users',
+		href: '/a/users',
 		permissions: ['manage_user'],
 		children: [
 			{
 				label: 'View All Users',
-				href: '/admin/users/list',
+				href: '/a/users/list',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'Create User',
-				href: '/admin/users/create',
+				href: '/a/users/create',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'User Roles',
-				href: '/admin/users/roles',
+				href: '/a/users/roles',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'Permissions',
-				href: '/admin/users/permissions',
+				href: '/a/users/permissions',
 				permissions: ['manage_user'],
 			},
 		],
 	},
 	{
 		label: 'Content Management',
-		href: '/admin/content',
+		href: '/a/content',
 		permissions: ['edit_content', 'write_content'],
 		children: [
 			{
 				label: 'All Content',
-				href: '/admin/content/all',
+				href: '/a/content/all',
 				permissions: ['edit_content'],
 			},
 			{
 				label: 'Pending Review',
-				href: '/admin/content/pending',
+				href: '/a/content/pending',
 				permissions: ['edit_content'],
 			},
 			{
 				label: 'Published',
-				href: '/admin/content/published',
+				href: '/a/content/published',
 				permissions: ['edit_content'],
 			},
 		],
 	},
 	{
 		label: 'System Settings',
-		href: '/admin/settings',
+		href: '/a/settings',
 		permissions: ['manage_user'],
 		children: [
 			{
 				label: 'General',
-				href: '/admin/settings/general',
+				href: '/a/settings/general',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'Security',
-				href: '/admin/settings/security',
+				href: '/a/settings/security',
 				permissions: ['manage_user'],
 			},
 			{
 				label: 'Integrations',
-				href: '/admin/settings/integrations',
+				href: '/a/settings/integrations',
 				permissions: ['manage_user'],
 			},
 		],
