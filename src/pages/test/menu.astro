@@ -11,6 +11,13 @@ import PermissionMenu from '@/components/auth/PermissionMenu.astro';
 import MenuExample from '@/components/auth/MenuExample.astro';
 import AdvancedMenuExample from '@/components/auth/AdvancedMenuExample.astro';
 import type { MenuItem } from '@/types/auth';
+import type { PageMeta } from '@/types';
+
+const pageMeta: PageMeta = {
+	title: 'Permission Menu Test',
+	description:
+		'Test page for permission-aware menu functionality with different user roles and permission levels.',
+};
 
 // Example menu configurations for testing
 const mainMenu: MenuItem[] = [
@@ -111,82 +118,122 @@ const publicMenu: MenuItem[] = [
 ];
 ---
 
-<Layout title="Permission Menu Test">
-	<main class="container">
-		<h1>Permission Menu Component Test</h1>
+<Layout pageMeta={pageMeta}>
+	<div class="max-w-6xl mx-auto p-8">
+		<h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">
+			Permission Menu Component Test
+		</h1>
 
-		<div class="test-section">
-			<h2>Main Navigation Menu</h2>
-			<p>
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Main Navigation Menu
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
 				This menu shows different items based on your current role and
 				permissions:
 			</p>
-			<div class="menu-container">
+			<!-- <div class="bg-foreground/10 border rounded p-4 mt-4 shadow-sm"> -->
+			<div class="bg-foreground/5 border rounded p-4 mt-4 shadow-sm">
 				<PermissionMenu items={mainMenu} className="main-nav" />
 			</div>
 		</div>
 
-		<div class="test-section">
-			<h2>Editor-Specific Menu</h2>
-			<p>This menu is designed for content editors:</p>
-			<div class="menu-container">
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Editor-Specific Menu
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
+				This menu is designed for content editors:
+			</p>
+			<div class="bg-foreground/5 border rounded p-4 mt-4 shadow-sm">
 				<PermissionMenu items={editorMenu} className="editor-nav" />
 			</div>
 		</div>
 
-		<div class="test-section">
-			<h2>Public Menu (No Permissions Required)</h2>
-			<p>This menu is visible to all users, including unauthenticated ones:</p>
-			<div class="menu-container">
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Public Menu (No Permissions Required)
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
+				This menu is visible to all users, including unauthenticated ones:
+			</p>
+			<div class="bg-foreground/5 border rounded p-4 mt-4 shadow-sm">
 				<PermissionMenu items={publicMenu} className="public-nav" />
 			</div>
 		</div>
 
-		<div class="test-section">
-			<h2>Menu Example Component</h2>
-			<p>This demonstrates the pre-configured menu example:</p>
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Menu Example Component
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
+				This demonstrates the pre-configured menu example:
+			</p>
 			<MenuExample />
 		</div>
 
-		<div class="test-section">
-			<h2>Advanced Menu Examples</h2>
-			<p>
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Advanced Menu Examples
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
 				Complex menu configurations with nested permissions and detailed
 				analysis:
 			</p>
 			<AdvancedMenuExample />
 		</div>
 
-		<div class="test-section">
-			<h2>Current User Context</h2>
-			<p>Your current authentication and permission status:</p>
-			<div class="user-context">
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Current User Context
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
+				Your current authentication and permission status:
+			</p>
+			<div class="bg-foreground/5 p-6 rounded-lg border mt-4">
 				{
 					Astro.locals.user ? (
-						<div class="authenticated">
-							<p>
+						<div class="text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900/30 p-4 rounded border border-green-300 dark:border-green-700">
+							<p class="mb-2">
 								<strong>Status:</strong> Authenticated
 							</p>
-							<p>
+							<p class="mb-2">
 								<strong>Role:</strong> {Astro.locals.user.role}
 							</p>
-							<p>
+							<p class="mb-2">
 								<strong>Permissions:</strong>{' '}
 								{Astro.locals.user.permissions.length > 0
 									? Astro.locals.user.permissions.join(', ')
 									: 'None'}
 							</p>
-							<p>
+							<p class="mb-0">
 								<strong>User ID:</strong> {Astro.locals.user.id}
 							</p>
 						</div>
 					) : (
-						<div class="unauthenticated">
-							<p>
+						<div class="text-red-800 dark:text-red-200 bg-red-100 dark:bg-red-900/30 p-4 rounded border border-red-300 dark:border-red-700">
+							<p class="mb-2">
 								<strong>Status:</strong> Not authenticated
 							</p>
-							<p>Sign in to see role-based menu filtering in action.</p>
-							<a href="/sign-in" class="auth-link">
+							<p class="mb-4">
+								Sign in to see role-based menu filtering in action.
+							</p>
+							<a
+								href="/sign-in"
+								class="inline-block mt-2 px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white no-underline rounded font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+							>
 								Sign In
 							</a>
 						</div>
@@ -195,248 +242,111 @@ const publicMenu: MenuItem[] = [
 			</div>
 		</div>
 
-		<div class="test-section">
-			<h2>Test Different Roles</h2>
-			<p>
+		<div class="mb-12 p-6 border rounded-lg">
+			<h2
+				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
+			>
+				Test Different Roles
+			</h2>
+			<p class="mb-4 text-gray-700 dark:text-gray-300">
 				Visit these pages to see how the interface adapts to different
 				permission levels:
 			</p>
-			<div class="role-test-grid">
-				<div class="role-test-card">
-					<h3>Admin Test Page</h3>
-					<p>Full administrative access with all permissions</p>
-					<ul>
-						<li>✅ User management</li>
-						<li>✅ Content creation</li>
-						<li>✅ Content editing</li>
-						<li>✅ System settings</li>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+				<div
+					class="bg-foreground/10 border rounded-lg p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-lg"
+				>
+					<h3
+						class="mt-0 mb-2 text-gray-800 dark:text-gray-200 text-lg font-semibold"
+					>
+						Admin Test Page
+					</h3>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+						Full administrative access with all permissions
+					</p>
+					<ul class="list-none m-0 mb-6 p-0">
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ User management
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ Content creation
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ Content editing
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ System settings
+						</li>
 					</ul>
-					<a href="/test/a" class="test-link admin">Visit Admin Page</a>
+					<a
+						href="/test/a"
+						class="block text-center px-4 py-3 rounded no-underline font-medium transition-colors bg-red-500 dark:bg-red-600 text-white hover:bg-red-600 dark:hover:bg-red-700"
+						>Visit Admin Page</a
+					>
 				</div>
-				<div class="role-test-card">
-					<h3>Editor Test Page</h3>
-					<p>Content management permissions</p>
-					<ul>
-						<li>❌ User management</li>
-						<li>✅ Content creation</li>
-						<li>✅ Content editing</li>
-						<li>❌ System settings</li>
+				<div
+					class="bg-foreground/10 border rounded-lg p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-lg"
+				>
+					<h3
+						class="mt-0 mb-2 text-gray-800 dark:text-gray-200 text-lg font-semibold"
+					>
+						Editor Test Page
+					</h3>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+						Content management permissions
+					</p>
+					<ul class="list-none m-0 mb-6 p-0">
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ User management
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ Content creation
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							✅ Content editing
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ System settings
+						</li>
 					</ul>
-					<a href="/test/editor" class="test-link editor">Visit Editor Page</a>
+					<a
+						href="/test/editor"
+						class="block text-center px-4 py-3 rounded no-underline font-medium transition-colors bg-green-500 dark:bg-green-600 text-white hover:bg-green-600 dark:hover:bg-green-700"
+						>Visit Editor Page</a
+					>
 				</div>
-				<div class="role-test-card">
-					<h3>Viewer Test Page</h3>
-					<p>Read-only access with no special permissions</p>
-					<ul>
-						<li>❌ User management</li>
-						<li>❌ Content creation</li>
-						<li>❌ Content editing</li>
-						<li>❌ System settings</li>
+				<div
+					class="bg-foreground/10 border rounded-lg p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-lg"
+				>
+					<h3
+						class="mt-0 mb-2 text-gray-800 dark:text-gray-200 text-lg font-semibold"
+					>
+						Viewer Test Page
+					</h3>
+					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
+						Read-only access with no special permissions
+					</p>
+					<ul class="list-none m-0 mb-6 p-0">
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ User management
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ Content creation
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ Content editing
+						</li>
+						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
+							❌ System settings
+						</li>
 					</ul>
-					<a href="/test/viewer" class="test-link viewer">Visit Viewer Page</a>
+					<a
+						href="/test/viewer"
+						class="block text-center px-4 py-3 rounded no-underline font-medium transition-colors bg-gray-500 dark:bg-gray-600 text-white hover:bg-gray-600 dark:hover:bg-gray-700"
+						>Visit Viewer Page</a
+					>
 				</div>
 			</div>
 		</div>
-	</main>
+	</div>
 </Layout>
-
-<style>
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-
-	.test-section {
-		margin-bottom: 3rem;
-		padding: 1.5rem;
-		border: 1px solid #e0e0e0;
-		border-radius: 0.5rem;
-		background-color: #f9f9f9;
-	}
-
-	.test-section h2 {
-		margin-top: 0;
-		color: #333;
-		border-bottom: 2px solid #007bff;
-		padding-bottom: 0.5rem;
-	}
-
-	.menu-container {
-		background-color: white;
-		border: 1px solid #ddd;
-		border-radius: 0.25rem;
-		padding: 1rem;
-		margin-top: 1rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	:global(.main-nav),
-	:global(.editor-nav),
-	:global(.public-nav) {
-		font-family:
-			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	}
-
-	:global(.main-nav .menu-link) {
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	:global(.editor-nav) {
-		background-color: #f8f9fa;
-	}
-
-	:global(.public-nav .menu-link) {
-		color: #007bff;
-	}
-
-	ul {
-		list-style-type: disc;
-		margin-left: 1.5rem;
-	}
-
-	ul li {
-		margin-bottom: 0.5rem;
-	}
-
-	ul a {
-		color: #007bff;
-		text-decoration: none;
-	}
-
-	ul a:hover {
-		text-decoration: underline;
-	}
-
-	.user-context {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-		margin-top: 1rem;
-	}
-
-	.authenticated {
-		color: #155724;
-		background: #d4edda;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #c3e6cb;
-	}
-
-	.unauthenticated {
-		color: #721c24;
-		background: #f8d7da;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #f5c6cb;
-	}
-
-	.auth-link {
-		display: inline-block;
-		margin-top: 0.5rem;
-		padding: 0.5rem 1rem;
-		background: #007bff;
-		color: white;
-		text-decoration: none;
-		border-radius: 0.25rem;
-		font-weight: 500;
-	}
-
-	.auth-link:hover {
-		background: #0056b3;
-		text-decoration: none;
-	}
-
-	.role-test-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1.5rem;
-		margin-top: 1rem;
-	}
-
-	.role-test-card {
-		background: white;
-		border: 1px solid #dee2e6;
-		border-radius: 0.5rem;
-		padding: 1.5rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
-	}
-
-	.role-test-card:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-	}
-
-	.role-test-card h3 {
-		margin-top: 0;
-		margin-bottom: 0.5rem;
-		color: #333;
-		font-size: 1.2rem;
-	}
-
-	.role-test-card p {
-		color: #666;
-		margin-bottom: 1rem;
-		font-size: 0.9rem;
-	}
-
-	.role-test-card ul {
-		list-style: none;
-		margin: 0 0 1.5rem 0;
-		padding: 0;
-	}
-
-	.role-test-card li {
-		margin-bottom: 0.25rem;
-		font-size: 0.85rem;
-		padding: 0.25rem 0;
-	}
-
-	.test-link {
-		display: block;
-		text-align: center;
-		padding: 0.75rem 1rem;
-		border-radius: 0.25rem;
-		text-decoration: none;
-		font-weight: 500;
-		transition: background-color 0.2s ease;
-	}
-
-	.test-link.admin {
-		background: #dc3545;
-		color: white;
-	}
-
-	.test-link.admin:hover {
-		background: #c82333;
-	}
-
-	.test-link.editor {
-		background: #28a745;
-		color: white;
-	}
-
-	.test-link.editor:hover {
-		background: #218838;
-	}
-
-	.test-link.viewer {
-		background: #6c757d;
-		color: white;
-	}
-
-	.test-link.viewer:hover {
-		background: #545b62;
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.role-test-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

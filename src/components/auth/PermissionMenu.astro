@@ -78,12 +78,23 @@ const visibleItems = filterMenuItems(items);
 
 {
 	visibleItems.length > 0 && (
-		<nav class={`permission-menu ${className} ${nested ? 'nested' : ''}`}>
-			<ul class="menu-list">
+		<nav
+			class={`block ${className} ${nested ? 'ml-4 border-l bg-foreground/20' : ''}`}
+		>
+			<ul class="list-none m-0 p-0">
 				{visibleItems.map((item) => (
-					<li class="menu-item">
-						<a href={item.href} class="menu-link" aria-label={item.label}>
+					<li class="relative">
+						<a
+							href={item.href}
+							class={`block px-4 py-3 no-underline text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-colors ${nested ? 'pl-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200' : ''}`}
+							aria-label={item.label}
+						>
 							{item.label}
+							{item.children && item.children.length > 0 && (
+								<span class="float-right text-xs text-gray-400 dark:text-gray-500 transition-transform duration-200 hover:rotate-180">
+									▼
+								</span>
+							)}
 						</a>
 
 						{item.children && item.children.length > 0 && (
@@ -99,81 +110,3 @@ const visibleItems = filterMenuItems(items);
 		</nav>
 	)
 }
-
-<style>
-	.permission-menu {
-		display: block;
-	}
-
-	.menu-list {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.menu-item {
-		position: relative;
-	}
-
-	.menu-link {
-		display: block;
-		padding: 0.75rem 1rem;
-		text-decoration: none;
-		color: inherit;
-		transition: background-color 0.2s ease;
-	}
-
-	.menu-link:hover {
-		background-color: rgba(0, 0, 0, 0.05);
-	}
-
-	.menu-link:focus {
-		outline: 2px solid #007bff;
-		outline-offset: -2px;
-	}
-
-	/* Nested menu styling */
-	.nested {
-		margin-left: 1rem;
-		border-left: 1px solid #e0e0e0;
-	}
-
-	.nested .menu-link {
-		padding-left: 1.5rem;
-		font-size: 0.9em;
-		color: #666;
-	}
-
-	.nested .menu-link:hover {
-		background-color: rgba(0, 0, 0, 0.03);
-		color: #333;
-	}
-
-	/* Submenu indicator */
-	.menu-item:has(.submenu) > .menu-link::after {
-		content: '▼';
-		float: right;
-		font-size: 0.8em;
-		color: #999;
-		transition: transform 0.2s ease;
-	}
-
-	.menu-item:hover:has(.submenu) > .menu-link::after {
-		transform: rotate(180deg);
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.menu-link {
-			padding: 0.5rem 0.75rem;
-		}
-
-		.nested {
-			margin-left: 0.5rem;
-		}
-
-		.nested .menu-link {
-			padding-left: 1rem;
-		}
-	}
-</style>

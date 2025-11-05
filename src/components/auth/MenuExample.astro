@@ -63,30 +63,9 @@ const menuItems: MenuItem[] = [
 ];
 ---
 
-<div class="menu-example">
-	<h3>Navigation Menu</h3>
-	<PermissionMenu items={menuItems} className="main-navigation" />
+<div class="max-w-sm border rounded-lg p-4 bg-foreground/5">
+	<h3 class="mt-0 mb-4 text-lg font-medium">Navigation Menu</h3>
+	<div class="bg-foreground/10 rounded shadow-sm">
+		<PermissionMenu items={menuItems} className="main-navigation" />
+	</div>
 </div>
-
-<style>
-	.menu-example {
-		max-width: 300px;
-		border: 1px solid #ddd;
-		border-radius: 0.5rem;
-		padding: 1rem;
-		background-color: #f9f9f9;
-	}
-
-	.menu-example h3 {
-		margin-top: 0;
-		margin-bottom: 1rem;
-		color: #333;
-		font-size: 1.1rem;
-	}
-
-	:global(.main-navigation) {
-		background-color: white;
-		border-radius: 0.25rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-</style>

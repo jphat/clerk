@@ -222,23 +222,27 @@ const roleBasedMenu: MenuItem[] = [
 ];
 ---
 
-<div class="advanced-menu-example">
-	<div class="example-section">
-		<h3>Current User Context</h3>
-		<div class="user-status">
+<div class="w-full">
+	<div class="mb-8 p-6 border rounded-lg bg-foreground/5">
+		<h3
+			class="mt-0 mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2"
+		>
+			Current User Context
+		</h3>
+		<div class="bg-foreground/10 p-4 rounded border">
 			{
 				authenticated ? (
-					<div class="status-info">
-						<p>
+					<div class="text-green-800 dark:text-green-200">
+						<p class="mb-2">
 							<strong>Role:</strong> {userRole}
 						</p>
-						<p>
+						<p class="mb-0">
 							<strong>Permissions:</strong>{' '}
 							{userPermissions.length > 0 ? userPermissions.join(', ') : 'None'}
 						</p>
 					</div>
 				) : (
-					<p class="not-authenticated">
+					<p class="text-red-800 dark:text-red-200 italic m-0">
 						Not authenticated - menus will show public items only
 					</p>
 				)
@@ -246,244 +250,147 @@ const roleBasedMenu: MenuItem[] = [
 		</div>
 	</div>
 
-	<div class="example-section">
-		<h3>Complex Multi-Level Menu</h3>
-		<p>This menu demonstrates nested permissions and complex hierarchies:</p>
-		<div class="menu-container complex">
+	<div class="mb-8 p-6 border rounded-lg bg-foreground/5">
+		<h3
+			class="mt-0 mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2"
+		>
+			Complex Multi-Level Menu
+		</h3>
+		<p class="mb-4 text-gray-700 dark:text-gray-300">
+			This menu demonstrates nested permissions and complex hierarchies:
+		</p>
+		<div
+			class="bg-foreground/10 border rounded p-0 mt-4 shadow-sm max-h-96 overflow-y-auto"
+		>
 			<PermissionMenu items={complexMenu} className="complex-navigation" />
 		</div>
 	</div>
 
-	<div class="example-section">
-		<h3>Role-Based Simple Menu</h3>
-		<p>This menu shows clear role-based access patterns:</p>
-		<div class="menu-container simple">
+	<div class="mb-8 p-6 border rounded-lg bg-foreground/5">
+		<h3
+			class="mt-0 mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2"
+		>
+			Role-Based Simple Menu
+		</h3>
+		<p class="mb-4 text-gray-700 dark:text-gray-300">
+			This menu shows clear role-based access patterns:
+		</p>
+		<div
+			class="bg-foreground/10 border rounded p-0 mt-4 shadow-sm overflow-hidden"
+		>
 			<PermissionMenu items={roleBasedMenu} className="role-navigation" />
 		</div>
 	</div>
 
-	<div class="example-section">
-		<h3>Permission Analysis</h3>
-		<p>Here's how the menus are filtered based on your current permissions:</p>
-		<div class="permission-analysis">
-			<div class="analysis-grid">
-				<div class="analysis-item">
-					<h4>Total Menu Items</h4>
-					<p class="metric">
+	<div class="mb-8 p-6 border rounded-lg bg-foreground/5">
+		<h3
+			class="mt-0 mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2"
+		>
+			Permission Analysis
+		</h3>
+		<p class="mb-4 text-gray-700 dark:text-gray-300">
+			Here's how the menus are filtered based on your current permissions:
+		</p>
+		<div class="bg-foreground/10 p-4 rounded border mt-4">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div
+					class="text-center p-4 bg-foreground/15 rounded border border-gray-200 dark:border-gray-500"
+				>
+					<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-sm">
+						Total Menu Items
+					</h4>
+					<p class="text-2xl font-bold text-blue-500 dark:text-blue-400 m-0">
 						{
 							complexMenu.length +
 								complexMenu.flatMap((item) => item.children || []).length
 						}
 					</p>
 				</div>
-				<div class="analysis-item">
-					<h4>Your Permissions</h4>
-					<p class="metric">{userPermissions.length}</p>
+				<div
+					class="text-center p-4 bg-foreground/15 rounded border border-gray-200 dark:border-gray-500"
+				>
+					<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-sm">
+						Your Permissions
+					</h4>
+					<p class="text-2xl font-bold text-blue-500 dark:text-blue-400 m-0">
+						{userPermissions.length}
+					</p>
 				</div>
-				<div class="analysis-item">
-					<h4>Accessible Items</h4>
-					<p class="metric">Varies by menu</p>
+				<div
+					class="text-center p-4 bg-foreground/15 rounded border border-gray-200 dark:border-gray-500"
+				>
+					<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-sm">
+						Accessible Items
+					</h4>
+					<p class="text-2xl font-bold text-blue-500 dark:text-blue-400 m-0">
+						Varies by menu
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="example-section">
-		<h3>Menu Behavior Examples</h3>
-		<div class="behavior-examples">
-			<div class="behavior-item">
-				<h4>No Permissions Required</h4>
-				<p>
+	<p>
+		:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	</p>
+
+	<div class="mb-8 p-6 border rounded-lg bg-foreground/5">
+		<h3
+			class="mt-0 mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2"
+		>
+			Menu Behavior Examples
+		</h3>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+			<div class="bg-foreground/10 p-4 rounded border">
+				<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-base">
+					No Permissions Required
+				</h4>
+				<p class="m-0 mb-2 text-sm text-gray-600 dark:text-gray-400">
 					Items like "Dashboard" and "Help" are visible to all authenticated
 					users
 				</p>
-				<code>// No permissions array specified</code>
+				<code
+					class="block bg-foreground/15 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500"
+					>// No permissions array specified</code
+				>
 			</div>
-			<div class="behavior-item">
-				<h4>Single Permission</h4>
-				<p>
+			<div class="bg-foreground/10 p-4 rounded border">
+				<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-base">
+					Single Permission
+				</h4>
+				<p class="m-0 mb-2 text-sm text-gray-600 dark:text-gray-400">
 					Items requiring one specific permission (e.g., "manage_user" for
 					admin)
 				</p>
-				<code>permissions: ['manage_user']</code>
-			</div>
-			<div class="behavior-item">
-				<h4>Multiple Permissions (OR)</h4>
-				<p>Items visible if user has ANY of the listed permissions</p>
-				<code>permissions: ['write_content', 'edit_content']</code>
-			</div>
-			<div class="behavior-item">
-				<h4>Nested Permission Inheritance</h4>
-				<p>Child items can have different permissions than their parents</p>
 				<code
+					class="block bg-foreground/15 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500"
+					>permissions: ['manage_user']</code
+				>
+			</div>
+			<div class="bg-foreground/10 p-4 rounded border">
+				<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-base">
+					Multiple Permissions (OR)
+				</h4>
+				<p class="m-0 mb-2 text-sm text-gray-600 dark:text-gray-400">
+					Items visible if user has ANY of the listed permissions
+				</p>
+				<code
+					class="block bg-foreground/15 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500"
+					>permissions: ['write_content', 'edit_content']</code
+				>
+			</div>
+			<div class="bg-foreground/10 p-4 rounded border">
+				<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 text-base">
+					Nested Permission Inheritance
+				</h4>
+				<p class="m-0 mb-2 text-sm text-gray-600 dark:text-gray-400">
+					Child items can have different permissions than their parents
+				</p>
+				<code
+					class="block bg-foreground/15 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500"
 					>// Parent and children can have different permission requirements</code
 				>
 			</div>
 		</div>
 	</div>
 </div>
-
-<style>
-	.advanced-menu-example {
-		max-width: 100%;
-		font-family:
-			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	}
-
-	.example-section {
-		margin-bottom: 2rem;
-		padding: 1.5rem;
-		border: 1px solid #e0e0e0;
-		border-radius: 0.5rem;
-		background-color: #fafafa;
-	}
-
-	.example-section h3 {
-		margin-top: 0;
-		margin-bottom: 1rem;
-		color: #333;
-		font-size: 1.2rem;
-		border-bottom: 2px solid #007bff;
-		padding-bottom: 0.5rem;
-	}
-
-	.user-status {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #ddd;
-	}
-
-	.status-info {
-		color: #155724;
-	}
-
-	.not-authenticated {
-		color: #721c24;
-		font-style: italic;
-		margin: 0;
-	}
-
-	.menu-container {
-		background: white;
-		border: 1px solid #ddd;
-		border-radius: 0.25rem;
-		padding: 0;
-		margin-top: 1rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		overflow: hidden;
-	}
-
-	.menu-container.complex {
-		max-height: 400px;
-		overflow-y: auto;
-	}
-
-	.permission-analysis {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #ddd;
-		margin-top: 1rem;
-	}
-
-	.analysis-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-		gap: 1rem;
-	}
-
-	.analysis-item {
-		text-align: center;
-		padding: 1rem;
-		background: #f8f9fa;
-		border-radius: 0.25rem;
-		border: 1px solid #e9ecef;
-	}
-
-	.analysis-item h4 {
-		margin: 0 0 0.5rem 0;
-		color: #495057;
-		font-size: 0.9rem;
-	}
-
-	.metric {
-		font-size: 1.5rem;
-		font-weight: bold;
-		color: #007bff;
-		margin: 0;
-	}
-
-	.behavior-examples {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.behavior-item {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #ddd;
-	}
-
-	.behavior-item h4 {
-		margin: 0 0 0.5rem 0;
-		color: #495057;
-		font-size: 1rem;
-	}
-
-	.behavior-item p {
-		margin: 0 0 0.5rem 0;
-		font-size: 0.9rem;
-		color: #666;
-	}
-
-	.behavior-item code {
-		display: block;
-		background: #f8f9fa;
-		padding: 0.5rem;
-		border-radius: 0.25rem;
-		font-family: 'Courier New', monospace;
-		font-size: 0.8rem;
-		color: #495057;
-		border: 1px solid #e9ecef;
-	}
-
-	/* Global menu styling */
-	:global(.complex-navigation) {
-		font-size: 0.9rem;
-	}
-
-	:global(.complex-navigation .menu-link) {
-		padding: 0.5rem 1rem;
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	:global(.role-navigation .menu-link) {
-		padding: 0.75rem 1rem;
-		font-weight: 500;
-		border-bottom: 1px solid #f0f0f0;
-	}
-
-	:global(.role-navigation .menu-link:hover) {
-		background-color: #e3f2fd;
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.analysis-grid,
-		.behavior-examples {
-			grid-template-columns: 1fr;
-		}
-
-		.example-section {
-			padding: 1rem;
-		}
-
-		.menu-container.complex {
-			max-height: 300px;
-		}
-	}
-</style>

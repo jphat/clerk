@@ -24,76 +24,83 @@ const userIsEditor = hasRole(Astro.locals, 'editor');
 const userIsAuthenticated = isAuthenticated(Astro.locals);
 ---
 
-<div class="permission-example">
-	<h2>Permission-Based Content</h2>
+<div
+	class="p-4 border border-gray-300 dark:border-gray-600 rounded-lg my-4 bg-white dark:bg-gray-800"
+>
+	<h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+		Permission-Based Content
+	</h2>
 
 	{
 		userIsAuthenticated ? (
-			<div>
-				<p>Welcome, authenticated user!</p>
+			<div class="space-y-4">
+				<p class="text-gray-700 dark:text-gray-300">
+					Welcome, authenticated user!
+				</p>
 
-				{userCanWrite && <button type="button">Create New Content</button>}
+				<div class="flex flex-wrap gap-2">
+					{userCanWrite && (
+						<button
+							type="button"
+							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+						>
+							Create New Content
+						</button>
+					)}
 
-				{userCanEdit && <button type="button">Edit Content</button>}
+					{userCanEdit && (
+						<button
+							type="button"
+							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+						>
+							Edit Content
+						</button>
+					)}
 
-				{userCanManage && <button type="button">Manage Users</button>}
+					{userCanManage && (
+						<button
+							type="button"
+							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+						>
+							Manage Users
+						</button>
+					)}
+				</div>
 
 				{userIsAdmin && (
-					<div class="admin-panel">
-						<h3>Admin Panel</h3>
-						<p>Admin-only content visible here</p>
+					<div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded border border-blue-200 dark:border-blue-700 my-2">
+						<h3 class="text-lg font-medium mb-2 text-blue-900 dark:text-blue-100">
+							Admin Panel
+						</h3>
+						<p class="text-blue-800 dark:text-blue-200">
+							Admin-only content visible here
+						</p>
 					</div>
 				)}
 
 				{userIsEditor && (
-					<div class="editor-tools">
-						<h3>Editor Tools</h3>
-						<p>Editor-specific tools available</p>
+					<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 my-2">
+						<h3 class="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">
+							Editor Tools
+						</h3>
+						<p class="text-gray-700 dark:text-gray-300">
+							Editor-specific tools available
+						</p>
 					</div>
 				)}
 			</div>
 		) : (
-			<div>
-				<p>Please sign in to access content.</p>
-				<a href="/sign-in">Sign In</a>
+			<div class="space-y-4">
+				<p class="text-gray-700 dark:text-gray-300">
+					Please sign in to access content.
+				</p>
+				<a
+					href="/sign-in"
+					class="inline-block px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white no-underline rounded hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+				>
+					Sign In
+				</a>
 			</div>
 		)
 	}
 </div>
-
-<style>
-	.permission-example {
-		padding: 1rem;
-		border: 1px solid #ccc;
-		border-radius: 0.5rem;
-		margin: 1rem 0;
-	}
-
-	.admin-panel {
-		background-color: #f0f8ff;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		margin: 0.5rem 0;
-	}
-
-	.editor-tools {
-		background-color: #f5f5f5;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		margin: 0.5rem 0;
-	}
-
-	button {
-		margin: 0.25rem;
-		padding: 0.5rem 1rem;
-		background-color: #007bff;
-		color: white;
-		border: none;
-		border-radius: 0.25rem;
-		cursor: pointer;
-	}
-
-	button:hover {
-		background-color: #0056b3;
-	}
-</style>

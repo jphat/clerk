@@ -59,10 +59,14 @@ const demoPermissions: Permission[] = [
 ];
 ---
 
-<div class="template-utility-demo">
-	<div class="demo-header">
-		<h2>Template Utility Functions Demonstration</h2>
-		<p>
+<div class="w-full">
+	<div
+		class="text-center mb-8 p-6 bg-linear-to-br from-blue-500 to-purple-600 text-white rounded-lg"
+	>
+		<h2 class="text-2xl font-bold mb-2 m-0">
+			Template Utility Functions Demonstration
+		</h2>
+		<p class="m-0 opacity-90">
 			Interactive showcase of all RBAC template utilities and their real-time
 			results
 		</p>
@@ -70,33 +74,48 @@ const demoPermissions: Permission[] = [
 
 	{
 		!authenticated ? (
-			<div class="auth-notice">
-				<h3>⚠️ Authentication Required</h3>
-				<p>
+			<div class="text-center p-8 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg text-yellow-800 dark:text-yellow-200">
+				<h3 class="text-lg font-semibold mb-2">⚠️ Authentication Required</h3>
+				<p class="mb-4">
 					Sign in to see the template utilities in action with real user data.
 				</p>
-				<a href="/sign-in" class="auth-button">
+				<a
+					href="/sign-in"
+					class="inline-block mt-4 px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white no-underline rounded font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
+				>
 					Sign In to Test
 				</a>
 			</div>
 		) : (
-			<div class="demo-content">
-				<div class="user-context-section">
-					<h3>Current User Context</h3>
-					<div class="context-grid">
-						<div class="context-item">
-							<strong>Authenticated:</strong>
-							<span class={`status ${authenticated ? 'positive' : 'negative'}`}>
+			<div class="flex flex-col gap-8">
+				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
+					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+						Current User Context
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
+							<strong class="text-gray-900 dark:text-gray-100">
+								Authenticated:
+							</strong>
+							<span
+								class={`font-bold ${authenticated ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
+							>
 								{authenticated ? 'Yes' : 'No'}
 							</span>
 						</div>
-						<div class="context-item">
-							<strong>Role:</strong>
-							<span class="role-badge role-{userRole}">{userRole}</span>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
+							<strong class="text-gray-900 dark:text-gray-100">Role:</strong>
+							<span
+								class={`px-2 py-1 rounded text-xs font-bold uppercase text-white ${userRole === 'admin' ? 'bg-red-500' : userRole === 'editor' ? 'bg-green-500' : 'bg-gray-500'}`}
+							>
+								{userRole}
+							</span>
 						</div>
-						<div class="context-item">
-							<strong>Permissions:</strong>
-							<span class="permissions-list">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
+							<strong class="text-gray-900 dark:text-gray-100">
+								Permissions:
+							</strong>
+							<span class="font-mono bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded text-sm text-gray-800 dark:text-gray-200">
 								{userPermissions.length > 0
 									? userPermissions.join(', ')
 									: 'None'}
@@ -105,54 +124,68 @@ const demoPermissions: Permission[] = [
 					</div>
 				</div>
 
-				<div class="utilities-section">
-					<h3>Permission Checking Utilities</h3>
-					<div class="utility-grid">
-						<div class="utility-card">
-							<h4>canWriteContent()</h4>
-							<div class="utility-result">
-								<span class={`result ${canWrite ? 'true' : 'false'}`}>
+				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
+					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+						Permission Checking Utilities
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								canWriteContent()
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${canWrite ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{canWrite ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
 								Checks if user can create new content
 							</p>
-							<code class="utility-code">
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{canWrite
 									? '// User can create content'
 									: '// User cannot create content'}
 							</code>
 						</div>
 
-						<div class="utility-card">
-							<h4>canEditContent()</h4>
-							<div class="utility-result">
-								<span class={`result ${canEdit ? 'true' : 'false'}`}>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								canEditContent()
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${canEdit ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{canEdit ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
 								Checks if user can edit existing content
 							</p>
-							<code class="utility-code">
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{canEdit
 									? '// User can edit content'
 									: '// User cannot edit content'}
 							</code>
 						</div>
 
-						<div class="utility-card">
-							<h4>canManageUser()</h4>
-							<div class="utility-result">
-								<span class={`result ${canManage ? 'true' : 'false'}`}>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								canManageUser()
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${canManage ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{canManage ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
 								Checks if user can manage other users
 							</p>
-							<code class="utility-code">
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{canManage
 									? '// User can manage users'
 									: '// User cannot manage users'}
@@ -161,48 +194,68 @@ const demoPermissions: Permission[] = [
 					</div>
 				</div>
 
-				<div class="utilities-section">
-					<h3>Role Checking Utilities</h3>
-					<div class="utility-grid">
-						<div class="utility-card">
-							<h4>isAdmin()</h4>
-							<div class="utility-result">
-								<span class={`result ${isUserAdmin ? 'true' : 'false'}`}>
+				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
+					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+						Role Checking Utilities
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								isAdmin()
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${isUserAdmin ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{isUserAdmin ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">Checks if user has admin role</p>
-							<code class="utility-code">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+								Checks if user has admin role
+							</p>
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{isUserAdmin
 									? '// User is an admin'
 									: '// User is not an admin'}
 							</code>
 						</div>
 
-						<div class="utility-card">
-							<h4>hasRole('editor')</h4>
-							<div class="utility-result">
-								<span class={`result ${isUserEditor ? 'true' : 'false'}`}>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								hasRole('editor')
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${isUserEditor ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{isUserEditor ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">Checks if user has editor role</p>
-							<code class="utility-code">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+								Checks if user has editor role
+							</p>
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{isUserEditor
 									? '// User is an editor'
 									: '// User is not an editor'}
 							</code>
 						</div>
 
-						<div class="utility-card">
-							<h4>hasRole('viewer')</h4>
-							<div class="utility-result">
-								<span class={`result ${isUserViewer ? 'true' : 'false'}`}>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								hasRole('viewer')
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${isUserViewer ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{isUserViewer ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">Checks if user has viewer role</p>
-							<code class="utility-code">
+							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+								Checks if user has viewer role
+							</p>
+							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
 								{isUserViewer
 									? '// User is a viewer'
 									: '// User is not a viewer'}
@@ -211,41 +264,55 @@ const demoPermissions: Permission[] = [
 					</div>
 				</div>
 
-				<div class="utilities-section">
-					<h3>Advanced Permission Utilities</h3>
-					<div class="utility-grid">
-						<div class="utility-card">
-							<h4>hasPermission('write_content')</h4>
-							<div class="utility-result">
-								<span class={`result ${hasWritePermission ? 'true' : 'false'}`}>
+				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
+					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+						Advanced Permission Utilities
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								hasPermission('write_content')
+							</h4>
+							<div class="mb-2">
+								<span
+									class={`px-2 py-1 rounded font-bold font-mono ${hasWritePermission ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
+								>
 									{hasWritePermission ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">
+							<p class="text-sm text-gray-600 dark:text-gray-400">
 								Direct permission check for specific permission
 							</p>
 						</div>
 
-						<div class="utility-card">
-							<h4>hasAnyPermission(['write_content', 'edit_content'])</h4>
-							<div class="utility-result">
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								hasAnyPermission(['write_content', 'edit_content'])
+							</h4>
+							<div class="mb-2">
 								<span
-									class={`result ${hasContentPermissions ? 'true' : 'false'}`}
+									class={`px-2 py-1 rounded font-bold font-mono ${hasContentPermissions ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
 								>
 									{hasContentPermissions ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="utility-description">
+							<p class="text-sm text-gray-600 dark:text-gray-400">
 								Checks if user has any of the specified permissions
 							</p>
 						</div>
 
-						<div class="utility-card">
-							<h4>getUserRole()</h4>
-							<div class="utility-result">
-								<span class="result role">'{userRole}'</span>
+						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
+							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+								getUserRole()
+							</h4>
+							<div class="mb-2">
+								<span class="px-2 py-1 rounded font-bold font-mono bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200">
+									'{userRole}'
+								</span>
 							</div>
-							<p class="utility-description">Returns the current user's role</p>
+							<p class="text-sm text-gray-600 dark:text-gray-400">
+								Returns the current user's role
+							</p>
 						</div>
 					</div>
 				</div>
@@ -391,326 +458,3 @@ const hasContentAccess = hasAnyPermission(
 		)
 	}
 </div>
-
-<style>
-	.template-utility-demo {
-		max-width: 100%;
-		font-family:
-			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	}
-
-	.demo-header {
-		text-align: center;
-		margin-bottom: 2rem;
-		padding: 1.5rem;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		color: white;
-		border-radius: 0.5rem;
-	}
-
-	.demo-header h2 {
-		margin: 0 0 0.5rem 0;
-		font-size: 1.5rem;
-	}
-
-	.demo-header p {
-		margin: 0;
-		opacity: 0.9;
-	}
-
-	.auth-notice {
-		text-align: center;
-		padding: 2rem;
-		background: #fff3cd;
-		border: 1px solid #ffeaa7;
-		border-radius: 0.5rem;
-		color: #856404;
-	}
-
-	.auth-button {
-		display: inline-block;
-		margin-top: 1rem;
-		padding: 0.75rem 1.5rem;
-		background: #007bff;
-		color: white;
-		text-decoration: none;
-		border-radius: 0.25rem;
-		font-weight: 500;
-	}
-
-	.auth-button:hover {
-		background: #0056b3;
-	}
-
-	.demo-content {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
-
-	.user-context-section,
-	.utilities-section,
-	.conditional-rendering-section,
-	.code-examples-section {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.user-context-section h3,
-	.utilities-section h3,
-	.conditional-rendering-section h3,
-	.code-examples-section h3 {
-		margin: 0 0 1rem 0;
-		color: #495057;
-		border-bottom: 2px solid #007bff;
-		padding-bottom: 0.5rem;
-	}
-
-	.context-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1rem;
-	}
-
-	.context-item {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.status.positive {
-		color: #28a745;
-		font-weight: bold;
-	}
-
-	.status.negative {
-		color: #dc3545;
-		font-weight: bold;
-	}
-
-	.role-badge {
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
-		font-size: 0.8rem;
-		font-weight: bold;
-		text-transform: uppercase;
-	}
-
-	.role-admin {
-		background: #dc3545;
-		color: white;
-	}
-
-	.role-editor {
-		background: #28a745;
-		color: white;
-	}
-
-	.role-viewer {
-		background: #6c757d;
-		color: white;
-	}
-
-	.permissions-list {
-		font-family: monospace;
-		background: #e9ecef;
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
-		font-size: 0.9rem;
-	}
-
-	.utility-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1rem;
-	}
-
-	.utility-card {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #dee2e6;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	.utility-card h4 {
-		margin: 0 0 0.5rem 0;
-		color: #495057;
-		font-family: monospace;
-		font-size: 0.9rem;
-	}
-
-	.utility-result {
-		margin-bottom: 0.5rem;
-	}
-
-	.result {
-		padding: 0.25rem 0.5rem;
-		border-radius: 0.25rem;
-		font-weight: bold;
-		font-family: monospace;
-	}
-
-	.result.true {
-		background: #d4edda;
-		color: #155724;
-	}
-
-	.result.false {
-		background: #f8d7da;
-		color: #721c24;
-	}
-
-	.result.role {
-		background: #e2e3e5;
-		color: #383d41;
-	}
-
-	.utility-description {
-		margin: 0.5rem 0;
-		font-size: 0.9rem;
-		color: #666;
-	}
-
-	.utility-code {
-		display: block;
-		background: #f8f9fa;
-		padding: 0.5rem;
-		border-radius: 0.25rem;
-		font-family: monospace;
-		font-size: 0.8rem;
-		color: #495057;
-		border: 1px solid #e9ecef;
-		margin-top: 0.5rem;
-	}
-
-	.rendering-examples {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1rem;
-	}
-
-	.example-card {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.example-card h4 {
-		margin: 0 0 1rem 0;
-		color: #495057;
-	}
-
-	.feature-available,
-	.feature-unavailable {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.demo-button {
-		padding: 0.5rem 1rem;
-		border: none;
-		border-radius: 0.25rem;
-		font-weight: 500;
-		cursor: pointer;
-		transition: background-color 0.2s ease;
-	}
-
-	.demo-button.primary {
-		background: #007bff;
-		color: white;
-	}
-
-	.demo-button.secondary {
-		background: #6c757d;
-		color: white;
-	}
-
-	.demo-button.success {
-		background: #28a745;
-		color: white;
-	}
-
-	.demo-button.danger {
-		background: #dc3545;
-		color: white;
-	}
-
-	.demo-button.warning {
-		background: #ffc107;
-		color: #212529;
-	}
-
-	.demo-button.info {
-		background: #17a2b8;
-		color: white;
-	}
-
-	.demo-button.disabled {
-		background: #e9ecef;
-		color: #6c757d;
-		cursor: not-allowed;
-	}
-
-	.feature-note {
-		margin: 0.5rem 0 0 0;
-		font-size: 0.9rem;
-		font-style: italic;
-	}
-
-	.code-examples {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1rem;
-	}
-
-	.code-example {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.code-example h4 {
-		margin: 0 0 0.5rem 0;
-		color: #495057;
-	}
-
-	.code-example pre {
-		margin: 0;
-		background: #f8f9fa;
-		padding: 1rem;
-		border-radius: 0.25rem;
-		overflow-x: auto;
-		border: 1px solid #e9ecef;
-	}
-
-	.code-example code {
-		font-family: 'Courier New', monospace;
-		font-size: 0.8rem;
-		color: #495057;
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.context-grid,
-		.utility-grid,
-		.rendering-examples,
-		.code-examples {
-			grid-template-columns: 1fr;
-		}
-
-		.demo-header {
-			padding: 1rem;
-		}
-
-		.demo-header h2 {
-			font-size: 1.2rem;
-		}
-	}
-</style>
