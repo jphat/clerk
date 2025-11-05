@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/user-context.schema.json",
+    "title": "UserContext",
+    "type": "object",
+    "properties": {
+        "isAuthenticated": {
+            "type": "boolean"
+        },
+        "role": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "enum": [
+                "admin",
+                "editor",
+                "viewer",
+                null
+            ]
+        },
+        "permissions": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "write_content",
+                    "edit_content",
+                    "manage_user"
+                ]
+            },
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "isAuthenticated",
+        "role",
+        "permissions"
+    ],
+    "additionalProperties": false
+}

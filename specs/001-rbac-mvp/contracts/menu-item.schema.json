@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://example.com/schemas/menu-item.schema.json",
+    "title": "MenuItem",
+    "type": "object",
+    "properties": {
+        "label": {
+            "type": "string",
+            "minLength": 1
+        },
+        "href": {
+            "type": "string",
+            "minLength": 1
+        },
+        "permissions": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "write_content",
+                    "edit_content",
+                    "manage_user"
+                ]
+            },
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "label",
+        "href"
+    ],
+    "additionalProperties": false
+}
