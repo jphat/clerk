@@ -476,7 +476,7 @@ export function canManageOwnContent(locals: App.Locals, contentAuthorId: string)
 
 Use the test pages to verify role-based access:
 
-- `/test/a` - Admin only
+- `/test/admin` - Admin only
 - `/test/editor` - Editor permissions required
 - `/test/viewer` - Any authenticated user
 
@@ -547,7 +547,7 @@ The 403 error page shows current user role and permissions for debugging.
 
 ### Testing Permissions
 
-1. **Use Test Pages**: Visit `/test/a`, `/test/editor`, `/test/viewer` to test role access
+1. **Use Test Pages**: Visit `/test/admin`, `/test/editor`, `/test/viewer` to test role access
 2. **Browser DevTools**: Inspect `Astro.locals.user` in server-side context
 3. **Console Logging**: Add temporary logging in middleware or components:
 

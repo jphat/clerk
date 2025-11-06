@@ -58,7 +58,7 @@ export const PROTECTED_ROUTES: RouteConfig[] = [
     { pattern: '/a/**', adminOnly: true },     // All /a/* routes
 
     // Test pages for different roles (used for development/testing)
-    { pattern: '/test/a', adminOnly: true },
+    { pattern: '/test/admin', adminOnly: true },
     { pattern: '/test/editor', permissions: ['write_content', 'edit_content'] },
     { pattern: '/test/viewer', permissions: [] }, // Authenticated users only
 

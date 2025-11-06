@@ -6,6 +6,8 @@
  * with different user roles and permission levels.
  */
 
+import TitleBar from '@/components/site/TitleBar.astro';
+import { Button } from '@/components/ui/button';
 import Layout from '@/layouts/Layout.astro';
 import PermissionMenu from '@/components/auth/PermissionMenu.astro';
 import MenuExample from '@/components/auth/MenuExample.astro';
@@ -119,18 +121,20 @@ const publicMenu: MenuItem[] = [
 ---
 
 <Layout pageMeta={pageMeta}>
-	<div class="max-w-6xl mx-auto p-8">
-		<h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-			Permission Menu Component Test
-		</h1>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: 'Test', url: '/test' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
 
+	<div class="container">
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Main Navigation Menu
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
+			<h2 class="text-2xl font-semibold mb-4">Main Navigation Menu</h2>
+			<p class="mb-6">
 				This menu shows different items based on your current role and
 				permissions:
 			</p>
@@ -141,26 +145,18 @@ const publicMenu: MenuItem[] = [
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Editor-Specific Menu
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
-				This menu is designed for content editors:
-			</p>
+			<h2 class="text-2xl font-semibold mb-4">Editor-Specific Menu</h2>
+			<p class="mb-6">This menu is designed for content editors:</p>
 			<div class="bg-foreground/5 border rounded p-4 mt-4 shadow-sm">
 				<PermissionMenu items={editorMenu} className="editor-nav" />
 			</div>
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
+			<h2 class="text-2xl font-semibold mb-4">
 				Public Menu (No Permissions Required)
 			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
+			<p class="mb-6">
 				This menu is visible to all users, including unauthenticated ones:
 			</p>
 			<div class="bg-foreground/5 border rounded p-4 mt-4 shadow-sm">
@@ -169,24 +165,14 @@ const publicMenu: MenuItem[] = [
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Menu Example Component
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
-				This demonstrates the pre-configured menu example:
-			</p>
+			<h2 class="text-2xl font-semibold mb-4">Menu Example Component</h2>
+			<p class="mb-6">This demonstrates the pre-configured menu example:</p>
 			<MenuExample />
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Advanced Menu Examples
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
+			<h2 class="text-2xl font-semibold mb-4">Advanced Menu Examples</h2>
+			<p class="mb-6">
 				Complex menu configurations with nested permissions and detailed
 				analysis:
 			</p>
@@ -194,14 +180,8 @@ const publicMenu: MenuItem[] = [
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Current User Context
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
-				Your current authentication and permission status:
-			</p>
+			<h2 class="text-2xl font-semibold mb-4">Current User Context</h2>
+			<p class="mb-6">Your current authentication and permission status:</p>
 			<div class="bg-foreground/5 p-6 border mt-4">
 				{
 					Astro.locals.user ? (
@@ -243,12 +223,8 @@ const publicMenu: MenuItem[] = [
 		</div>
 
 		<div class="mb-12 p-6 border">
-			<h2
-				class="mt-0 text-xl font-semibold text-gray-800 dark:text-gray-200 border-b-2 border-blue-500 dark:border-blue-400 pb-2 mb-4"
-			>
-				Test Different Roles
-			</h2>
-			<p class="mb-4 text-gray-700 dark:text-gray-300">
+			<h2 class="text-2xl font-semibold mb-4">Test Different Roles</h2>
+			<p class="mb-6">
 				Visit these pages to see how the interface adapts to different
 				permission levels:
 			</p>
