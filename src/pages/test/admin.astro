@@ -165,12 +165,10 @@ const adminMenu: MenuItem[] = [
 						</p>
 						<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
 							<div class="p-3 bg-foreground/5 rounded border">
-								<strong class="">Role:</strong> <span>{userRole}</span>
+								<strong>Role:</strong> <span>{userRole}</span>
 							</div>
 							<div class="p-3 bg-foreground/5 rounded border">
-								<strong class="">Permissions:</strong>{' '}
-								{/* <code>{userPermissions.join(', ')}</code> */}
-								{/* <span class="font-mono bg-foreground/10 px-2 py-1 rounded text-sm leading-8 flex gap-2"> */}
+								<strong>Permissions:</strong>{' '}
 								<span class="text-sm flex gap-2">
 									{userPermissions.length > 0
 										? userPermissions.map((permission) => (
@@ -182,7 +180,7 @@ const adminMenu: MenuItem[] = [
 								</span>
 							</div>
 							<div class="p-3 bg-foreground/5 rounded border">
-								<strong class="">Admin Access:</strong>{' '}
+								<strong>Admin Access:</strong>{' '}
 								<span>{adminAccess ? 'Yes' : 'No'}</span>
 							</div>
 						</div>
@@ -193,17 +191,17 @@ const adminMenu: MenuItem[] = [
 						</h2>
 						<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
 							<div class="p-3 bg-foreground/10 rounded border">
-								<strong class="">Role:</strong>{' '}
+								<strong>Role:</strong>{' '}
 								<span class="text-gray-700 dark:text-gray-300">{userRole}</span>
 							</div>
 							<div class="p-3 bg-foreground/10 rounded border">
-								<strong class="">Permissions:</strong>{' '}
+								<strong>Permissions:</strong>{' '}
 								<span class="text-gray-700 dark:text-gray-300">
 									{userPermissions.join(', ')}
 								</span>
 							</div>
 							<div class="p-3 bg-foreground/10 rounded border">
-								<strong class="">Admin Access:</strong>{' '}
+								<strong>Admin Access:</strong>{' '}
 								<span class="text-gray-700 dark:text-gray-300">
 									{adminAccess ? 'Yes' : 'No'}
 								</span>

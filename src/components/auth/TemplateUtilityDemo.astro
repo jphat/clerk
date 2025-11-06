@@ -300,17 +300,17 @@ const demoPermissions: Permission[] = [
 					<h3 class="text-lg font-semibold mb-4">
 						Conditional Rendering Examples
 					</h3>
-					<div>
-						<div class="space-y-4">
+					<div class="space-y-6">
+						<div class="space-y-4 p-3 bg-foreground/5 rounded border">
 							<h4 class="font-semibold py-4">Content Creation UI</h4>
 							{canWrite ? (
-								<div>
+								<div class="space-y-4">
 									<p>✅ Content creation tools are available</p>
 									<Button variant="outline">Create New Article</Button>
 									<Button variant="outline">Save Draft</Button>
 								</div>
 							) : (
-								<div>
+								<div class="space-y-4">
 									<p>❌ Content creation requires write_content permission</p>
 									{/* TODO: disable */}
 									<Button variant="outline">Create New Article</Button>
@@ -318,27 +318,27 @@ const demoPermissions: Permission[] = [
 							)}
 						</div>
 
-						<div class="space-y-4">
+						<div class="space-y-4 p-3 bg-foreground/5 rounded border">
 							<h4 class="font-semibold py-4">Editorial Tools</h4>
 							{canEdit ? (
-								<div>
+								<div class="space-y-4">
 									<p>✅ Editorial tools are available</p>
 									<Button variant="outline">Review Queue</Button>
 									<Button variant="outline">Bulk Edit</Button>
 									<Button variant="outline">Publish Content</Button>
 								</div>
 							) : (
-								<div>
+								<div class="space-y-4">
 									<p>❌ Editorial tools require edit_content permission</p>
 									<Button variant="outline">Review Queue</Button>
 								</div>
 							)}
 						</div>
 
-						<div class="space-y-4">
+						<div class="space-y-4 p-3 bg-foreground/5 rounded border">
 							<h4 class="font-semibold py-4">Admin Panel</h4>
 							{canManage ? (
-								<div class="feature-available">
+								<div class="space-y-4">
 									<p>✅ Administrative controls are available</p>
 									{/* TODO: add color */}
 									<Button variant="outline">Delete User</Button>
@@ -346,7 +346,7 @@ const demoPermissions: Permission[] = [
 									<Button variant="outline">System Settings</Button>
 								</div>
 							) : (
-								<div>
+								<div class="space-y-4">
 									<Button variant="outline">Admin Panel</Button>
 									<p>❌ Admin panel requires manage_user permission</p>
 								</div>
@@ -358,12 +358,12 @@ const demoPermissions: Permission[] = [
 				{/* Usage Code Examples */}
 				<div class="conditional-rendering-section">
 					<h3 class="text-lg font-semibold mb-4">Usage Code Examples</h3>
-					<div class="space-y-6">
+					<div class="space-y-6 p-3 bg-foreground/5 rounded border">
 						<div class="code-example">
 							<h4 class="font-bold py-4">Basic Permission Check</h4>
 							<Code
 								lang="astro"
-								class="p-4"
+								class="p-4 rounded"
 								code={`
 ---
 import { canWriteContent } from '@/lib/auth';
@@ -382,7 +382,7 @@ const canWrite = canWriteContent(Astro.locals);
 							<h4 class="font-bold py-4">Role-Based Rendering</h4>
 							<Code
 								lang="astro"
-								class="p-4"
+								class="p-4 rounded"
 								code={`
 --- 
 import {(isAdmin, hasRole)} from '@/lib/auth';
@@ -400,7 +400,7 @@ const isEditor = hasRole(Astro.locals, 'editor');
 							<h4 class="font-bold py-4">Multiple Permission Check</h4>
 							<Code
 								lang="astro"
-								class="p-4"
+								class="p-4 rounded"
 								code={`
 ---
 import { hasAnyPermission } from '@/lib/auth';
