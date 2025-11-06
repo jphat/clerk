@@ -6,6 +6,8 @@
  * This page showcases RBAC features for users with editor role.
  */
 
+import TitleBar from '@/components/site/TitleBar.astro';
+import { Button } from '@/components/ui/button';
 import Layout from '@/layouts/Layout.astro';
 import PermissionExample from '@/components/auth/PermissionExample.astro';
 import MenuExample from '@/components/auth/MenuExample.astro';
@@ -115,101 +117,98 @@ const editorMenu: MenuItem[] = [
 ---
 
 <Layout pageMeta={pageMeta}>
-	<div class="container">
-		<header class="text-center mb-12 text-white">
-			<h1 class="text-5xl font-bold mb-2 drop-shadow-lg">Editor Test Page</h1>
-			<p class="text-xl opacity-90 m-0">
-				Demonstrating editor-level access and content management capabilities
-			</p>
-		</header>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: 'Test', url: '/test' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
 
+	<div class="container">
 		{
 			!authenticated ? (
-				<div class="bg-white dark:bg-gray-800 p-8 rounded-2xl text-center shadow-2xl">
-					<h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-						Authentication Required
-					</h2>
-					<p class="mb-6 text-gray-700 dark:text-gray-300">
-						Please sign in to access this editor test page.
-					</p>
-					<a
-						href="/sign-in"
-						class="inline-block px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white  font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors no-underline"
-					>
-						Sign In
-					</a>
-				</div>
+				<>
+					<h2 class="text-2xl font-semibold mb-4">Authentication Required</h2>
+					<p class="mb-6">Please sign in to access this editor test page.</p>
+					<Button variant="default">
+						<a href="/sign-in"> Sign In </a>
+					</Button>
+				</>
 			) : !hasContentPermissions ? (
-				<div class="bg-white dark:bg-gray-800 p-8 rounded-2xl text-center shadow-2xl">
-					<h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+				<>
+					<h2 class="text-2xl font-semibold mb-4">
 						Content Permissions Required
 					</h2>
-					<p class="mb-4 text-gray-700 dark:text-gray-300">
+					<p class="mb-4">
 						Your current role ({userRole}) does not have content creation or
 						editing permissions. This page requires editor-level access.
 					</p>
-					<p class="mb-4 text-gray-700 dark:text-gray-300">
+					<p class="mb-4">
 						<strong>Your permissions:</strong>{' '}
 						{userPermissions.length > 0 ? userPermissions.join(', ') : 'None'}
 					</p>
-					<div class="bg-gray-50 dark:bg-gray-700 p-4  my-4 border-l-4 border-cyan-500">
-						<p class="mb-2 text-gray-700 dark:text-gray-300">
+					<div class="bg-foreground/5 p-4 my-4 space-y-4">
+						<p>
 							<strong>Required permissions:</strong> write_content or
 							edit_content
 						</p>
-						<p class="mb-0 text-gray-700 dark:text-gray-300">
+						<p>
 							<strong>Available roles with these permissions:</strong> editor,
 							admin
 						</p>
 					</div>
-					<a
-						href="/test/menu"
-						class="inline-block px-6 py-3 bg-gray-500 dark:bg-gray-600 text-white  font-medium hover:bg-gray-600 dark:hover:bg-gray-700 transition-colors no-underline"
-					>
-						Back to Menu Test
-					</a>
-				</div>
+					<Button variant="default">
+						<a href="/test/menu"> Back to Menu Test </a>
+					</Button>
+				</>
 			) : (
-				<div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
-					<div class="bg-gray-50 dark:bg-gray-700 p-6  mb-8 border-l-4 border-green-500">
-						<h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+				<>
+					{/* Current User Information */}
+					{/* TODO: componentize */}
+					<div class="border mb-10 p-6">
+						<h2 class="text-2xl font-semibold mb-4">
 							Current User Information
 						</h2>
+						<p> Quick overview of current user's role and permissions </p>
 						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-gray-200 dark:border-gray-500">
-								<strong class="text-gray-900 dark:text-gray-100">Role:</strong>{' '}
-								<span class="text-gray-700 dark:text-gray-300">{userRole}</span>
+							<div class="p-3  rounded border bg-foreground/5 ">
+								<strong class="">Role:</strong> <span class="">{userRole}</span>
 							</div>
-							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-gray-200 dark:border-gray-500">
-								<strong class="text-gray-900 dark:text-gray-100">
-									Permissions:
-								</strong>{' '}
-								<span class="text-gray-700 dark:text-gray-300">
-									{userPermissions.join(', ')}
+							<div class="p-3  rounded border bg-foreground/5 ">
+								<strong class="">Permissions:</strong>{' '}
+								{/* TODO: componentize */}
+								<span class="text-sm gap-2">
+									{userPermissions.length > 0
+										? userPermissions.map((permission) => (
+												<code class="rounded font-mono bg-foreground/10 px-1 mx-1 inline-block">
+													{permission}
+												</code>
+											))
+										: 'None'}
 								</span>
 							</div>
-							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-gray-200 dark:border-gray-500">
-								<strong class="text-gray-900 dark:text-gray-100">
-									Can Write:
-								</strong>{' '}
-								<span class="text-gray-700 dark:text-gray-300">
+							<div class="p-3  rounded border bg-foreground/5 ">
+								<strong class="">Can Write:</strong>{' '}
+								<span class="">
 									{canWriteContent(Astro.locals) ? 'Yes' : 'No'}
 								</span>
 							</div>
-							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-gray-200 dark:border-gray-500">
-								<strong class="text-gray-900 dark:text-gray-100">
-									Can Edit:
-								</strong>{' '}
-								<span class="text-gray-700 dark:text-gray-300">
+							<div class="p-3  rounded border bg-foreground/5 ">
+								<strong class="">Can Edit:</strong>{' '}
+								<span class="">
 									{canEditContent(Astro.locals) ? 'Yes' : 'No'}
 								</span>
 							</div>
 						</div>
 					</div>
 
-					<div class="demo-section">
-						<h2>Editor Menu Navigation</h2>
-						<p>
+					{/* Editor Menu Navigation */}
+					<div class="border mb-10 p-6">
+						<h2 class="text-2xl font-semibold mb-4">Editor Menu Navigation</h2>
+						<p class=" mb-6">
 							This menu shows editor-specific navigation options for content
 							management:
 						</p>
@@ -221,129 +220,125 @@ const editorMenu: MenuItem[] = [
 						</div>
 					</div>
 
-					<div class="demo-section">
-						<h2>Content Management Actions</h2>
+					{/* Content Management Actions */}
+					<div class="border mb-10 p-6 space-y-4">
+						<h2 class="text-2xl font-semibold mb-4">
+							Content Management Actions
+						</h2>
 						<p>
 							These actions are available based on your content permissions:
 						</p>
-						<div class="content-actions">
+						<div class=" space-y-4">
 							{canWriteContent(Astro.locals) && (
-								<div class="action-group">
-									<h3>Writing Permissions</h3>
-									<button type="button" class="btn btn-success">
+								<>
+									<h3 class="text-lg font-semibold">Writing Permissions</h3>
+									<Button variant="outline" class="">
 										Create New Article
-									</button>
-									<button type="button" class="btn btn-info">
+									</Button>
+									<Button variant="outline" class="">
 										Save Draft
-									</button>
-									<button type="button" class="btn btn-warning">
+									</Button>
+									<Button variant="outline" class="">
 										Submit for Review
-									</button>
-								</div>
+									</Button>
+								</>
 							)}
 
 							{canEditContent(Astro.locals) && (
-								<div class="action-group">
-									<h3>Editing Permissions</h3>
-									<button type="button" class="btn btn-primary">
-										Edit Published Content
-									</button>
-									<button type="button" class="btn btn-info">
-										Review Submissions
-									</button>
-									<button type="button" class="btn btn-success">
-										Approve for Publishing
-									</button>
-								</div>
+								<>
+									<h3 class="text-lg font-semibold">Editing Permissions</h3>
+									<Button variant="outline">Edit Published Content</Button>
+									<Button variant="outline">Review Submissions</Button>
+									<Button variant="outline">Approve for Publishing</Button>
+								</>
 							)}
 
 							{!canManageUser(Astro.locals) && (
-								<div class="action-group disabled">
-									<h3>Admin-Only Actions (Not Available)</h3>
-									<button type="button" class="btn btn-disabled" disabled>
-										Manage Users
-									</button>
-									<button type="button" class="btn btn-disabled" disabled>
-										System Settings
-									</button>
-									<button type="button" class="btn btn-disabled" disabled>
-										Delete Any Content
-									</button>
-								</div>
+								<>
+									{/* TODO: determine how this is renderable */}
+									<h3 class="text-lg font-semibold">
+										Admin-Only Actions (Not Available)
+									</h3>
+									<Button variant="outline">Manage Users</Button>
+									<Button variant="outline">System Settings</Button>
+									<Button variant="outline">Delete Any Content</Button>
+								</>
 							)}
 						</div>
 					</div>
 
-					<div class="demo-section">
-						<h2>Permission-Based Components</h2>
+					{/* Permission-Based Components */}
+					<div class="border mb-10 p-6 space-y-4">
+						<h2 class="text-2xl font-semibold mb-4">
+							Permission-Based Components
+						</h2>
 						<p>The following component demonstrates conditional rendering:</p>
 						<PermissionExample />
 					</div>
 
-					<div class="demo-section">
-						<h2>Content Workflow Simulation</h2>
+					{/* Content Workflow Simulation */}
+					{/* TODO: not needed */}
+					<div class="border mb-10 p-6 space-y-4">
+						<h2 class="text-2xl font-semibold mb-4">
+							Content Workflow Simulation
+						</h2>
 						<p>
 							This simulates a typical content creation and editing workflow:
 						</p>
-						<div class="workflow">
-							<div class="workflow-step">
-								<div class="step-number">1</div>
-								<div class="step-content">
-									<h4>Create Content</h4>
+						<div>
+							<ol class="list-decimal ml-8 space-y-4">
+								<li class="space-y-2">
+									<h4 class="font-semibold">Create Content</h4>
 									<p>
 										{canWriteContent(Astro.locals)
 											? '✅ You can create new content'
 											: '❌ Write permission required'}
 									</p>
-								</div>
-							</div>
-							<div class="workflow-step">
-								<div class="step-number">2</div>
-								<div class="step-content">
-									<h4>Edit & Review</h4>
+								</li>
+								<li class="space-y-2">
+									<h4 class="font-semibold">Edit & Review</h4>
 									<p>
 										{canEditContent(Astro.locals)
 											? '✅ You can edit and review content'
 											: '❌ Edit permission required'}
 									</p>
-								</div>
-							</div>
-							<div class="workflow-step">
-								<div class="step-number">3</div>
-								<div class="step-content">
-									<h4>Publish</h4>
+								</li>
+								<li class="space-y-2">
+									<h4 class="font-semibold">Publish</h4>
 									<p>
 										{canEditContent(Astro.locals)
 											? '✅ You can publish content'
 											: '❌ Edit permission required'}
 									</p>
-								</div>
-							</div>
+								</li>
+							</ol>
 						</div>
 					</div>
 
-					<div class="demo-section">
-						<h2>Standard Menu Example</h2>
+					{/* Standard Menu Example */}
+					<div class="border mb-10 p-6 space-y-4">
+						<h2 class="text-2xl font-semibold mb-4">Standard Menu Example</h2>
 						<p>This shows how the standard menu appears for editor users:</p>
 						<MenuExample />
 					</div>
 
-					<div class="demo-section">
-						<h2>Test Other Roles</h2>
+					{/* Test Other Roles */}
+					<div class="border mb-10 p-6 space-y-4">
+						<h2 class="text-2xl font-semibold mb-4">Test Other Roles</h2>
 						<p>Compare editor access with other role levels:</p>
 						<div class="role-links">
-							<a href="/test/a" class="btn btn-outline">
-								Admin Test Page
-							</a>
-							<a href="/test/viewer" class="btn btn-outline">
-								Viewer Test Page
-							</a>
-							<a href="/test/menu" class="btn btn-outline">
-								Menu Test Page
-							</a>
+							<Button variant="outline">
+								<a href="/test/admin">Admin Test Page</a>
+							</Button>
+							<Button variant="outline">
+								<a href="/test/viewer">Viewer Test Page</a>
+							</Button>
+							<Button variant="outline">
+								<a href="/test/menu">Menu Test Page</a>
+							</Button>
 						</div>
 					</div>
-				</div>
+				</>
 			)
 		}
 	</div>
