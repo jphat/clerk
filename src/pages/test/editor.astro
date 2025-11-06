@@ -212,12 +212,7 @@ const editorMenu: MenuItem[] = [
 							This menu shows editor-specific navigation options for content
 							management:
 						</p>
-						<div class="menu-demo">
-							<PermissionMenu
-								items={editorMenu}
-								className="editor-navigation"
-							/>
-						</div>
+						<PermissionMenu items={editorMenu} className="editor-navigation" />
 					</div>
 
 					{/* Content Management Actions */}
