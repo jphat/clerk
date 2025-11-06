@@ -7,6 +7,8 @@
  */
 
 import Layout from '@/layouts/Layout.astro';
+import { Button } from '@/components/ui/button';
+import TitleBar from '@/components/site/TitleBar.astro';
 import PermissionExample from '@/components/auth/PermissionExample.astro';
 import MenuExample from '@/components/auth/MenuExample.astro';
 import PermissionMenu from '@/components/auth/PermissionMenu.astro';
@@ -40,7 +42,7 @@ const adminAccess = isAdmin(Astro.locals);
 const adminMenu: MenuItem[] = [
 	{
 		label: 'Dashboard',
-		href: '/a/dashboard',
+		href: '/a',
 		permissions: ['manage_user'],
 	},
 	{
@@ -118,357 +120,184 @@ const adminMenu: MenuItem[] = [
 ---
 
 <Layout pageMeta={pageMeta}>
-	<div class="admin-test-page">
-		<div class="container">
-			<header class="page-header">
-				<h1>Admin Test Page</h1>
-				<p class="subtitle">
-					Demonstrating admin-level access and full permission capabilities
-				</p>
-			</header>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: 'Test', url: '/test' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
 
-			{
-				!authenticated ? (
-					<div class="auth-required">
-						<h2>Authentication Required</h2>
-						<p>Please sign in to access this admin test page.</p>
-						<a href="/sign-in" class="btn btn-primary">
-							Sign In
-						</a>
-					</div>
-				) : !adminAccess ? (
-					<div class="access-denied">
-						<h2>Admin Access Required</h2>
-						<p>
-							Your current role ({userRole}) does not have admin privileges.
-							This page requires admin role to access.
+	<div class="container">
+		{
+			!authenticated ? (
+				<>
+					<h2 class="text-2xl font-semibold mb-4">Authentication Required</h2>
+					<p class="mb-6">Please sign in to access this admin test page.</p>
+					<Button variant="default">
+						<a href="/sign-in">Sign In</a>
+					</Button>
+				</>
+			) : !adminAccess ? (
+				<>
+					<h2 class="text-2xl font-semibold mb-4">Admin Access Required</h2>
+					<p class="mb-6">
+						Your current role ({userRole}) does not have admin privileges. This
+						page requires admin role to access.
+					</p>
+					<p class="mb-6">
+						<strong>Your permissions:</strong>{' '}
+						{userPermissions.length > 0 ? userPermissions.join(', ') : 'None'}
+					</p>
+					<Button variant="default">
+						<a href="/test/menu">Back to Menu Test</a>
+					</Button>
+				</>
+			) : (
+				<>
+					{/* Current User Information */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">Admin Menu Navigation</h2>
+						<p class="mb-6">
+							Quick overview of current user's role and permissions
 						</p>
-						<p>
-							<strong>Your permissions:</strong>{' '}
-							{userPermissions.length > 0 ? userPermissions.join(', ') : 'None'}
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+							<div class="p-3 bg-foreground/5 rounded border">
+								<strong class="">Role:</strong> <span>{userRole}</span>
+							</div>
+							<div class="p-3 bg-foreground/5 rounded border">
+								<strong class="">Permissions:</strong>{' '}
+								{/* <code>{userPermissions.join(', ')}</code> */}
+								{/* <span class="font-mono bg-foreground/10 px-2 py-1 rounded text-sm leading-8 flex gap-2"> */}
+								<span class="text-sm flex gap-2">
+									{userPermissions.length > 0
+										? userPermissions.map((permission) => (
+												<code class="rounded font-mono bg-foreground/10 px-1">
+													{permission}
+												</code>
+											))
+										: 'None'}
+								</span>
+							</div>
+							<div class="p-3 bg-foreground/5 rounded border">
+								<strong class="">Admin Access:</strong>{' '}
+								<span>{adminAccess ? 'Yes' : 'No'}</span>
+							</div>
+						</div>
+					</div>
+					{/* <div class="bg-foreground/5 p-6 rounded mb-8">
+						<h2 class="text-xl font-semibold mb-4 ">
+							Current User Information
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+							<div class="p-3 bg-foreground/10 rounded border">
+								<strong class="">Role:</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">{userRole}</span>
+							</div>
+							<div class="p-3 bg-foreground/10 rounded border">
+								<strong class="">Permissions:</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">
+									{userPermissions.join(', ')}
+								</span>
+							</div>
+							<div class="p-3 bg-foreground/10 rounded border">
+								<strong class="">Admin Access:</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">
+									{adminAccess ? 'Yes' : 'No'}
+								</span>
+							</div>
+						</div>
+					</div> */}
+					{/* Admin Menu Navigation */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">Admin Menu Navigation</h2>
+						<p class="mb-6">
+							This menu shows admin-specific navigation options with nested
+							permission requirements:
 						</p>
-						<a href="/test/menu" class="btn btn-secondary">
-							Back to Menu Test
-						</a>
-					</div>
-				) : (
-					<div class="admin-content">
-						<div class="user-info">
-							<h2>Current User Information</h2>
-							<div class="info-grid">
-								<div class="info-item">
-									<strong>Role:</strong> {userRole}
-								</div>
-								<div class="info-item">
-									<strong>Permissions:</strong> {userPermissions.join(', ')}
-								</div>
-								<div class="info-item">
-									<strong>Admin Access:</strong> {adminAccess ? 'Yes' : 'No'}
-								</div>
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Admin Menu Navigation</h2>
-							<p>
-								This menu shows admin-specific navigation options with nested
-								permission requirements:
-							</p>
-							<div class="menu-demo">
-								<PermissionMenu
-									items={adminMenu}
-									className="admin-navigation"
-								/>
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Permission-Based Components</h2>
-							<p>
-								The following component demonstrates conditional rendering based
-								on permissions:
-							</p>
-							<PermissionExample />
-						</div>
-
-						<div class="demo-section">
-							<h2>Admin Actions</h2>
-							<p>
-								These actions are only available to users with admin
-								permissions:
-							</p>
-							<div class="admin-actions">
-								{canManageUser(Astro.locals) && (
-									<button type="button" class="btn btn-danger">
-										Delete User Account
-									</button>
-								)}
-								{canManageUser(Astro.locals) && (
-									<button type="button" class="btn btn-warning">
-										Modify User Roles
-									</button>
-								)}
-								{canEditContent(Astro.locals) && (
-									<button type="button" class="btn btn-info">
-										Moderate All Content
-									</button>
-								)}
-								{canWriteContent(Astro.locals) && (
-									<button type="button" class="btn btn-success">
-										Create System Announcements
-									</button>
-								)}
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Standard Menu Example</h2>
-							<p>This shows how the standard menu appears for admin users:</p>
-							<MenuExample />
-						</div>
-
-						<div class="demo-section">
-							<h2>Template Utility Functions</h2>
-							<p>Comprehensive demonstration of all RBAC template utilities:</p>
-							<TemplateUtilityDemo />
-						</div>
-
-						<div class="demo-section">
-							<h2>Test Other Roles</h2>
-							<p>Compare admin access with other role levels:</p>
-							<div class="role-links">
-								<a href="/test/editor" class="btn btn-outline">
-									Editor Test Page
-								</a>
-								<a href="/test/viewer" class="btn btn-outline">
-									Viewer Test Page
-								</a>
-								<a href="/test/menu" class="btn btn-outline">
-									Menu Test Page
-								</a>
-							</div>
+						<div class="bg-foreground/5 p-6 rounded border">
+							<PermissionMenu items={adminMenu} className="admin-navigation" />
 						</div>
 					</div>
-				)
-			}
-		</div>
+					{/* Permission-Based Components */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">
+							Permission-Based Components
+						</h2>
+						<p class="mb-6">
+							The following component demonstrates conditional rendering based
+							on permissions:
+						</p>
+						<PermissionExample />
+					</div>
+					{/* Admin Actions */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">Admin Actions</h2>
+						<p class="mb-6">
+							These actions are only available to users with admin permissions:
+						</p>
+						<div class="p-4 border rounded my-4 bg-foreground/5">
+							{canManageUser(Astro.locals) && (
+								<Button class="px-6 py-3 bg-red-500 dark:bg-red-600 text-white  font-medium hover:bg-red-600 dark:hover:bg-red-700 transition-colors border-0 cursor-pointer">
+									Delete User Account
+								</Button>
+							)}
+							{canManageUser(Astro.locals) && (
+								<Button class="px-6 py-3 bg-yellow-500 dark:bg-yellow-600 text-white  font-medium hover:bg-yellow-600 dark:hover:bg-yellow-700 transition-colors border-0 cursor-pointer">
+									Modify User Roles
+								</Button>
+							)}
+							{canEditContent(Astro.locals) && (
+								<Button class="px-6 py-3 bg-cyan-500 dark:bg-cyan-600 text-white  font-medium hover:bg-cyan-600 dark:hover:bg-cyan-700 transition-colors border-0 cursor-pointer">
+									Moderate All Content
+								</Button>
+							)}
+							{canWriteContent(Astro.locals) && (
+								<Button class="px-6 py-3 bg-green-500 dark:bg-green-600 text-white  font-medium hover:bg-green-600 dark:hover:bg-green-700 transition-colors border-0 cursor-pointer">
+									Create System Announcements
+								</Button>
+							)}
+						</div>
+					</div>
+					{/* Standard Menu Example */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">Standard Menu Example</h2>
+						<p class="mb-6">
+							This shows how the standard menu appears for admin users:
+						</p>
+						<MenuExample />
+					</div>
+					{/* Template Utility Functions */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">
+							Template Utility Functions
+						</h2>
+						<p class="mb-6">
+							Comprehensive demonstration of all RBAC template utilities:
+						</p>
+						<TemplateUtilityDemo />
+					</div>
+
+					{/* Test Other Roles */}
+					<div class="mb-10 pb-8">
+						<h2 class="text-2xl font-semibold mb-4">Test Other Roles</h2>
+						<p class="mb-6">Compare admin access with other role levels:</p>
+						<div class="flex flex-wrap gap-4 mt-4">
+							<Button variant="outline">
+								<a href="/test/editor">Editor Test Page</a>
+							</Button>
+							<Button variant="outline">
+								<a href="/test/viewer">Viewer Test Page</a>
+							</Button>
+							<Button variant="outline">
+								<a href="/test/menu">Menu Test Page</a>
+							</Button>
+						</div>
+					</div>
+				</>
+			)
+		}
 	</div>
 </Layout>
-
-<style>
-	.admin-test-page {
-		min-height: 100vh;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		padding: 2rem 0;
-	}
-
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 1rem;
-	}
-
-	.page-header {
-		text-align: center;
-		margin-bottom: 3rem;
-		color: white;
-	}
-
-	.page-header h1 {
-		font-size: 3rem;
-		margin-bottom: 0.5rem;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-	}
-
-	.subtitle {
-		font-size: 1.2rem;
-		opacity: 0.9;
-		margin: 0;
-	}
-
-	.auth-required,
-	.access-denied {
-		background: white;
-		padding: 2rem;
-		border-radius: 1rem;
-		text-align: center;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-	}
-
-	.admin-content {
-		background: white;
-		border-radius: 1rem;
-		padding: 2rem;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-	}
-
-	.user-info {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		margin-bottom: 2rem;
-		border-left: 4px solid #28a745;
-	}
-
-	.info-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.info-item {
-		padding: 0.5rem;
-		background: white;
-		border-radius: 0.25rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.demo-section {
-		margin-bottom: 2.5rem;
-		padding-bottom: 2rem;
-		border-bottom: 1px solid #e9ecef;
-	}
-
-	.demo-section:last-child {
-		border-bottom: none;
-		margin-bottom: 0;
-	}
-
-	.demo-section h2 {
-		color: #495057;
-		margin-bottom: 1rem;
-		font-size: 1.5rem;
-	}
-
-	.menu-demo {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.admin-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.role-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	/* Button styles */
-	.btn {
-		display: inline-block;
-		padding: 0.75rem 1.5rem;
-		border: none;
-		border-radius: 0.5rem;
-		text-decoration: none;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		text-align: center;
-	}
-
-	.btn-primary {
-		background: #007bff;
-		color: white;
-	}
-
-	.btn-primary:hover {
-		background: #0056b3;
-	}
-
-	.btn-secondary {
-		background: #6c757d;
-		color: white;
-	}
-
-	.btn-secondary:hover {
-		background: #545b62;
-	}
-
-	.btn-danger {
-		background: #dc3545;
-		color: white;
-	}
-
-	.btn-danger:hover {
-		background: #c82333;
-	}
-
-	.btn-warning {
-		background: #ffc107;
-		color: #212529;
-	}
-
-	.btn-warning:hover {
-		background: #e0a800;
-	}
-
-	.btn-info {
-		background: #17a2b8;
-		color: white;
-	}
-
-	.btn-info:hover {
-		background: #138496;
-	}
-
-	.btn-success {
-		background: #28a745;
-		color: white;
-	}
-
-	.btn-success:hover {
-		background: #218838;
-	}
-
-	.btn-outline {
-		background: transparent;
-		color: #007bff;
-		border: 2px solid #007bff;
-	}
-
-	.btn-outline:hover {
-		background: #007bff;
-		color: white;
-	}
-
-	/* Global menu styling */
-	:global(.admin-navigation) {
-		background: white;
-		border: 1px solid #dee2e6;
-		border-radius: 0.5rem;
-		overflow: hidden;
-	}
-
-	:global(.admin-navigation .menu-link) {
-		border-bottom: 1px solid #f8f9fa;
-	}
-
-	:global(.admin-navigation .menu-link:hover) {
-		background: #e9ecef;
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.page-header h1 {
-			font-size: 2rem;
-		}
-
-		.admin-actions,
-		.role-links {
-			flex-direction: column;
-		}
-
-		.info-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

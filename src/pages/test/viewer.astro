@@ -113,519 +113,234 @@ const restrictedItems = [
 ---
 
 <Layout pageMeta={pageMeta}>
-	<div class="viewer-test-page">
-		<div class="container">
-			<header class="page-header">
-				<h1>Viewer Test Page</h1>
-				<p class="subtitle">
-					Demonstrating viewer-level access with minimal permissions
-				</p>
-			</header>
+	<div class="container">
+		<header class="text-center mb-12 text-white">
+			<h1 class="text-5xl font-bold mb-2 drop-shadow-lg">Viewer Test Page</h1>
+			<p class="text-xl opacity-90 m-0">
+				Demonstrating viewer-level access with minimal permissions
+			</p>
+		</header>
 
-			{
-				!authenticated ? (
-					<div class="auth-required">
-						<h2>Authentication Required</h2>
-						<p>Please sign in to access this viewer test page.</p>
-						<a href="/sign-in" class="btn btn-primary">
-							Sign In
-						</a>
-					</div>
-				) : (
-					<div class="viewer-content">
-						<div class="user-info">
-							<h2>Current User Information</h2>
-							<div class="info-grid">
-								<div class="info-item">
-									<strong>Role:</strong> {userRole}
-								</div>
-								<div class="info-item">
-									<strong>Permissions:</strong>{' '}
+		{
+			!authenticated ? (
+				<div class="bg-white dark:bg-gray-800 p-8 rounded-2xl text-center shadow-2xl">
+					<h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+						Authentication Required
+					</h2>
+					<p class="mb-6 text-gray-700 dark:text-gray-300">
+						Please sign in to access this viewer test page.
+					</p>
+					<a
+						href="/sign-in"
+						class="inline-block px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white  font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors no-underline"
+					>
+						Sign In
+					</a>
+				</div>
+			) : (
+				<div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
+					<div class="bg-blue-50 dark:bg-blue-900/30 p-6  mb-8 border-l-4 border-blue-500">
+						<h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+							Current User Information
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-blue-200 dark:border-gray-500">
+								<strong class="text-gray-900 dark:text-gray-100">Role:</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">{userRole}</span>
+							</div>
+							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-blue-200 dark:border-gray-500">
+								<strong class="text-gray-900 dark:text-gray-100">
+									Permissions:
+								</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">
 									{userPermissions.length > 0
 										? userPermissions.join(', ')
 										: 'None (viewer role)'}
-								</div>
-								<div class="info-item">
-									<strong>Access Level:</strong> Read-only
-								</div>
-								<div class="info-item">
-									<strong>Account Type:</strong> Standard User
-								</div>
+								</span>
 							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Available Navigation</h2>
-							<p>
-								This menu shows what's accessible to viewer-level users (no
-								special permissions required):
-							</p>
-							<div class="menu-demo">
-								<PermissionMenu
-									items={viewerMenu}
-									className="viewer-navigation"
-								/>
+							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-blue-200 dark:border-gray-500">
+								<strong class="text-gray-900 dark:text-gray-100">
+									Access Level:
+								</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">Read-only</span>
 							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Permission Status</h2>
-							<p>Here's what you can and cannot do with viewer-level access:</p>
-							<div class="permission-status">
-								<div class="status-section allowed">
-									<h3>✅ What You Can Do</h3>
-									<ul>
-										<li>Browse and read all public content</li>
-										<li>Access your account settings</li>
-										<li>View help and documentation</li>
-										<li>Search and filter content</li>
-										<li>Update your profile information</li>
-										<li>Change account preferences</li>
-									</ul>
-								</div>
-
-								<div class="status-section restricted">
-									<h3>❌ What You Cannot Do</h3>
-									<ul>
-										{restrictedItems.map((item) => (
-											<li>
-												{item.label} (requires {item.permission} permission)
-											</li>
-										))}
-									</ul>
-								</div>
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Action Buttons Demo</h2>
-							<p>These buttons demonstrate permission-based visibility:</p>
-							<div class="action-demo">
-								<div class="available-actions">
-									<h4>Available Actions</h4>
-									<button type="button" class="btn btn-primary">
-										View Content
-									</button>
-									<button type="button" class="btn btn-info">
-										Search
-									</button>
-									<button type="button" class="btn btn-secondary">
-										Update Profile
-									</button>
-								</div>
-
-								<div class="restricted-actions">
-									<h4>Restricted Actions (Not Visible/Disabled)</h4>
-									{!canWriteContent(Astro.locals) && (
-										<button type="button" class="btn btn-disabled" disabled>
-											Create Content (requires write_content)
-										</button>
-									)}
-									{!canEditContent(Astro.locals) && (
-										<button type="button" class="btn btn-disabled" disabled>
-											Edit Content (requires edit_content)
-										</button>
-									)}
-									{!canManageUser(Astro.locals) && (
-										<button type="button" class="btn btn-disabled" disabled>
-											Manage Users (requires manage_user)
-										</button>
-									)}
-								</div>
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Permission-Based Components</h2>
-							<p>
-								The following component shows how content adapts to your
-								permission level:
-							</p>
-							<PermissionExample />
-						</div>
-
-						<div class="demo-section">
-							<h2>Standard Menu Example</h2>
-							<p>This shows how the standard menu appears for viewer users:</p>
-							<MenuExample />
-						</div>
-
-						<div class="demo-section">
-							<h2>Role Upgrade Information</h2>
-							<div class="upgrade-info">
-								<h3>Want More Access?</h3>
-								<p>
-									Your current viewer role provides read-only access. To get
-									additional permissions, you would need:
-								</p>
-								<div class="role-comparison">
-									<div class="role-card">
-										<h4>Editor Role</h4>
-										<p>
-											<strong>Additional permissions:</strong>
-										</p>
-										<ul>
-											<li>write_content - Create new content</li>
-											<li>edit_content - Modify existing content</li>
-										</ul>
-										<p>
-											<strong>Capabilities:</strong>
-										</p>
-										<ul>
-											<li>Create articles and posts</li>
-											<li>Edit and publish content</li>
-											<li>Manage content workflow</li>
-										</ul>
-									</div>
-									<div class="role-card">
-										<h4>Admin Role</h4>
-										<p>
-											<strong>All permissions:</strong>
-										</p>
-										<ul>
-											<li>write_content - Create content</li>
-											<li>edit_content - Edit content</li>
-											<li>manage_user - User management</li>
-										</ul>
-										<p>
-											<strong>Capabilities:</strong>
-										</p>
-										<ul>
-											<li>Full content management</li>
-											<li>User account management</li>
-											<li>System administration</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="demo-section">
-							<h2>Test Other Roles</h2>
-							<p>
-								Compare viewer access with higher privilege levels (note: you
-								may get access denied):
-							</p>
-							<div class="role-links">
-								<a href="/test/editor" class="btn btn-outline">
-									Editor Test Page
-								</a>
-								<a href="/test/a" class="btn btn-outline">
-									Admin Test Page
-								</a>
-								<a href="/test/menu" class="btn btn-outline">
-									Menu Test Page
-								</a>
+							<div class="p-3 bg-white dark:bg-gray-600 rounded border border-blue-200 dark:border-gray-500">
+								<strong class="text-gray-900 dark:text-gray-100">
+									Account Type:
+								</strong>{' '}
+								<span class="text-gray-700 dark:text-gray-300">
+									Standard User
+								</span>
 							</div>
 						</div>
 					</div>
-				)
-			}
-		</div>
+
+					<div class="demo-section">
+						<h2>Available Navigation</h2>
+						<p>
+							This menu shows what's accessible to viewer-level users (no
+							special permissions required):
+						</p>
+						<div class="menu-demo">
+							<PermissionMenu
+								items={viewerMenu}
+								className="viewer-navigation"
+							/>
+						</div>
+					</div>
+
+					<div class="demo-section">
+						<h2>Permission Status</h2>
+						<p>Here's what you can and cannot do with viewer-level access:</p>
+						<div class="permission-status">
+							<div class="status-section allowed">
+								<h3>✅ What You Can Do</h3>
+								<ul>
+									<li>Browse and read all public content</li>
+									<li>Access your account settings</li>
+									<li>View help and documentation</li>
+									<li>Search and filter content</li>
+									<li>Update your profile information</li>
+									<li>Change account preferences</li>
+								</ul>
+							</div>
+
+							<div class="status-section restricted">
+								<h3>❌ What You Cannot Do</h3>
+								<ul>
+									{restrictedItems.map((item) => (
+										<li>
+											{item.label} (requires {item.permission} permission)
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="demo-section">
+						<h2>Action Buttons Demo</h2>
+						<p>These buttons demonstrate permission-based visibility:</p>
+						<div class="action-demo">
+							<div class="available-actions">
+								<h4>Available Actions</h4>
+								<button type="button" class="btn btn-primary">
+									View Content
+								</button>
+								<button type="button" class="btn btn-info">
+									Search
+								</button>
+								<button type="button" class="btn btn-secondary">
+									Update Profile
+								</button>
+							</div>
+
+							<div class="restricted-actions">
+								<h4>Restricted Actions (Not Visible/Disabled)</h4>
+								{!canWriteContent(Astro.locals) && (
+									<button type="button" class="btn btn-disabled" disabled>
+										Create Content (requires write_content)
+									</button>
+								)}
+								{!canEditContent(Astro.locals) && (
+									<button type="button" class="btn btn-disabled" disabled>
+										Edit Content (requires edit_content)
+									</button>
+								)}
+								{!canManageUser(Astro.locals) && (
+									<button type="button" class="btn btn-disabled" disabled>
+										Manage Users (requires manage_user)
+									</button>
+								)}
+							</div>
+						</div>
+					</div>
+
+					<div class="demo-section">
+						<h2>Permission-Based Components</h2>
+						<p>
+							The following component shows how content adapts to your
+							permission level:
+						</p>
+						<PermissionExample />
+					</div>
+
+					<div class="demo-section">
+						<h2>Standard Menu Example</h2>
+						<p>This shows how the standard menu appears for viewer users:</p>
+						<MenuExample />
+					</div>
+
+					<div class="demo-section">
+						<h2>Role Upgrade Information</h2>
+						<div class="upgrade-info">
+							<h3>Want More Access?</h3>
+							<p>
+								Your current viewer role provides read-only access. To get
+								additional permissions, you would need:
+							</p>
+							<div class="role-comparison">
+								<div class="role-card">
+									<h4>Editor Role</h4>
+									<p>
+										<strong>Additional permissions:</strong>
+									</p>
+									<ul>
+										<li>write_content - Create new content</li>
+										<li>edit_content - Modify existing content</li>
+									</ul>
+									<p>
+										<strong>Capabilities:</strong>
+									</p>
+									<ul>
+										<li>Create articles and posts</li>
+										<li>Edit and publish content</li>
+										<li>Manage content workflow</li>
+									</ul>
+								</div>
+								<div class="role-card">
+									<h4>Admin Role</h4>
+									<p>
+										<strong>All permissions:</strong>
+									</p>
+									<ul>
+										<li>write_content - Create content</li>
+										<li>edit_content - Edit content</li>
+										<li>manage_user - User management</li>
+									</ul>
+									<p>
+										<strong>Capabilities:</strong>
+									</p>
+									<ul>
+										<li>Full content management</li>
+										<li>User account management</li>
+										<li>System administration</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="demo-section">
+						<h2>Test Other Roles</h2>
+						<p>
+							Compare viewer access with higher privilege levels (note: you may
+							get access denied):
+						</p>
+						<div class="role-links">
+							<a href="/test/editor" class="btn btn-outline">
+								Editor Test Page
+							</a>
+							<a href="/test/a" class="btn btn-outline">
+								Admin Test Page
+							</a>
+							<a href="/test/menu" class="btn btn-outline">
+								Menu Test Page
+							</a>
+						</div>
+					</div>
+				</div>
+			)
+		}
 	</div>
 </Layout>
-
-<style>
-	.viewer-test-page {
-		min-height: 100vh;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		padding: 2rem 0;
-	}
-
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 1rem;
-	}
-
-	.page-header {
-		text-align: center;
-		margin-bottom: 3rem;
-		color: white;
-	}
-
-	.page-header h1 {
-		font-size: 3rem;
-		margin-bottom: 0.5rem;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-	}
-
-	.subtitle {
-		font-size: 1.2rem;
-		opacity: 0.9;
-		margin: 0;
-	}
-
-	.auth-required {
-		background: white;
-		padding: 2rem;
-		border-radius: 1rem;
-		text-align: center;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-	}
-
-	.viewer-content {
-		background: white;
-		border-radius: 1rem;
-		padding: 2rem;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-	}
-
-	.user-info {
-		background: #e3f2fd;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		margin-bottom: 2rem;
-		border-left: 4px solid #2196f3;
-	}
-
-	.info-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.info-item {
-		padding: 0.5rem;
-		background: white;
-		border-radius: 0.25rem;
-		border: 1px solid #bbdefb;
-	}
-
-	.demo-section {
-		margin-bottom: 2.5rem;
-		padding-bottom: 2rem;
-		border-bottom: 1px solid #e9ecef;
-	}
-
-	.demo-section:last-child {
-		border-bottom: none;
-		margin-bottom: 0;
-	}
-
-	.demo-section h2 {
-		color: #495057;
-		margin-bottom: 1rem;
-		font-size: 1.5rem;
-	}
-
-	.menu-demo {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.permission-status {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1.5rem;
-		margin-top: 1rem;
-	}
-
-	.status-section {
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.status-section.allowed {
-		background: #d4edda;
-		border-color: #c3e6cb;
-	}
-
-	.status-section.restricted {
-		background: #f8d7da;
-		border-color: #f5c6cb;
-	}
-
-	.status-section h3 {
-		margin-top: 0;
-		margin-bottom: 1rem;
-		font-size: 1.1rem;
-	}
-
-	.status-section ul {
-		margin: 0;
-		padding-left: 1.5rem;
-	}
-
-	.status-section li {
-		margin-bottom: 0.5rem;
-	}
-
-	.action-demo {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1.5rem;
-		margin-top: 1rem;
-	}
-
-	.available-actions,
-	.restricted-actions {
-		background: #f8f9fa;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.available-actions h4,
-	.restricted-actions h4 {
-		margin-top: 0;
-		margin-bottom: 1rem;
-		color: #495057;
-	}
-
-	.available-actions .btn,
-	.restricted-actions .btn {
-		display: block;
-		width: 100%;
-		margin-bottom: 0.5rem;
-	}
-
-	.upgrade-info {
-		background: #fff3cd;
-		padding: 1.5rem;
-		border-radius: 0.5rem;
-		border: 1px solid #ffeaa7;
-		margin-top: 1rem;
-	}
-
-	.upgrade-info h3 {
-		margin-top: 0;
-		color: #856404;
-	}
-
-	.role-comparison {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.role-card {
-		background: white;
-		padding: 1rem;
-		border-radius: 0.5rem;
-		border: 1px solid #dee2e6;
-	}
-
-	.role-card h4 {
-		margin-top: 0;
-		color: #495057;
-		border-bottom: 2px solid #007bff;
-		padding-bottom: 0.5rem;
-	}
-
-	.role-card ul {
-		margin: 0.5rem 0;
-		padding-left: 1.5rem;
-	}
-
-	.role-card li {
-		margin-bottom: 0.25rem;
-		font-size: 0.9rem;
-	}
-
-	.role-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	/* Button styles */
-	.btn {
-		display: inline-block;
-		padding: 0.75rem 1.5rem;
-		border: none;
-		border-radius: 0.5rem;
-		text-decoration: none;
-		font-weight: 500;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		text-align: center;
-	}
-
-	.btn-primary {
-		background: #007bff;
-		color: white;
-	}
-
-	.btn-primary:hover {
-		background: #0056b3;
-	}
-
-	.btn-secondary {
-		background: #6c757d;
-		color: white;
-	}
-
-	.btn-secondary:hover {
-		background: #545b62;
-	}
-
-	.btn-info {
-		background: #17a2b8;
-		color: white;
-	}
-
-	.btn-info:hover {
-		background: #138496;
-	}
-
-	.btn-outline {
-		background: transparent;
-		color: #007bff;
-		border: 2px solid #007bff;
-	}
-
-	.btn-outline:hover {
-		background: #007bff;
-		color: white;
-	}
-
-	.btn-disabled {
-		background: #e9ecef;
-		color: #6c757d;
-		cursor: not-allowed;
-	}
-
-	/* Global menu styling */
-	:global(.viewer-navigation) {
-		background: white;
-		border: 1px solid #dee2e6;
-		border-radius: 0.5rem;
-		overflow: hidden;
-	}
-
-	:global(.viewer-navigation .menu-link) {
-		border-bottom: 1px solid #f8f9fa;
-	}
-
-	:global(.viewer-navigation .menu-link:hover) {
-		background: #e9ecef;
-	}
-
-	/* Responsive design */
-	@media (max-width: 768px) {
-		.page-header h1 {
-			font-size: 2rem;
-		}
-
-		.permission-status,
-		.action-demo,
-		.role-comparison {
-			grid-template-columns: 1fr;
-		}
-
-		.role-links {
-			flex-direction: column;
-		}
-
-		.info-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

@@ -5,7 +5,8 @@
  * Comprehensive showcase of all RBAC template utilities and their usage patterns.
  * Demonstrates conditional rendering, permission checking, and role-based UI adaptation.
  */
-
+import { Button } from '@/components/ui/button';
+import { Code } from 'astro:components';
 import {
 	canWriteContent,
 	canEditContent,
@@ -60,8 +61,8 @@ const demoPermissions: Permission[] = [
 ---
 
 <div class="w-full">
-	<div
-		class="text-center mb-8 p-6 bg-linear-to-br from-blue-500 to-purple-600 text-white rounded-lg"
+	<!-- <div
+		class="text-center mb-8 p-6 bg-linear-to-br from-blue-500 to-purple-600 text-white"
 	>
 		<h2 class="text-2xl font-bold mb-2 m-0">
 			Template Utility Functions Demonstration
@@ -70,11 +71,11 @@ const demoPermissions: Permission[] = [
 			Interactive showcase of all RBAC template utilities and their real-time
 			results
 		</p>
-	</div>
+	</div> -->
 
 	{
 		!authenticated ? (
-			<div class="text-center p-8 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg text-yellow-800 dark:text-yellow-200">
+			<div class="text-center p-8 bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700  text-yellow-800 dark:text-yellow-200">
 				<h3 class="text-lg font-semibold mb-2">⚠️ Authentication Required</h3>
 				<p class="mb-4">
 					Sign in to see the template utilities in action with real user data.
@@ -88,51 +89,49 @@ const demoPermissions: Permission[] = [
 			</div>
 		) : (
 			<div class="flex flex-col gap-8">
-				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
-					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
-						Current User Context
-					</h3>
+				{/* Current User Context */}
+				<div class="bg-foreground/5 p-6 rounded border">
+					<h3 class="text-lg font-semi m-0 mb-4 pb-2">Current User Context</h3>
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
-							<strong class="text-gray-900 dark:text-gray-100">
-								Authenticated:
-							</strong>
+						<div class="bg-foreground/10 p-4 rounded border">
+							<strong>Authenticated:</strong>
 							<span
 								class={`font-bold ${authenticated ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}
 							>
 								{authenticated ? 'Yes' : 'No'}
 							</span>
 						</div>
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
-							<strong class="text-gray-900 dark:text-gray-100">Role:</strong>
+						<div class="bg-foreground/10 p-4 rounded border">
+							<strong>Role:</strong>
 							<span
-								class={`px-2 py-1 rounded text-xs font-bold uppercase text-white ${userRole === 'admin' ? 'bg-red-500' : userRole === 'editor' ? 'bg-green-500' : 'bg-gray-500'}`}
+								class={`px-2 py-1 rounded text-xs font-bold uppercase text-white ${userRole === 'admin' ? 'bg-destructive' : userRole === 'editor' ? 'bg-green-500' : 'bg-gray-500'}`}
 							>
 								{userRole}
 							</span>
 						</div>
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600">
-							<strong class="text-gray-900 dark:text-gray-100">
-								Permissions:
-							</strong>
-							<span class="font-mono bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded text-sm text-gray-800 dark:text-gray-200">
+						<div class="bg-foreground/10 p-4 rounded border">
+							<strong>Permissions:</strong>
+							<span class="text-sm flex gap-2">
 								{userPermissions.length > 0
-									? userPermissions.join(', ')
+									? userPermissions.map((permission) => (
+											<code class="rounded font-mono bg-foreground/10 px-1">
+												{permission}
+											</code>
+										))
 									: 'None'}
 							</span>
 						</div>
 					</div>
 				</div>
 
-				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
-					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+				{/* Permission Checking Utilities */}
+				<div class="bg-foreground/5 p-6 rounded border">
+					<h3 class="text-lg font-semi m-0 mb-4 pb-2">
 						Permission Checking Utilities
 					</h3>
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								canWriteContent()
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border">
+							<h4 class="m-0 mb-2 font-mono text-sm">canWriteContent()</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${canWrite ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -140,20 +139,16 @@ const demoPermissions: Permission[] = [
 									{canWrite ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-								Checks if user can create new content
-							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<p class="text-sm  mb-2">Checks if user can create new content</p>
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{canWrite
 									? '// User can create content'
 									: '// User cannot create content'}
 							</code>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								canEditContent()
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border">
+							<h4 class="m-0 mb-2 font-mono text-sm">canEditContent()</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${canEdit ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -161,20 +156,18 @@ const demoPermissions: Permission[] = [
 									{canEdit ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+							<p class="text-sm  mb-2">
 								Checks if user can edit existing content
 							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{canEdit
 									? '// User can edit content'
 									: '// User cannot edit content'}
 							</code>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								canManageUser()
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border">
+							<h4 class="m-0 mb-2 font-mono text-sm">canManageUser()</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${canManage ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -182,10 +175,8 @@ const demoPermissions: Permission[] = [
 									{canManage ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-								Checks if user can manage other users
-							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<p class="text-sm  mb-2">Checks if user can manage other users</p>
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{canManage
 									? '// User can manage users'
 									: '// User cannot manage users'}
@@ -194,15 +185,15 @@ const demoPermissions: Permission[] = [
 					</div>
 				</div>
 
-				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
-					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+				{/* ##################### */}
+				{/* Role Checking Utilities */}
+				<div class="bg-foreground/5 p-6 rounded border">
+					<h3 class="text-lg font-semi m-0 mb-4 pb-2">
 						Role Checking Utilities
 					</h3>
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								isAdmin()
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">isAdmin()</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${isUserAdmin ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -210,20 +201,16 @@ const demoPermissions: Permission[] = [
 									{isUserAdmin ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-								Checks if user has admin role
-							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<p class="text-sm  mb-2">Checks if user has admin role</p>
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{isUserAdmin
 									? '// User is an admin'
 									: '// User is not an admin'}
 							</code>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								hasRole('editor')
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">hasRole('editor')</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${isUserEditor ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -231,20 +218,16 @@ const demoPermissions: Permission[] = [
 									{isUserEditor ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-								Checks if user has editor role
-							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<p class="text-sm  mb-2">Checks if user has editor role</p>
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{isUserEditor
 									? '// User is an editor'
 									: '// User is not an editor'}
 							</code>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								hasRole('viewer')
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">hasRole('viewer')</h4>
 							<div class="mb-2">
 								<span
 									class={`px-2 py-1 rounded font-bold font-mono ${isUserViewer ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200'}`}
@@ -252,10 +235,8 @@ const demoPermissions: Permission[] = [
 									{isUserViewer ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-								Checks if user has viewer role
-							</p>
-							<code class="block bg-gray-100 dark:bg-gray-600 p-2 rounded font-mono text-xs text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-500 mt-2">
+							<p class="text-sm  mb-2">Checks if user has viewer role</p>
+							<code class="block bg-foreground/5 p-2 rounded font-mono text-xs border  mt-2">
 								{isUserViewer
 									? '// User is a viewer'
 									: '// User is not a viewer'}
@@ -264,13 +245,14 @@ const demoPermissions: Permission[] = [
 					</div>
 				</div>
 
-				<div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-600">
-					<h3 class="m-0 mb-4 text-gray-700 dark:text-gray-300 border-b-2 border-blue-500 dark:border-blue-400 pb-2">
+				{/* Advanced Permission Utilities */}
+				<div class="bg-foreground/5 p-6 rounded border">
+					<h3 class="text-lg font-semi m-0 mb-4 pb-2">
 						Advanced Permission Utilities
 					</h3>
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">
 								hasPermission('write_content')
 							</h4>
 							<div class="mb-2">
@@ -280,13 +262,13 @@ const demoPermissions: Permission[] = [
 									{hasWritePermission ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400">
+							<p class="text-sm ">
 								Direct permission check for specific permission
 							</p>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">
 								hasAnyPermission(['write_content', 'edit_content'])
 							</h4>
 							<div class="mb-2">
@@ -296,121 +278,94 @@ const demoPermissions: Permission[] = [
 									{hasContentPermissions ? 'true' : 'false'}
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400">
+							<p class="text-sm ">
 								Checks if user has any of the specified permissions
 							</p>
 						</div>
 
-						<div class="bg-white dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 shadow-sm">
-							<h4 class="m-0 mb-2 text-gray-700 dark:text-gray-300 font-mono text-sm">
-								getUserRole()
-							</h4>
+						<div class="bg-foreground/10 p-4 rounded border ">
+							<h4 class="m-0 mb-2 font-mono text-sm">getUserRole()</h4>
 							<div class="mb-2">
 								<span class="px-2 py-1 rounded font-bold font-mono bg-gray-100 dark:bg-gray-600 text-gray-800 dark:text-gray-200">
 									'{userRole}'
 								</span>
 							</div>
-							<p class="text-sm text-gray-600 dark:text-gray-400">
-								Returns the current user's role
-							</p>
+							<p class="text-sm ">Returns the current user's role</p>
 						</div>
 					</div>
 				</div>
 
+				{/* Conditional Rendering Examples */}
 				<div class="conditional-rendering-section">
-					<h3>Conditional Rendering Examples</h3>
-					<div class="rendering-examples">
-						<div class="example-card">
-							<h4>Content Creation UI</h4>
+					<h3 class="text-lg font-semibold mb-4">
+						Conditional Rendering Examples
+					</h3>
+					<div>
+						<div class="space-y-4">
+							<h4 class="font-semibold py-4">Content Creation UI</h4>
 							{canWrite ? (
-								<div class="feature-available">
-									<button type="button" class="demo-button primary">
-										Create New Article
-									</button>
-									<button type="button" class="demo-button secondary">
-										Save Draft
-									</button>
-									<p class="feature-note">
-										✅ Content creation tools are available
-									</p>
+								<div>
+									<p>✅ Content creation tools are available</p>
+									<Button variant="outline">Create New Article</Button>
+									<Button variant="outline">Save Draft</Button>
 								</div>
 							) : (
-								<div class="feature-unavailable">
-									<button type="button" class="demo-button disabled" disabled>
-										Create New Article
-									</button>
-									<p class="feature-note">
-										❌ Content creation requires write_content permission
-									</p>
+								<div>
+									<p>❌ Content creation requires write_content permission</p>
+									{/* TODO: disable */}
+									<Button variant="outline">Create New Article</Button>
 								</div>
 							)}
 						</div>
 
-						<div class="example-card">
-							<h4>Editorial Tools</h4>
+						<div class="space-y-4">
+							<h4 class="font-semibold py-4">Editorial Tools</h4>
 							{canEdit ? (
-								<div class="feature-available">
-									<button type="button" class="demo-button primary">
-										Review Queue
-									</button>
-									<button type="button" class="demo-button secondary">
-										Bulk Edit
-									</button>
-									<button type="button" class="demo-button success">
-										Publish Content
-									</button>
-									<p class="feature-note">✅ Editorial tools are available</p>
+								<div>
+									<p>✅ Editorial tools are available</p>
+									<Button variant="outline">Review Queue</Button>
+									<Button variant="outline">Bulk Edit</Button>
+									<Button variant="outline">Publish Content</Button>
 								</div>
 							) : (
-								<div class="feature-unavailable">
-									<button type="button" class="demo-button disabled" disabled>
-										Review Queue
-									</button>
-									<p class="feature-note">
-										❌ Editorial tools require edit_content permission
-									</p>
+								<div>
+									<p>❌ Editorial tools require edit_content permission</p>
+									<Button variant="outline">Review Queue</Button>
 								</div>
 							)}
 						</div>
 
-						<div class="example-card">
-							<h4>Admin Panel</h4>
+						<div class="space-y-4">
+							<h4 class="font-semibold py-4">Admin Panel</h4>
 							{canManage ? (
 								<div class="feature-available">
-									<button type="button" class="demo-button danger">
-										Delete User
-									</button>
-									<button type="button" class="demo-button warning">
-										Change Roles
-									</button>
-									<button type="button" class="demo-button info">
-										System Settings
-									</button>
-									<p class="feature-note">
-										✅ Administrative controls are available
-									</p>
+									<p>✅ Administrative controls are available</p>
+									{/* TODO: add color */}
+									<Button variant="outline">Delete User</Button>
+									<Button variant="outline">Change Roles</Button>
+									<Button variant="outline">System Settings</Button>
 								</div>
 							) : (
-								<div class="feature-unavailable">
-									<button type="button" class="demo-button disabled" disabled>
-										Admin Panel
-									</button>
-									<p class="feature-note">
-										❌ Admin panel requires manage_user permission
-									</p>
+								<div>
+									<Button variant="outline">Admin Panel</Button>
+									<p>❌ Admin panel requires manage_user permission</p>
 								</div>
 							)}
 						</div>
 					</div>
 				</div>
 
-				<div class="code-examples-section">
-					<h3>Usage Code Examples</h3>
-					<div class="code-examples">
+				{/* Usage Code Examples */}
+				<div class="conditional-rendering-section">
+					<h3 class="text-lg font-semibold mb-4">Usage Code Examples</h3>
+					<div class="space-y-6">
 						<div class="code-example">
-							<h4>Basic Permission Check</h4>
-							<pre>
-								<code>{`---
+							<h4 class="font-bold py-4">Basic Permission Check</h4>
+							<Code
+								lang="astro"
+								class="p-4"
+								code={`
+---
 import { canWriteContent } from '@/lib/auth';
 
 const canWrite = canWriteContent(Astro.locals);
@@ -418,29 +373,36 @@ const canWrite = canWriteContent(Astro.locals);
 
 {canWrite && (
   <button>Create Content</button>
-)}`}</code>
-							</pre>
+)}
+  `}
+							/>
 						</div>
 
 						<div class="code-example">
-							<h4>Role-Based Rendering</h4>
-							<pre>
-								<code>{`---
-import { isAdmin, hasRole } from '@/lib/auth';
+							<h4 class="font-bold py-4">Role-Based Rendering</h4>
+							<Code
+								lang="astro"
+								class="p-4"
+								code={`
+--- 
+import {(isAdmin, hasRole)} from '@/lib/auth';
 
 const isUserAdmin = isAdmin(Astro.locals);
 const isEditor = hasRole(Astro.locals, 'editor');
 ---
-
 {isUserAdmin && <AdminPanel />}
-{isEditor && <EditorTools />}`}</code>
-							</pre>
+{isEditor && <EditorTools />}
+`}
+							/>
 						</div>
 
 						<div class="code-example">
-							<h4>Multiple Permission Check</h4>
-							<pre>
-								<code>{`---
+							<h4 class="font-bold py-4">Multiple Permission Check</h4>
+							<Code
+								lang="astro"
+								class="p-4"
+								code={`
+---
 import { hasAnyPermission } from '@/lib/auth';
 
 const hasContentAccess = hasAnyPermission(
@@ -449,8 +411,9 @@ const hasContentAccess = hasAnyPermission(
 );
 ---
 
-{hasContentAccess && <ContentManagement />}`}</code>
-							</pre>
+{hasContentAccess && <ContentManagement />
+								`}
+							/>
 						</div>
 					</div>
 				</div>

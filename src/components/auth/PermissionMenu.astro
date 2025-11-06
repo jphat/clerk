@@ -79,14 +79,14 @@ const visibleItems = filterMenuItems(items);
 {
 	visibleItems.length > 0 && (
 		<nav
-			class={`block ${className} ${nested ? 'ml-4 border-l bg-foreground/20' : ''}`}
+			class={`block ${className} ${nested ? 'ml-4 border-l border-foreground/40' : ''}`}
 		>
 			<ul class="list-none m-0 p-0">
 				{visibleItems.map((item) => (
 					<li class="relative">
 						<a
 							href={item.href}
-							class={`block px-4 py-3 no-underline text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset transition-colors ${nested ? 'pl-6 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200' : ''}`}
+							class={`block px-4 py-3 hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-inset transition-colors ${nested ? 'pl-6 text-sm ' : ''}`}
 							aria-label={item.label}
 						>
 							{item.label}

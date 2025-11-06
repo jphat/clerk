@@ -28,7 +28,7 @@ const user = Astro.locals.user;
 		{
 			user ? (
 				<div class="mt-6 space-y-4">
-					<div class="bg-card p-6 rounded-lg border">
+					<div class="bg-card p-6  border">
 						<h2 class="text-xl font-semibold mb-2">
 							Welcome back, {user.email}!
 						</h2>
@@ -39,7 +39,7 @@ const user = Astro.locals.user;
 
 						<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 							{canWriteContent(Astro.locals) && (
-								<div class="bg-primary/10 p-4 rounded-lg">
+								<div class="bg-primary/10 p-4 ">
 									<h3 class="font-medium text-primary">Content Creation</h3>
 									<p class="text-sm text-muted-foreground mt-1">
 										You can create new content
@@ -54,7 +54,7 @@ const user = Astro.locals.user;
 							)}
 
 							{canEditContent(Astro.locals) && (
-								<div class="bg-secondary/50 p-4 rounded-lg">
+								<div class="bg-secondary/50 p-4 ">
 									<h3 class="font-medium">Content Editing</h3>
 									<p class="text-sm text-muted-foreground mt-1">
 										You can edit existing content
@@ -69,7 +69,7 @@ const user = Astro.locals.user;
 							)}
 
 							{canManageUser(Astro.locals) && (
-								<div class="bg-accent/50 p-4 rounded-lg">
+								<div class="bg-accent/50 p-4 ">
 									<h3 class="font-medium">User Management</h3>
 									<p class="text-sm text-muted-foreground mt-1">
 										You can manage users and permissions
@@ -84,7 +84,7 @@ const user = Astro.locals.user;
 							)}
 
 							{isAdmin(Astro.locals) && (
-								<div class="bg-destructive/10 p-4 rounded-lg border-destructive/20 border">
+								<div class="bg-destructive/10 p-4  border-destructive/20 border">
 									<h3 class="font-medium text-destructive">Admin Access</h3>
 									<p class="text-sm text-muted-foreground mt-1">
 										You have full administrative privileges
@@ -101,7 +101,7 @@ const user = Astro.locals.user;
 
 						{hasRole(Astro.locals, 'viewer') &&
 							!canWriteContent(Astro.locals) && (
-								<div class="mt-4 p-4 bg-muted rounded-lg">
+								<div class="mt-4 p-4 bg-muted ">
 									<p class="text-sm text-muted-foreground">
 										You currently have viewer access. Contact an administrator
 										to request additional permissions.
@@ -110,7 +110,7 @@ const user = Astro.locals.user;
 							)}
 					</div>
 
-					<div class="bg-card p-6 rounded-lg border">
+					<div class="bg-card p-6  border">
 						<h3 class="text-lg font-medium mb-3">Quick Actions</h3>
 						<div class="flex flex-wrap gap-2">
 							<a
@@ -138,7 +138,7 @@ const user = Astro.locals.user;
 				</div>
 			) : (
 				<div class="mt-6">
-					<div class="bg-card p-6 rounded-lg border text-center">
+					<div class="bg-card p-6  border text-center">
 						<h2 class="text-xl font-semibold mb-2">Get Started</h2>
 						<p class="text-muted-foreground mb-4">
 							Sign in to access personalized content and features based on your

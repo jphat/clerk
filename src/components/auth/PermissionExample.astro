@@ -6,6 +6,7 @@
  * for conditional rendering based on user permissions and roles.
  */
 
+import { Button } from '@/components/ui/button';
 import {
 	canWriteContent,
 	canEditContent,
@@ -24,82 +25,44 @@ const userIsEditor = hasRole(Astro.locals, 'editor');
 const userIsAuthenticated = isAuthenticated(Astro.locals);
 ---
 
-<div
-	class="p-4 border border-gray-300 dark:border-gray-600 rounded-lg my-4 bg-white dark:bg-gray-800"
->
-	<h2 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-		Permission-Based Content
-	</h2>
+<div class="p-4 border rounded my-4 bg-foreground/5">
+	<h3 class="text-xl font-semibold mb-4">Permission-Based Content</h3>
 
 	{
 		userIsAuthenticated ? (
 			<div class="space-y-4">
-				<p class="text-gray-700 dark:text-gray-300">
-					Welcome, authenticated user!
-				</p>
+				<p>Welcome, authenticated user!</p>
 
 				<div class="flex flex-wrap gap-2">
-					{userCanWrite && (
-						<button
-							type="button"
-							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
-						>
-							Create New Content
-						</button>
-					)}
+					{userCanWrite && <Button variant="outline">Create Content</Button>}
 
-					{userCanEdit && (
-						<button
-							type="button"
-							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
-						>
-							Edit Content
-						</button>
-					)}
+					{userCanEdit && <Button variant="outline">Edit Content</Button>}
 
-					{userCanManage && (
-						<button
-							type="button"
-							class="px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white border-0 rounded cursor-pointer hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
-						>
-							Manage Users
-						</button>
-					)}
+					{userCanManage && <Button variant="outline">Manage Users</Button>}
 				</div>
 
 				{userIsAdmin && (
-					<div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded border border-blue-200 dark:border-blue-700 my-2">
-						<h3 class="text-lg font-medium mb-2 text-blue-900 dark:text-blue-100">
-							Admin Panel
-						</h3>
-						<p class="text-blue-800 dark:text-blue-200">
-							Admin-only content visible here
-						</p>
+					<div class="bg-destructive/5 p-4 rounded border border-destructive/50 my-2 text-destructive">
+						<h3 class="text-lg font-medium mb-2">Admin Panel</h3>
+						<p>Admin-only content visible here</p>
 					</div>
 				)}
 
+				{/* 
+				TODO: admin should also have editor role
 				{userIsEditor && (
-					<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded border border-gray-200 dark:border-gray-600 my-2">
-						<h3 class="text-lg font-medium mb-2 text-gray-900 dark:text-gray-100">
-							Editor Tools
-						</h3>
-						<p class="text-gray-700 dark:text-gray-300">
-							Editor-specific tools available
-						</p>
+					<div class="bg-foreground/5 p-4 rounded border border-foreground/50 my-2 text-foreground">
+						<h3 class="text-lg font-medium mb-2">Editor Tools</h3>
+						<p>Editor-specific tools available</p>
 					</div>
-				)}
+				)} */}
 			</div>
 		) : (
 			<div class="space-y-4">
-				<p class="text-gray-700 dark:text-gray-300">
-					Please sign in to access content.
-				</p>
-				<a
-					href="/sign-in"
-					class="inline-block px-4 py-2 bg-blue-500 dark:bg-blue-600 text-white no-underline rounded hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
-				>
-					Sign In
-				</a>
+				<p>Please sign in to access content.</p>
+				<Button variant="default">
+					<a href="/sign-in">Sign In</a>
+				</Button>
 			</div>
 		)
 	}

@@ -36,7 +36,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 
 		<div class="grid gap-6">
 			<!-- Authentication Status -->
-			<div class="bg-card p-6 rounded-lg border">
+			<div class="bg-card p-6 border">
 				<h2 class="text-xl font-semibold mb-4">Authentication Status</h2>
 				<div class="space-y-2">
 					<p><strong>Authenticated:</strong> {isAuth ? '✅ Yes' : '❌ No'}</p>
@@ -54,7 +54,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 			<!-- User Context -->
 			{
 				user && (
-					<div class="bg-card p-6 rounded-lg border">
+					<div class="bg-card p-6  border">
 						<h2 class="text-xl font-semibold mb-4">User Context</h2>
 						<div class="space-y-2">
 							<p>
@@ -76,7 +76,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 			}
 
 			<!-- Permission Tests -->
-			<div class="bg-card p-6 rounded-lg border">
+			<div class="bg-card p-6 border">
 				<h2 class="text-xl font-semibold mb-4">Permission Tests</h2>
 				<div class="grid gap-4 md:grid-cols-2">
 					<div class="space-y-2">
@@ -97,7 +97,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 			</div>
 
 			<!-- Role Tests -->
-			<div class="bg-card p-6 rounded-lg border">
+			<div class="bg-card p-6 border">
 				<h2 class="text-xl font-semibold mb-4">Role Tests</h2>
 				<div class="grid gap-4 md:grid-cols-3">
 					<div class="space-y-2">
@@ -125,7 +125,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 			</div>
 
 			<!-- Navigation Test -->
-			<div class="bg-card p-6 rounded-lg border">
+			<div class="bg-card p-6 border">
 				<h2 class="text-xl font-semibold mb-4">Navigation Test</h2>
 				<div class="space-y-2">
 					<p class="text-sm text-muted-foreground mb-4">
@@ -189,7 +189,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 			</div>
 
 			<!-- Integration Status -->
-			<div class="bg-card p-6 rounded-lg border">
+			<div class="bg-card p-6 border">
 				<h2 class="text-xl font-semibold mb-4">Integration Status</h2>
 				<div class="space-y-2">
 					<p class="text-green-600">✅ RBAC system is properly integrated</p>
@@ -202,7 +202,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 					</p>
 				</div>
 
-				<div class="mt-4 p-4 bg-muted rounded-lg">
+				<div class="mt-4 p-4 bg-muted">
 					<p class="text-sm text-muted-foreground">
 						<strong>Note:</strong> This page is for development and testing purposes.
 						Remove or protect it in production environments.
