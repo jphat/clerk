@@ -11,7 +11,7 @@ import {
 	canWriteContent,
 	canEditContent,
 	canManageUser,
-	hasRole,
+	// hasRole,
 	isAdmin,
 	isAuthenticated,
 } from '@/lib/auth';
@@ -21,7 +21,7 @@ const userCanWrite = canWriteContent(Astro.locals);
 const userCanEdit = canEditContent(Astro.locals);
 const userCanManage = canManageUser(Astro.locals);
 const userIsAdmin = isAdmin(Astro.locals);
-const userIsEditor = hasRole(Astro.locals, 'editor');
+// const userIsEditor = hasRole(Astro.locals, 'editor');
 const userIsAuthenticated = isAuthenticated(Astro.locals);
 ---
 

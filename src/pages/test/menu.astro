@@ -6,8 +6,8 @@
  * with different user roles and permission levels.
  */
 
+import { Check, X } from 'lucide-vue-next';
 import TitleBar from '@/components/site/TitleBar.astro';
-import { Button } from '@/components/ui/button';
 import Layout from '@/layouts/Layout.astro';
 import PermissionMenu from '@/components/auth/PermissionMenu.astro';
 import MenuExample from '@/components/auth/MenuExample.astro';
@@ -25,7 +25,7 @@ const pageMeta: PageMeta = {
 const mainMenu: MenuItem[] = [
 	{
 		label: 'Dashboard',
-		href: '/dashboard',
+		href: '/u',
 		// No permissions - visible to all authenticated users
 	},
 	{
@@ -229,33 +229,29 @@ const publicMenu: MenuItem[] = [
 				permission levels:
 			</p>
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-				<div
-					class="bg-foreground/10 border p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:hover:shadow-lg"
-				>
+				<div class="bg-foreground/5 border p-6">
 					<h3
 						class="mt-0 mb-2 text-gray-800 dark:text-gray-200 text-lg font-semibold"
 					>
 						Admin Test Page
 					</h3>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-						Full administrative access with all permissions
-					</p>
-					<ul class="list-none m-0 mb-6 p-0">
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ User management
+					<p class="mb-4">Full administrative access with all permissions</p>
+					<ul class="list-none m-0 mb-6 p-0 space-y-4">
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> User management
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ Content creation
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> Content creation
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ Content editing
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> Content editing
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ System settings
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> System settings
 						</li>
 					</ul>
 					<a
-						href="/test/a"
+						href="/test/admin"
 						class="block text-center px-4 py-3 rounded no-underline font-medium transition-colors bg-red-500 dark:bg-red-600 text-white hover:bg-red-600 dark:hover:bg-red-700"
 						>Visit Admin Page</a
 					>
@@ -268,21 +264,19 @@ const publicMenu: MenuItem[] = [
 					>
 						Editor Test Page
 					</h3>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-						Content management permissions
-					</p>
-					<ul class="list-none m-0 mb-6 p-0">
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ User management
+					<p class="mb-4">Content management permissions</p>
+					<ul class="list-none m-0 mb-6 p-0 space-y-4">
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> User management
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ Content creation
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> Content creation
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							✅ Content editing
+						<li class="flex gap-2">
+							<Check class="stroke-green-600" /> Content editing
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ System settings
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> System settings
 						</li>
 					</ul>
 					<a
@@ -299,21 +293,19 @@ const publicMenu: MenuItem[] = [
 					>
 						Viewer Test Page
 					</h3>
-					<p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">
-						Read-only access with no special permissions
-					</p>
-					<ul class="list-none m-0 mb-6 p-0">
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ User management
+					<p class="mb-4">Read-only access with no special permissions</p>
+					<ul class="list-none m-0 mb-6 p-0 space-y-4">
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> User management
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ Content creation
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> Content creation
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ Content editing
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> Content editing
 						</li>
-						<li class="mb-1 text-xs py-1 text-gray-700 dark:text-gray-300">
-							❌ System settings
+						<li class="flex gap-2">
+							<X class="stroke-destructive" /> System settings
 						</li>
 					</ul>
 					<a

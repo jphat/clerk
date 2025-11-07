@@ -34,5 +34,5 @@ export type {
 	RoleConfig,
 	UserContext,
 	MenuItem,
-	RouteConfig
+	RouteConfig,
 } from './auth';

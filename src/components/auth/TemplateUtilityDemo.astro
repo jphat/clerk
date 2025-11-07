@@ -5,6 +5,7 @@
  * Comprehensive showcase of all RBAC template utilities and their usage patterns.
  * Demonstrates conditional rendering, permission checking, and role-based UI adaptation.
  */
+import { Check, X } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import { Code } from 'astro:components';
 import {
@@ -19,7 +20,7 @@ import {
 	getUserRoleTemplate as getUserRole,
 	getUserPermissionsTemplate as getUserPermissions,
 } from '@/lib/auth';
-import type { Permission } from '@/types/auth';
+// import type { Permission } from '@/types/auth';
 
 // Get all utility function results for demonstration
 const authenticated = isAuthenticated(Astro.locals);
@@ -38,26 +39,26 @@ const isUserViewer = hasRole(Astro.locals, 'viewer');
 
 // Advanced permission checks
 const hasWritePermission = hasPermission(Astro.locals, 'write_content');
-const hasEditPermission = hasPermission(Astro.locals, 'edit_content');
-const hasManagePermission = hasPermission(Astro.locals, 'manage_user');
+// const hasEditPermission = hasPermission(Astro.locals, 'edit_content');
+// const hasManagePermission = hasPermission(Astro.locals, 'manage_user');
 
 // Multiple permission checks
 const hasContentPermissions = hasAnyPermission(Astro.locals, [
 	'write_content',
 	'edit_content',
 ]);
-const hasAllPermissions = hasAnyPermission(Astro.locals, [
-	'write_content',
-	'edit_content',
-	'manage_user',
-]);
+// const hasAllPermissions = hasAnyPermission(Astro.locals, [
+// 	'write_content',
+// 	'edit_content',
+// 	'manage_user',
+// ]);
 
 // Demo data for examples
-const demoPermissions: Permission[] = [
-	'write_content',
-	'edit_content',
-	'manage_user',
-];
+// const demoPermissions: Permission[] = [
+// 	'write_content',
+// 	'edit_content',
+// 	'manage_user',
+// ];
 ---
 
 <div class="w-full">
@@ -305,13 +306,19 @@ const demoPermissions: Permission[] = [
 							<h4 class="font-semibold py-4">Content Creation UI</h4>
 							{canWrite ? (
 								<div class="space-y-4">
-									<p>✅ Content creation tools are available</p>
+									<p class="flex gap-2">
+										<Check class="stroke-green-600" /> Content creation tools
+										are available
+									</p>
 									<Button variant="outline">Create New Article</Button>
 									<Button variant="outline">Save Draft</Button>
 								</div>
 							) : (
 								<div class="space-y-4">
-									<p>❌ Content creation requires write_content permission</p>
+									<p class="flex gap-2">
+										<X class="stroke-destructive" /> Content creation requires
+										write_content permission
+									</p>
 									{/* TODO: disable */}
 									<Button variant="outline">Create New Article</Button>
 								</div>
@@ -322,14 +329,20 @@ const demoPermissions: Permission[] = [
 							<h4 class="font-semibold py-4">Editorial Tools</h4>
 							{canEdit ? (
 								<div class="space-y-4">
-									<p>✅ Editorial tools are available</p>
+									<p class="flex gap-2">
+										<Check class="stroke-green-600" /> Editorial tools are
+										available
+									</p>
 									<Button variant="outline">Review Queue</Button>
 									<Button variant="outline">Bulk Edit</Button>
 									<Button variant="outline">Publish Content</Button>
 								</div>
 							) : (
 								<div class="space-y-4">
-									<p>❌ Editorial tools require edit_content permission</p>
+									<p class="flex gap-2">
+										<X class="stroke-destructive" /> Editorial tools require
+										edit_content permission
+									</p>
 									<Button variant="outline">Review Queue</Button>
 								</div>
 							)}
@@ -339,7 +352,10 @@ const demoPermissions: Permission[] = [
 							<h4 class="font-semibold py-4">Admin Panel</h4>
 							{canManage ? (
 								<div class="space-y-4">
-									<p>✅ Administrative controls are available</p>
+									<p class="flex gap-2">
+										<Check class="stroke-green-600" /> Administrative controls
+										are available
+									</p>
 									{/* TODO: add color */}
 									<Button variant="outline">Delete User</Button>
 									<Button variant="outline">Change Roles</Button>
@@ -348,7 +364,10 @@ const demoPermissions: Permission[] = [
 							) : (
 								<div class="space-y-4">
 									<Button variant="outline">Admin Panel</Button>
-									<p>❌ Admin panel requires manage_user permission</p>
+									<p class="flex gap-2">
+										<X class="stroke-destructive" /> Admin panel requires
+										manage_user permission
+									</p>
 								</div>
 							)}
 						</div>

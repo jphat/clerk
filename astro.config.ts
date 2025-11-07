@@ -1,7 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import { shadcn } from '@clerk/themes'
+import { shadcn } from '@clerk/themes';
 import clerk from '@clerk/astro';
 import mdx from '@astrojs/mdx';
 import node from '@astrojs/node';
@@ -46,14 +46,14 @@ export default defineConfig({
 			appearance: {
 				baseTheme: shadcn,
 				elements: {
-					userButtonPopoverFooter: "hidden",
+					userButtonPopoverFooter: 'hidden',
 				},
 				signIn: {},
 				signUp: {},
 			},
 		}),
 		mdx(),
-		vue()
+		vue(),
 	],
 
 	output: 'server',

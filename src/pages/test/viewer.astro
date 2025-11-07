@@ -6,6 +6,7 @@
  * This page showcases RBAC features for users with viewer role (no special permissions).
  */
 
+import { Check, X } from 'lucide-vue-next';
 import Layout from '@/layouts/Layout.astro';
 import { Button } from '@/components/ui/button';
 import PermissionExample from '@/components/auth/PermissionExample.astro';
@@ -16,7 +17,7 @@ import {
 	canWriteContent,
 	canEditContent,
 	canManageUser,
-	hasRole,
+	// hasRole,
 	isAuthenticated,
 	getUserRoleTemplate as getUserRole,
 	getUserPermissionsTemplate as getUserPermissions,
@@ -35,7 +36,7 @@ const pageMeta: PageMeta = {
 const userRole = getUserRole(Astro.locals);
 const userPermissions = getUserPermissions(Astro.locals);
 const authenticated = isAuthenticated(Astro.locals);
-const isViewer = hasRole(Astro.locals, 'viewer');
+// const isViewer = hasRole(Astro.locals, 'viewer');
 
 // Viewer-accessible menu configuration (public/general access items)
 const viewerMenu: MenuItem[] = [
@@ -148,11 +149,10 @@ const restrictedItems = [
 						<p> Quick overview of current user's role and permissions </p>
 						<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
 							<div class="p-3  rounded border bg-foreground/5 ">
-								<strong class="">Role:</strong> <span class="">{userRole}</span>
+								<strong>Role:</strong> <span>{userRole}</span>
 							</div>
 							<div class="p-3  rounded border bg-foreground/5 ">
-								<strong class="">Permissions:</strong>{' '}
-								{/* TODO: componentize */}
+								<strong>Permissions:</strong> {/* TODO: componentize */}
 								<span class="text-sm gap-2">
 									{userPermissions.length > 0
 										? userPermissions.map((permission) => (
@@ -165,20 +165,18 @@ const restrictedItems = [
 							</div>
 							<div class="p-3  rounded border bg-foreground/5 ">
 								{/* TODO: check actual */}
-								{/* <strong class="">Can Write:</strong>{' '}
-								<span class="">
+								{/* <strong >Can Write:</strong>{' '}
+								<span >
 									{canWriteContent(Astro.locals) ? 'Yes' : 'No'}
 								</span> */}
-								<strong class="">Access Level:</strong>{' '}
-								<span class="">Read-only</span>
+								<strong>Access Level:</strong> <span>Read-only</span>
 							</div>
 							<div class="p-3  rounded border bg-foreground/5 ">
-								{/* <strong class="">Can Edit:</strong>{' '}
-								<span class="">
+								{/* <strong >Can Edit:</strong>{' '}
+								<span >
 									{canEditContent(Astro.locals) ? 'Yes' : 'No'}
 								</span> */}
-								<strong class="">Account Type:</strong>{' '}
-								<span class="">Standard User</span>
+								<strong>Account Type:</strong> <span>Standard User</span>
 							</div>
 						</div>
 					</div>
@@ -203,7 +201,9 @@ const restrictedItems = [
 						<h2 class="text-2xl font-semibold mb-4">Permission Status</h2>
 						<p>Here's what you can and cannot do with viewer-level access:</p>
 						<div class="mt-4">
-							<h3 class="font-semibold text-lg">✅ What You Can Do</h3>
+							<h3 class="font-semibold text-lg flex gap-2">
+								<Check class="stroke-green-600" /> What You Can Do
+							</h3>
 							<ul class="space-y-4 list-disc ml-4">
 								<li>Browse and read all public content</li>
 								<li>Access your account settings</li>
@@ -215,7 +215,9 @@ const restrictedItems = [
 						</div>
 
 						<div class="mt-4">
-							<h3 class="font-semibold text-lg">❌ What You Cannot Do</h3>
+							<h3 class="font-semibold text-lg flex  gap-2">
+								<X class="stroke-destructive" /> What You Cannot Do
+							</h3>
 							<ul class="space-y-4 list-disc ml-4">
 								{restrictedItems.map((item) => (
 									<li>
