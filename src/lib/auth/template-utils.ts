@@ -15,7 +15,7 @@ import type { Role, Permission } from '@/types/auth';
  * @returns True if user has write_content permission
  */
 export function canWriteContent(locals: App.Locals): boolean {
-	return locals.user?.permissions.includes('write_content') || false;
+	return locals.user?.permissions?.includes('write_content') || false;
 }
 
 /**
@@ -25,7 +25,7 @@ export function canWriteContent(locals: App.Locals): boolean {
  * @returns True if user has edit_content permission
  */
 export function canEditContent(locals: App.Locals): boolean {
-	return locals.user?.permissions.includes('edit_content') || false;
+	return locals.user?.permissions?.includes('edit_content') || false;
 }
 
 /**
@@ -35,7 +35,7 @@ export function canEditContent(locals: App.Locals): boolean {
  * @returns True if user has manage_user permission
  */
 export function canManageUser(locals: App.Locals): boolean {
-	return locals.user?.permissions.includes('manage_user') || false;
+	return locals.user?.permissions?.includes('manage_user') || false;
 }
 
 /**
@@ -70,7 +70,7 @@ export function hasPermission(
 	locals: App.Locals,
 	permission: Permission,
 ): boolean {
-	return locals.user?.permissions.includes(permission) || false;
+	return locals.user?.permissions?.includes(permission) || false;
 }
 
 /**

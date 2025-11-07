@@ -33,7 +33,7 @@
     - Ensure functions work with Astro locals context
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 6.3_
 
-  - [ ]* 4.2 Write unit tests for template utilities
+  - [x] 4.2 Write unit tests for template utilities
     - Create tests for each permission checking function
     - Test edge cases with undefined user context
     - Verify correct boolean returns for various permission scenarios
@@ -46,7 +46,7 @@
     - Create shouldShowMenuItem logic for conditional rendering
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-  - [ ]* 5.2 Write component tests for menu rendering
+  - [x] 5.2 Write component tests for menu rendering
     - Test menu filtering with different user permission sets
     - Verify correct rendering for authenticated and unauthenticated users
     - Test nested menu item permission handling
@@ -72,7 +72,7 @@
     - Create demonstration of template utility usage in components
     - _Requirements: 1.1, 3.4, 5.1, 7.4_
 
-  - [ ]* 7.2 Write integration tests for RBAC flow
+  - [x] 7.2 Write integration tests for RBAC flow
     - Test complete authentication and authorization flow
     - Verify middleware integration with Clerk authentication
     - Test route protection across different user roles
