@@ -102,8 +102,8 @@ function verifyTemplateUtilities(): boolean {
 			permissions: ['write_content', 'edit_content', 'manage_user'] as const,
 			firstName: '',
 			imageUrl: '',
-			lastName: ''
-		}
+			lastName: '',
+		},
 	} as unknown as App.Locals;
 
 	return (
