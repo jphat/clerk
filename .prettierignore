@@ -97,3 +97,9 @@ playwright/.cache/
 
 # ShadCN Components
 src/components/ui/
+
+# Github + AI assistants
+.github/
+.kiro/
+.specify/
+specs/
