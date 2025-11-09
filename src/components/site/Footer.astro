@@ -1,5 +1,5 @@
 ---
-import { NAV_FOOTER, SITE_TITLE } from '@/consts';
+import { NAV_TEST, NAV_FOOTER, SITE_TITLE } from '@/consts';
 import { Zap } from 'lucide-vue-next';
 import ModeToggle from '@/components/site/ModeToggle.vue';
 
@@ -11,10 +11,10 @@ const year = new Date().getFullYear();
 		class="border-border border-t container flex flex-col gap-x-6 gap-y-4 items-center md:flex-row md:items-start md:justify-between mt-24 pt-12 text-center"
 	>
 		{
-			NAV_FOOTER && (
+			NAV_TEST && (
 				<nav>
 					<ul class="flex flex-wrap gap-6">
-						{NAV_FOOTER.map((item) => (
+						{NAV_TEST.map((item) => (
 							<li>
 								<a href={item.href}>{item.title}</a>
 							</li>

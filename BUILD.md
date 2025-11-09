@@ -121,3 +121,11 @@ playwright/.clerk/user.json \
 src/pages/{a,u}/index.astro \
 src/pages/{sign-in,sign-up}.astro \
 src/pages/test/{admin,editor,viewer}.astro
+
+touch src/pages/test/{components}.astro
+
+update astro.config.ts with shadcn clerk theme + clerk integrations configs
+
+update sign-in + sign-up + middleware + header with basic stuff
+
+add clerk css file + shadcn for clerk in global.css
