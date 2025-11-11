@@ -1,0 +1,22 @@
+---
+import type { Permissions } from '@/types';
+
+const userPermissions: Permissions[] = Astro.locals.user?.permissions || [];
+
+const { permissions } = Astro.props;
+---
+
+{/* Check if user has all required permissions */}
+{
+	permissions.every((perm: string) => userPermissions.includes(perm)) ? (
+		<div class="p-4 rounded border border-success bg-success/10">
+			<slot />
+		</div>
+	) : (
+		<div class="p-4 rounded border border-destructive bg-destructive/10">
+			You <strong>do not</strong> have permission to view this content; it is
+			vieweable by users with:
+			<code>{permissions.join(', ')}</code> permissions.
+		</div>
+	)
+}

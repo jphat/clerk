@@ -1,7 +1,30 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+
+import { Code } from 'astro:components';
+import { getAccessibleRoutes } from '@/lib/auth/routes';
+import {
+	getUserPermissions,
+	getUserRole,
+	userCanContentDelete,
+	userCanContentRead,
+	userCanContentWrite,
+	userCanUsersManage,
+} from '@/lib';
+import { MENUS } from '@/consts';
+import Component from '@/components/test/Component.astro';
+import Permissions from '@/components/test/Permissions.astro';
+import Role from '@/components/test/Role.astro';
 import TitleBar from '@/components/site/TitleBar.astro';
 import type { PageMeta } from '@/types';
+
+const canContentDelete = userCanContentDelete(Astro.locals);
+const canContentRead = userCanContentRead(Astro.locals);
+const canContentWrite = userCanContentWrite(Astro.locals);
+const canUsersManage = userCanUsersManage(Astro.locals);
+const userRole = getUserRole(Astro.locals);
+const userPermissions = getUserPermissions(Astro.locals);
+const menuTest = getAccessibleRoutes(Astro.locals, MENUS.NAV_TEST)[0].children;
 
 const pageMeta: PageMeta = {
 	bodyClassList: [],
@@ -21,4 +44,199 @@ const pageMeta: PageMeta = {
 		description={pageMeta.description}
 		title={pageMeta.title}
 	/>
+
+	<div class="container typography">
+		<!-- User Information -->
+		<div class="">
+			<h2>User Information</h2>
+			<p>Quick overview of current user's role and permissions</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+				<div class="p-3 rounded border">
+					<Role title="Role" data={userRole} />
+				</div>
+				<div class="p-3 rounded border">
+					<Permissions title="Permissions" data={userPermissions} />
+				</div>
+			</div>
+		</div>
+
+		<!-- RBAC Menu -->
+		<div class="">
+			<h2>RBAC Menu</h2>
+			<p>
+				Menu items are conditionally rendered on an authenticated user's role.
+			</p>
+			<ul>
+				<li>
+					Users' with admin role should see: Admin Test, Editor Test, Viewer
+					Test, Components Test
+				</li>
+				<li>
+					Users' with editor role should see: Editor Test, Viewer Test,
+					Components Test
+				</li>
+				<li>
+					Users' with viewer or no assigned role should see: Viewer Test,
+					Components Test
+				</li>
+			</ul>
+
+			<h3>Expected Output</h3>
+			<div class="border rounded bg-foreground/5 px-6 pb-6">
+				{
+					menuTest && (
+						<nav>
+							<ul class="">
+								{menuTest.map((item) => (
+									<li>
+										<a href={item.href}>{item.title}</a>
+									</li>
+								))}
+							</ul>
+						</nav>
+					)
+				}
+			</div>
+
+			<h3>How to Implement</h3>
+			<p>Add a role in the <code>permissions</code> array of a nav item</p>
+			<Code
+				lang="ts"
+				class="p-4 rounded"
+				code={`{
+	children: null,
+	description: 'Admin access test page',
+	href: '/test/admin',
+	permissions: ['admin'],
+	title: 'Admin Test',
+}`}
+			/>
+		</div>
+
+		<!-- RBAC Components -->
+		<div class="">
+			<h2>Conditional Rendering</h2>
+			<!-- Astro Components -->
+			<div class="rounded border p-6">
+				<h3>Astro Components</h3>
+				<p>
+					In Astro templates, content can be conditionally rendered based on
+					user permissions by using a custom component. In the example below:
+				</p>
+				<h4>Expected Output</h4>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+					<Component permissions={['users:manage']}>
+						This content is only visible to users with the <code
+							>users:manage</code
+						> permission.
+					</Component>
+					<Component permissions={['content:write']}>
+						This content is only visible to users with the <code
+							>content:write</code
+						> permission.
+					</Component>
+					<Component permissions={['content:read']}>
+						This content is only visible to users with the <code
+							>content:read</code
+						> permission.
+					</Component>
+				</div>
+
+				<h4>How to Implement</h4>
+				<p>
+					Wrap content in the <code>Component</code> and pass required permissions
+				</p>
+				<Code
+					lang="astro"
+					class="p-4 rounded"
+					code={`---
+import Component from '@/components/rbac/Component.astro';
+const userPermissions = getUserPermissions(Astro.locals);
+---
+<Component permissions={['content:edit']}>
+	...protected content...
+</Component>
+`}
+				/>
+
+				<!-- In Template -->
+				<div class="rounded border p-6">
+					<h3>In Template</h3>
+					<p>
+						You can also implement permission checks directly within your Astro
+						templates without a separate component by using helper functions.
+					</p>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+						<div>
+							{
+								canContentDelete ? (
+									<div class="p-4 rounded border border-success bg-success/10">
+										User has <code>canContentDelete</code> permission.
+									</div>
+								) : (
+									<div class="p-4 rounded border border-destructive bg-destructive/10">
+										User does not have <code>canContentDelete</code> permission
+									</div>
+								)
+							}
+						</div>
+						<div>
+							{
+								canContentRead ? (
+									<div class="p-4 rounded border border-success bg-success/10">
+										User has <code>canContentRead</code> permission.
+									</div>
+								) : (
+									<div class="p-4 rounded border border-destructive bg-destructive/10">
+										User does not have <code>canContentRead</code> permission
+									</div>
+								)
+							}
+						</div>
+						<div>
+							{
+								canContentWrite ? (
+									<div class="p-4 rounded border border-success bg-success/10">
+										User has <code>canContentWrite</code> permission.
+									</div>
+								) : (
+									<div class="p-4 rounded border border-destructive bg-destructive/10">
+										User does not have <code>canContentWrite</code> permission
+									</div>
+								)
+							}
+						</div>
+						<div>
+							{
+								canUsersManage ? (
+									<div class="p-4 rounded border border-success bg-success/10">
+										User has <code>canUsersManage</code> permission.
+									</div>
+								) : (
+									<div class="p-4 rounded border border-destructive bg-destructive/10">
+										User does not have <code>canUsersManage</code> permission
+									</div>
+								)
+							}
+						</div>
+					</div>
+
+					<h4>How to Implement</h4>
+					<p>
+						Use helper functions to check permissions directly in your template
+					</p>
+					<Code
+						lang="astro"
+						class="p-4 rounded"
+						code={`---
+import { userCanContentDelete } from '@/lib/auth/permissions';
+const canContentDelete = userCanContentDelete(Astro.locals);
+---
+{ canContentDelete && ( <div>...some privileged content...</div> )}`}
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </Layout>

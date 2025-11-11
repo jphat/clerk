@@ -1,0 +1,14 @@
+---
+import type { Permissions } from '@/types';
+
+const { title, data } = Astro.props as {
+	title: string;
+	data: Permissions[];
+};
+---
+
+<strong>{title}:</strong>
+
+<div class="inline-flex flex-wrap gap-2">
+	{data.map((permission) => <code>{permission}</code>)}
+</div>

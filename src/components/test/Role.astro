@@ -1,0 +1,11 @@
+---
+import type { Role } from '@/types';
+
+const { title, data } = Astro.props as {
+	title: string;
+	data: Role;
+};
+---
+
+<strong>{title}:</strong>
+{data}

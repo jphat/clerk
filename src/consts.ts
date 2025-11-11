@@ -37,7 +37,15 @@ export const NAV_USER: NavItem[] = [];
 
 export const MENUS = {
 	NAV_FOOTER: [],
-	NAV_MAIN: [],
+	NAV_MAIN: [
+		{
+			children: null,
+			description: 'Home',
+			href: '/',
+			permissions: [],
+			title: 'Home',
+		},
+	],
 	NAV_TEST: [
 		{
 			children: [
@@ -75,10 +83,9 @@ export const MENUS = {
 			permissions: [],
 			title: 'RBAC Test',
 		},
-
 	],
 	NAV_USER: [],
-}
+};
 
 export const SITE_DESCRIPTION =
 	'Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.';
