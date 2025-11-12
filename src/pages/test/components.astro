@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 
-import { Code } from 'astro:components';
+import { Code } from 'astro-expressive-code/components';
 import { getAccessibleRoutes } from '@/lib/auth/routes';
 import {
 	getUserPermissions,
@@ -102,7 +102,7 @@ const pageMeta: PageMeta = {
 			<p>Add a role in the <code>permissions</code> array of a nav item</p>
 			<Code
 				lang="ts"
-				class="p-4 rounded"
+				class="my-4"
 				code={`{
 	children: null,
 	description: 'Admin access test page',
@@ -148,7 +148,7 @@ const pageMeta: PageMeta = {
 				</p>
 				<Code
 					lang="astro"
-					class="p-4 rounded"
+					class="my-4"
 					code={`---
 import Component from '@/components/rbac/Component.astro';
 const userPermissions = getUserPermissions(Astro.locals);
@@ -228,7 +228,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 					</p>
 					<Code
 						lang="astro"
-						class="p-4 rounded"
+						class="my-4"
 						code={`---
 import { userCanContentDelete } from '@/lib/auth/permissions';
 const canContentDelete = userCanContentDelete(Astro.locals);

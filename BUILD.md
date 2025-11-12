@@ -129,3 +129,10 @@ update astro.config.ts with shadcn clerk theme + clerk integrations configs
 update sign-in + sign-up + middleware + header with basic stuff
 
 add clerk css file + shadcn for clerk in global.css
+
+
+
+##################################
+##################################
+
+npx astro add astro-expressive-code -y
