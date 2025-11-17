@@ -24,7 +24,6 @@ const canContentRead = userCanContentRead(Astro.locals);
 const canContentWrite = userCanContentWrite(Astro.locals);
 const canUsersManage = userCanUsersManage(Astro.locals);
 const userRole = getUserRole(Astro.locals);
-const userPermissions = getUserPermissions(Astro.locals);
 const menuTest = getAccessibleRoutes(Astro.locals, MENUS.NAV_TEST)[0].children;
 
 const pageMeta: PageMeta = {

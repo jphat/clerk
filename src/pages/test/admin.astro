@@ -4,6 +4,10 @@ import Layout from '@/layouts/Layout.astro';
 import { Button } from '@/components/ui/button';
 import {
 	getUserPermissions,
+	userCanContentDelete,
+	userCanContentRead,
+	userCanContentWrite,
+	userCanUsersManage,
 	getUserRole,
 	isAdmin,
 	isAuthenticated,
@@ -11,9 +15,13 @@ import {
 import { SITE_EMAILS } from '@/consts';
 import TitleBar from '@/components/site/TitleBar.astro';
 import type { PageMeta } from '@/types';
-import Permissions from '@/components/test/Permissions.astro';
-import Role from '@/components/test/Role.astro';
+import PermissionsUser from '@/components/test/PermissionsUser.astro';
+import RoleUser from '@/components/test/RoleUser.astro';
 
+const canContentDelete = userCanContentDelete(Astro.locals);
+const canContentRead = userCanContentRead(Astro.locals);
+const canContentWrite = userCanContentWrite(Astro.locals);
+const canUsersManage = userCanUsersManage(Astro.locals);
 const hasAdminAccess = isAdmin(Astro.locals);
 const isAuthed = isAuthenticated(Astro.locals);
 const userPermissions = getUserPermissions(Astro.locals);
@@ -64,10 +72,18 @@ const pageMeta: PageMeta = {
 					<p>Quick overview of current user's role and permissions</p>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 						<div class="p-3 rounded border">
-							<Role title="Role" data={userRole} />
+							<RoleUser title="Role" data={userRole} />
 						</div>
 						<div class="p-3 rounded border">
-							<Permissions title="Permissions" data={userPermissions} />
+							<PermissionsUser
+								title="Permissions"
+								data={[
+									{ label: 'canContentDelete', status: canContentDelete },
+									{ label: 'canContentRead', status: canContentRead },
+									{ label: 'canContentWrite', status: canContentWrite },
+									{ label: 'canUsersManage', status: canUsersManage },
+								]}
+							/>
 						</div>
 					</div>
 				</>
