@@ -29,6 +29,8 @@ export default defineConfig({
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
+	/* Global setup for Clerk testing */
+	globalSetup: './tests/e2e/global.setup.ts',
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('')`. */
@@ -41,10 +43,29 @@ export default defineConfig({
 	/* Configure projects for major browsers */
 	projects: [
 		{
+			name: 'global setup',
+			testMatch: /global\.setup\.ts/,
+		},
+		{
+			name: 'clerk',
+			testMatch: /.*clerk.spec.ts/,
+			use: {
+				...devices['Desktop Chrome'],
+			},
+			dependencies: ['global setup'],
+		},
+		{
+			name: 'rbac',
+			testMatch: /.*rbac.spec.ts/,
+			use: {
+				...devices['Desktop Chrome'],
+			},
+			dependencies: ['global setup'],
+		},
+		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
 		},
-
 		{
 			name: 'firefox',
 			use: { ...devices['Desktop Firefox'] },

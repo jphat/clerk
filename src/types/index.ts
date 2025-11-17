@@ -1,27 +1,2 @@
-export type NavItem = {
-	children?: NavItem[] | null;
-	description?: string;
-	href: string;
-	icon?: string;
-	title: string;
-};
-
-export type PageMeta = {
-	bodyClassList?: string[];
-	description: string;
-	image?: {
-		src: string;
-		alt?: string;
-		width?: number;
-		height?: number;
-	};
-	language?: string;
-	title: string;
-};
-
-export type TitleBar = {
-	breadcrumbs?: Array<{ title: string; url: string }>;
-	headerClassList?: string[];
-	title: string;
-	description?: string;
-};
+export * from '@/types/auth';
+export * from '@/types/sites';

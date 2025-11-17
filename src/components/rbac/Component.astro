@@ -1,0 +1,14 @@
+---
+import type { Permissions } from '@/types';
+
+const userPermissions: Permissions[] = Astro.locals.user?.permissions || [];
+
+const { permissions } = Astro.props;
+---
+
+{/* Check if user has all required permissions */}
+{
+	permissions.every((perm: string) => userPermissions.includes(perm)) ? (
+		<slot />
+	) : null
+}

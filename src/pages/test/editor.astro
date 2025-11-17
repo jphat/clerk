@@ -1,0 +1,93 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+import { Button } from '@/components/ui/button';
+import {
+	getUserRole,
+	isAdmin,
+	isAuthenticated,
+	isEditor,
+	userCanContentDelete,
+	userCanContentRead,
+	userCanContentWrite,
+	userCanUsersManage,
+} from '@/lib';
+import { SITE_EMAILS } from '@/consts';
+import TitleBar from '@/components/site/TitleBar.astro';
+import type { PageMeta } from '@/types';
+import PermissionsUser from '@/components/test/PermissionsUser.astro';
+import RoleUser from '@/components/test/RoleUser.astro';
+
+const canContentDelete = userCanContentDelete(Astro.locals);
+const canContentRead = userCanContentRead(Astro.locals);
+const canContentWrite = userCanContentWrite(Astro.locals);
+const canUsersManage = userCanUsersManage(Astro.locals);
+const hasAdminAccess = isAdmin(Astro.locals);
+const hasEditorAccess = isEditor(Astro.locals);
+const isAuthed = isAuthenticated(Astro.locals);
+const userRole = getUserRole(Astro.locals);
+
+const pageMeta: PageMeta = {
+	bodyClassList: [],
+	description: 'This is a validation page for editor role and privileges.',
+	// image: {},
+	// language: "en",
+	title: 'Editor Role Validation Page',
+};
+---
+
+<Layout pageMeta={pageMeta}>
+	<TitleBar
+		breadcrumbs={[
+			{ title: 'Home', url: '/' },
+			{ title: pageMeta.title, url: '' },
+		]}
+		description={pageMeta.description}
+		title={pageMeta.title}
+	/>
+
+	<div class="container typography">
+		{
+			!isAuthed ? (
+				<>
+					<h2>Authentication Required</h2>
+					<p class="mb-6">Please sign in to access this admin test page.</p>
+					<Button variant="default">
+						<a href="/sign-in">Sign In</a>
+					</Button>
+				</>
+			) : !hasAdminAccess && !hasEditorAccess ? (
+				<>
+					<h2>Editor Role Required</h2>
+					<p>
+						Admin or Editor role is required to view this page. Our records show
+						your current role as <code>{userRole}</code>. If you believe this is
+						an error, please
+						<a href={`mailto:${SITE_EMAILS.technical}`}>contact support</a>.
+					</p>
+				</>
+			) : (
+				<>
+					<h2>User Information</h2>
+					<p>Quick overview of current user's role and permissions</p>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+						<div class="p-3 rounded border">
+							<RoleUser title="Role" data={userRole} />
+						</div>
+						<div class="p-3 rounded border">
+							<PermissionsUser
+								title="Permissions"
+								data={[
+									{ label: 'canContentDelete', status: canContentDelete },
+									{ label: 'canContentRead', status: canContentRead },
+									{ label: 'canContentWrite', status: canContentWrite },
+									{ label: 'canUsersManage', status: canUsersManage },
+								]}
+							/>
+						</div>
+					</div>
+				</>
+			)
+		}
+	</div>
+</Layout>

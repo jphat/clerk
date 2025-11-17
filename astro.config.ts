@@ -1,7 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import { shadcn } from '@clerk/themes';
 import clerk from '@clerk/astro';
+// import { astroExpressiveCode } from 'astro-expressive-code';
+import expressiveCode from 'astro-expressive-code';
 import mdx from '@astrojs/mdx';
 import node from '@astrojs/node';
 import tailwindcss from '@tailwindcss/vite';
@@ -40,7 +43,26 @@ export default defineConfig({
 		],
 	},
 
-	integrations: [clerk(), mdx(), vue()],
+	integrations: [
+		clerk({
+			appearance: {
+				baseTheme: shadcn,
+				elements: {
+					userButtonPopoverFooter: 'hidden',
+				},
+				signIn: {},
+				signUp: {},
+			},
+		}),
+		expressiveCode(),
+		// astroExpressiveCode({
+		//     frames: {
+		//         showCopyToClipboardButton: true,
+		//     },
+		// }),
+		mdx(),
+		vue(),
+	],
 
 	output: 'server',
 
