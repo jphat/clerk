@@ -1,0 +1,32 @@
+---
+interface Props {
+	title: string;
+	data: Array<{ label: string; status: boolean }>;
+}
+
+const { title, data } = Astro.props;
+---
+
+<strong>{title}:</strong>
+{
+	data.length > 0 ? (
+		<ul class="!list-none !pl-0">
+			{data.map(({ label, status }) => (
+				<li id={label}>
+					{label}:{' '}
+					<span
+						class={
+							status
+								? 'font-bold rounded border border-success bg-success/10 py-1 px-2 text-sm'
+								: 'font-bold rounded border border-destructive bg-destructive/10 py-1 px-2 text-sm'
+						}
+					>
+						{status.toString()}
+					</span>
+				</li>
+			))}
+		</ul>
+	) : (
+		<p>No permissions available.</p>
+	)
+}

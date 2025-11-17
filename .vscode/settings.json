@@ -2,6 +2,9 @@
     "chat.tools.terminal.autoApprove": {
         "git log": true,
         "git tag": true,
+        "git --no-pager": true,
+        "ls": true,
+        "pwd": true,
     },
     "editor.cursorBlinking": "smooth",
     "editor.cursorSmoothCaretAnimation": "on",

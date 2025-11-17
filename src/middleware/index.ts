@@ -62,16 +62,17 @@ export const onRequest: MiddlewareHandler = clerkMiddleware(
 				// }
 			}
 		} else {
-			// Log that no user ID was found
-			console.log('No user ID found in auth context.');
-
-			// For unauthenticated users, check if route requires authentication (no role = unauthenticated)
-			// const routeCheck = isRouteProtected(context.url.pathname, []);
+			// For unauthenticated users, check if route requires authentication
+			const routeCheck = isAllowedRoute(
+				context.url.pathname,
+				[], // No roles for unauthenticated users
+				[], // No permissions for unauthenticated users
+			);
 
 			// If route is protected and user is not authenticated, redirect to sign-in
-			// if (!routeCheck.allowed) {
-			//     return context.redirect('/sign-in');
-			// }
+			if (!routeCheck.allowed) {
+				return context.redirect('/sign-in');
+			}
 		}
 
 		return next();

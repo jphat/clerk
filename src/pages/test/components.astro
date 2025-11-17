@@ -13,8 +13,9 @@ import {
 } from '@/lib';
 import { MENUS } from '@/consts';
 import Component from '@/components/test/Component.astro';
-import Permissions from '@/components/test/Permissions.astro';
-import Role from '@/components/test/Role.astro';
+// import PermissionsUser from '@/components/test/PermissionsUser.astro';
+import RoleUser from '@/components/test/RoleUser.astro';
+import PermissionsUser from '@/components/test/PermissionsUser.astro';
 import TitleBar from '@/components/site/TitleBar.astro';
 import type { PageMeta } from '@/types';
 
@@ -52,10 +53,18 @@ const pageMeta: PageMeta = {
 			<p>Quick overview of current user's role and permissions</p>
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 				<div class="p-3 rounded border">
-					<Role title="Role" data={userRole} />
+					<RoleUser title="Role" data={userRole} />
 				</div>
 				<div class="p-3 rounded border">
-					<Permissions title="Permissions" data={userPermissions} />
+					<PermissionsUser
+						title="Permissions"
+						data={[
+							{ label: 'canContentDelete', status: canContentDelete },
+							{ label: 'canContentRead', status: canContentRead },
+							{ label: 'canContentWrite', status: canContentWrite },
+							{ label: 'canUsersManage', status: canUsersManage },
+						]}
+					/>
 				</div>
 			</div>
 		</div>
@@ -167,6 +176,7 @@ const userPermissions = getUserPermissions(Astro.locals);
 						templates without a separate component by using helper functions.
 					</p>
 
+					<h4>Expected Output</h4>
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 						<div>
 							{

@@ -84,7 +84,38 @@ export const MENUS = {
 			title: 'RBAC Test',
 		},
 	],
-	NAV_USER: [],
+	NAV_SIGN: [
+		{
+			children: null,
+			description: 'Sign in',
+			href: '/sign-in',
+			permissions: [],
+			title: 'Sign in',
+		},
+		{
+			children: null,
+			description: 'Sign up',
+			href: '/sign-up',
+			permissions: [],
+			title: 'Sign up',
+		},
+	],
+	NAV_USER: [
+		{
+			children: null,
+			description: 'User dashboard',
+			href: '/u',
+			permissions: ['admin', 'editor', 'viewer'],
+			title: 'Dashboard',
+		},
+		{
+			children: null,
+			description: 'Admin area',
+			href: '/a',
+			permissions: ['admin'],
+			title: 'Admin',
+		},
+	],
 };
 
 export const SITE_DESCRIPTION =

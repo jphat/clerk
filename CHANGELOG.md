@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning].
 
 - /
 
+## [0.0.3] - 2025-11-12
+
+### Added
+
+- Playwright Clerk test configuration and global setup
+- NAV_SIGN and NAV_USER menu configurations in `src/consts.ts`
+- VS Code settings for terminal command auto-approval
+- RBAC permissions tests
+
+### Changed
+
+- Moved `tests/global.setup.ts` to `tests/e2e/global.setup.ts`
+- Updated `playwright.config.ts` with Clerk-specific test project
+- Re-enabled route protection middleware for unauthenticated users
+- Cleared Clerk user.json test data
+- Moved `tests/global.setup.ts` to `tests/e2e` where it belongs
+
 ## [0.0.2] - 2025-11-11
 
 ### Added
@@ -50,6 +67,7 @@ and this project adheres to [Semantic Versioning].
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
-[unreleased]: https://github.com/jphat/clerk/compare/v0.0.1...HEAD
+[unreleased]: https://github.com/jphat/clerk/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/jphat/clerk/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/jphat/clerk/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/jphat/clerk/releases/tag/v0.0.1
