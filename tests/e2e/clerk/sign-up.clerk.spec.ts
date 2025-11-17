@@ -1,35 +1,37 @@
-import { setupClerkTestingToken } from '@clerk/testing/playwright'
-import { test, expect } from '@playwright/test'
+import { setupClerkTestingToken } from '@clerk/testing/playwright';
+import { test /*expect*/ } from '@playwright/test';
 
-const TEST_CODE = process.env.CLERK_TEST_EMAIL_CODE ?? null
-const TEST_EMAIL = process.env.CLERK_TEST_EMAIL ?? null
-const TEST_PASSWORD = process.env.CLERK_TEST_PASSWORD ?? null
+// const TEST_CODE = process.env.CLERK_TEST_EMAIL_CODE ?? null
+// const TEST_EMAIL = process.env.CLERK_TEST_EMAIL ?? null
+// const TEST_PASSWORD = process.env.CLERK_TEST_PASSWORD ?? null
 
 test.describe('User Sign-Up - Email/Password', () => {
-    test.beforeEach(async ({ page }) => {
-        // Set up Clerk testing token to bypass bot detection
-        await setupClerkTestingToken({ page })
+	test.beforeEach(async ({ page }) => {
+		// Set up Clerk testing token to bypass bot detection
+		await setupClerkTestingToken({ page });
 
-        // Start from sign-up page
-        await page.goto('/sign-up')
+		// Start from sign-up page
+		await page.goto('/sign-up');
 
-        // Wait for Clerk to load and the form to be ready
-        await page.waitForSelector('input[name="emailAddress"]', { timeout: 10000 })
-    })
+		// Wait for Clerk to load and the form to be ready
+		await page.waitForSelector('input[name="emailAddress"]', {
+			timeout: 10000,
+		});
+	});
 
-    test('should show error for missing required fields', async ({ page }) => {
-        // Try to submit without filling required fields
-        await page.getByText('Continue').click()
+	test('should show error for missing required fields', async ({ page }) => {
+		// Try to submit without filling required fields
+		await page.getByText('Continue').click();
 
-        // Should show validation errors for missing fields
-        await page.locator('input#firstName-field[required]:invalid')
-        await page.locator('input#lastName-field[required]:invalid')
-        await page.locator('input#emailAddress-field[required]:invalid')
-        await page.locator('input#password-field[required]:invalid')
-    })
+		// Should show validation errors for missing fields
+		page.locator('input#firstName-field[required]:invalid');
+		page.locator('input#lastName-field[required]:invalid');
+		page.locator('input#emailAddress-field[required]:invalid');
+		page.locator('input#password-field[required]:invalid');
+	});
 
-    // On Chromium, bot verification may block automated sign-ups
-    /*
+	// On Chromium, bot verification may block automated sign-ups
+	/*
     test('should successfully register a new user', async ({ page }) => {
         if (!TEST_CODE || !TEST_EMAIL || !TEST_PASSWORD) {
             throw new Error("Missing required environment variables for email testing.")
@@ -69,8 +71,8 @@ test.describe('User Sign-Up - Email/Password', () => {
     })
     */
 
-    // On Chromium, bot verification may block automated sign-ups
-    /*
+	// On Chromium, bot verification may block automated sign-ups
+	/*
     test('should handle duplicate email registration gracefully', async ({ page }) => {
         if (!TEST_CODE || !TEST_EMAIL || !TEST_PASSWORD) {
             test.skip()
@@ -93,4 +95,4 @@ test.describe('User Sign-Up - Email/Password', () => {
         await expect(page.locator('.cl-formFieldErrorText__emailAddress')).toBeVisible()
     })
     */
-})
+});

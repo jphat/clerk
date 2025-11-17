@@ -1,7 +1,7 @@
 import { clerkSetup } from '@clerk/testing/playwright';
 
 async function globalSetup() {
-    await clerkSetup();
+	await clerkSetup();
 }
 
 export default globalSetup;

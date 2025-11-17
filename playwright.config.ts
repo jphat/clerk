@@ -43,29 +43,30 @@ export default defineConfig({
 	/* Configure projects for major browsers */
 	projects: [
 		{
-			name: "global setup",
+			name: 'global setup',
 			testMatch: /global\.setup\.ts/,
 		},
 		{
-			name: "clerk",
+			name: 'clerk',
 			testMatch: /.*clerk.spec.ts/,
 			use: {
-				...devices["Desktop Chrome"],
+				...devices['Desktop Chrome'],
 			},
-			dependencies: ["global setup"],
+			dependencies: ['global setup'],
 		},
 		{
-			name: "rbac",
+			name: 'rbac',
 			testMatch: /.*rbac.spec.ts/,
 			use: {
-				...devices["Desktop Chrome"],
+				...devices['Desktop Chrome'],
 			},
-			dependencies: ["global setup"],
+			dependencies: ['global setup'],
 		},
 		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
-		}, {
+		},
+		{
 			name: 'firefox',
 			use: { ...devices['Desktop Firefox'] },
 		},

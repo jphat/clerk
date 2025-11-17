@@ -3,7 +3,6 @@ import Layout from '@/layouts/Layout.astro';
 
 import { Button } from '@/components/ui/button';
 import {
-	getUserPermissions,
 	getUserRole,
 	isAdmin,
 	isAuthenticated,
@@ -26,7 +25,6 @@ const canUsersManage = userCanUsersManage(Astro.locals);
 const hasAdminAccess = isAdmin(Astro.locals);
 const hasEditorAccess = isEditor(Astro.locals);
 const isAuthed = isAuthenticated(Astro.locals);
-const userPermissions = getUserPermissions(Astro.locals);
 const userRole = getUserRole(Astro.locals);
 
 const pageMeta: PageMeta = {
